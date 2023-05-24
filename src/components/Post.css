@@ -1,0 +1,77 @@
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.post-container{
+    min-height: 100px;
+    overflow: hidden;
+    display: inline-block;
+    
+}
+
+.post{
+    border: solid 1px;
+    display: inline-block;
+}
+
+.post-element{
+    border: solid 1px;
+    margin: 50px;
+}
+
+.post-info{
+    display: inline-block;
+    width: 100%;
+    border: solid 1px;
+}
+
+.post-author-avatar{
+    width: 50px;
+    border-radius: 50%;
+    float: left;
+}
+
+
+.post-author-name{
+    display: inline;
+    float: left;
+    margin: 15px 0 0 5px;
+}
+
+.post-content{
+    font-size: 90%;
+    margin: 0 5px;
+}
+
+.time{
+    display: inline;
+    float: right;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 70%;
+    margin: 25px 20px 0 0;
+}
+
+.post-action{
+    text-align: center;
+}
+
+.comment-button, .report-button{
+    border: none;
+    font-size: 120%;
+    margin: 0 100px;
+    display: inline-block;
+    background-color: #FFF;
+}
+
+.comment-button{
+    width: 100px;
+    display: inline;
+    text-align: start;
+}
+
+.report-button{
+    width: 100px;
+}
+
+.comment-button:hover, .report-button:hover{
+    background-color: aquamarine;
+}
