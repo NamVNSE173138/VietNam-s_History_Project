@@ -1,16 +1,17 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import Events from '../components/Event/Event'
+import EventDetail from '../components/Event/EventDetail'
 
-const Event = () => {
+const EventsDetail = () => {
   return (
     <>
     <Header/>
-    <Events/>
+    <EventDetail/>
     <Footer/>
+
     </>
-  )
+    )
 }
 
-export default Event
+export default EventsDetail

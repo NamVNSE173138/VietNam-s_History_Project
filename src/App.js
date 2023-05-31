@@ -15,6 +15,7 @@ import Posts from './pages/Posts';
 import Grades from './pages/Grades';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EventDetail from './pages/EventDetail';
 // import Sign-In from './pages/Sign-in';
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
         <Route path='/events'  element={<Events />} />
         <Route path='/posts'  element={<Posts />} />
         <Route path='/Grade'  element={<Grades/>} />
-        <Route path='/Login' element={<Login/>} />
+        <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>}/>
+        <Route path='/events/eventsDetail' element={<EventDetail/>}/>
       </Routes>
   );
 }
