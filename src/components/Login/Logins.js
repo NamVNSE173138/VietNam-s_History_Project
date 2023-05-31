@@ -1,12 +1,14 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 const App = () => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
   return (
-    
+  <>
+  <Row>
+    <Col span={12}>
     <Form
       name="normal_login"
       className="login-form"
@@ -64,6 +66,10 @@ const App = () => {
         Or <Link to={"/signup"}>Sign up</Link>
       </Form.Item>
     </Form>
+    </Col>
+  </Row>
+  </>
+    
   );
 };
 export default App;

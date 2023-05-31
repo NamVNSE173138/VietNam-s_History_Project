@@ -10,6 +10,7 @@ import './App.css';
 import { Routes, Route} from "react-router-dom"
 import Home from './pages/Home';
 import Events from './pages/Events';
+import EventDetail from './pages/EventsDetail'
 import Posts from './pages/Posts';
 // import Grade from './pages/Grade';
 import Grades from './pages/Grades';
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path='/'  element={<Home />} />
         <Route path='/events'  element={<Events />} />
+        <Route path='/eventDetail' element={<EventDetail/>}/>
         <Route path='/posts'  element={<Posts />} />
         <Route path='/Grade'  element={<Grades/>} />
         <Route path='/Login' element={<Login/>} />
