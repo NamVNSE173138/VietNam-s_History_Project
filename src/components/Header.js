@@ -20,7 +20,7 @@ export default function Header(){
                 <nav className='login'>
                     <ul>
                     <li><Link to={"/login"} >LOGIN</Link></li>
-                    <li><Link to={"/sign-up"} >SIGN UP</Link></li>
+                    <li><Link to={"/signup"} >SIGN UP</Link></li>
                     </ul>
                 </nav>
             </div>

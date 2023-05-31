@@ -114,8 +114,45 @@ button {
   cursor: pointer;
 }
 
+h1{
+  text-align: center;
+  color: #007bff;
+  padding-top: 40px;
+}
+.ant-form {
+  /* justify-content: center; */
+  /* position: absolute;
+  padding: auto; */
+  /* top: 50%; */
+  /* left: 50%;
+  transform: translate(-50%, -50%); */
+  /* align-items: center; */
+  /* margin-top: 200px; */
+  margin: 0 auto;
+}
 
-.app {
+
+.ant-col {
+  margin: 0 auto;
+}
+
+.login-form {
+  max-width: 300px;
+}
+ .login-form-forgot {
+  float: right;
+}
+ .ant-col-rtl .login-form-forgot {
+  float: left;
+}
+ .login-form-button {
+  width: 100%;
+}
+
+
+
+
+/* .app {
   text-align: center;
 }
 
@@ -138,7 +175,12 @@ button {
 
 .class.hovered .lesson-list {
   display: block;
-}
+} */
+
+/* .ant-menu .ul{
+  width: 100px;
+  background-color: #000000;
+} */
 
 
  .footer{

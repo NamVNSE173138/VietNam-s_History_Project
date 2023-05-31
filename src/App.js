@@ -11,15 +11,20 @@ import { Routes, Route} from "react-router-dom"
 import Home from './pages/Home';
 import Events from './pages/Events';
 import Posts from './pages/Posts';
-import Grade from './pages/Grade';
+// import Grade from './pages/Grade';
+import Grades from './pages/Grades';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+// import Sign-In from './pages/Sign-in';
 function App() {
   return (
       <Routes>
         <Route path='/'  element={<Home />} />
         <Route path='/events'  element={<Events />} />
         <Route path='/posts'  element={<Posts />} />
-        <Route path='/Grade'  element={<Grade/>} />
-        {/* <Route path='/events'  element={<Events />} /> */}
+        <Route path='/Grade'  element={<Grades/>} />
+        <Route path='/Login' element={<Login/>} />
+        <Route path='/signup' element={<Signup/>}/>
       </Routes>
   );
 }
