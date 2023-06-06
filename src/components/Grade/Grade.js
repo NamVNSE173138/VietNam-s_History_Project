@@ -1,7 +1,11 @@
 // import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 // import { AppstoreOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { AudioOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
+const { Search } = Input;
 function getItem(label, key, children, type) {
   return {
     key,
@@ -10,17 +14,30 @@ function getItem(label, key, children, type) {
     type,
   };
 }
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: '#1677ff',
+    }}
+  />
+);
+const onSearch = (value) => console.log(value);
+
+
 const items = [
   getItem('Grade 4', 'sub4', [
     getItem('Phần 1: Buổi đầu dựng nước và giữ nước (Khoảng 700 năm TCN đến năm 179 TCN)', '1'),
     getItem('Phần 2: Hơn một nghìn năm đấu tranh giành lại độc lập (Từ năm 179 TCN đến năm 938)', '2'),
-    getItem('Phần 3: Buổi đầu độc lập (Từ năm 938 đến năm 1009)', '3'),
+    getItem(<Link to={'/'}>demo</Link>, '3'),
     getItem('Phần 4: Nước Đại Việt thời Lý (Từ năm 1009 đến năm 1226)', '4',[getItem('demo')]),
+    
   ]),
   getItem('Grade 5', 'sub5', [
     getItem('Bài 1: "Bình Tây Đại nguyên soái" Trương Định', '5'),
     getItem('Bài 2: Nguyễn Trường Tộ mong muốn canh tân đất nước', '6'),
     getItem('Bài 3: Cuộc phản công ở kinh thành Huế', 'sub3'), 
+
   ]),
   getItem('Grade 6', 'sub6', [
     getItem('Chương 1: Vì sao phải học lịch sử', '9'),
@@ -74,6 +91,18 @@ const App = () => {
     }
   };
   return (
+    <div className='grade'>
+
+  <Space direction="vertical">
+
+  <Search
+  placeholder="input search text"
+  allowClear
+  enterButton="Search"
+  size="large"
+  onSearch={onSearch}
+/>
+  </Space>
     <Menu
       mode="inline"
       openKeys={openKeys}
@@ -83,6 +112,7 @@ const App = () => {
       // }}
       items={items}
     />
+  </div>
   );
 };
 export default App;

@@ -1,7 +1,8 @@
 import { Avatar, List, Space} from 'antd';
 
-import {StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import {StarOutlined, LikeOutlined, MessageOutlined, FlagOutlined } from '@ant-design/icons';
 import React from 'react';
+import Icon from '@ant-design/icons/lib/components/Icon';
 const data = Array.from({
   length: 23,
 }).map((_, i) => ({
@@ -30,18 +31,19 @@ const App = () => (
       pageSize: 3,
     }}
     dataSource={data}
-    footer={
-      <div>
-        <b>ant design</b> footer part
-      </div>
-    }
+      // footer={
+      //   <div>
+      //     <b>ant design</b> footer part
+      //   </div>
+      // }
     renderItem={(item) => (
       <List.Item
         key={item.title}
         actions={[
-          <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-          <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-          <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+          // <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+          <IconText icon={LikeOutlined} text="69" key="list-vertical-like-o" />,
+          <IconText icon={MessageOutlined} text="69" key="list-vertical-message" />,
+          <IconText icon={FlagOutlined} text="6" key="list-vertical-report"/>
         ]}
         extra={
           <img

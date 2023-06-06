@@ -1,8 +1,9 @@
 import React from "react"
+import { Link } from "react-router-dom"
 export default function Footer(){
     return(
         <div className="footer">
-            <h5><a href="https://www.facebook.com/quan.van.5076/">Quandeptroai</a></h5>
+            <h5>Copyright © <Link to={'/'}>Cun</Link></h5>
         </div>
     )
 }

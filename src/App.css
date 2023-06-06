@@ -8,10 +8,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #000000;
+  background-color: #353535;
   padding: 0 10px 0 10px;
-  /* margin-top: 20px; */
-  /* border-bottom: 1px solid; */
+
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  transition: all 300ms ease-in-out;
 }
 
 /* nav .login a{
@@ -73,6 +78,7 @@ nav li {
     background: #d1cbcb;
     padding: 0 10px 10px 10px;
     background-color: #000000;
+    margin-top: 72px;
  }
  .carousel-control-next{
   /* height: 561px; */
@@ -106,28 +112,47 @@ nav li {
 
 }
 
+ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-k7429z {
+  font-family: 'Archivo Narrow', sans-serif;
+  /* margin-top: 72px;   */
+}
+
 button {
   padding: 5px 10px;
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   cursor: pointer;
+}
+
+.grade{
+  margin-top: 72px;
 }
 
 h1{
   text-align: center;
   color: #007bff;
-  padding-top: 40px;
+  padding-top: 112px;
+  padding-bottom: 20px;
+  /* margin-top: 72px; */
 }
+button.ant-btn.css-dev-only-do-not-override-k7429z.ant-btn-primary {
+  margin-right: 15px;
+}
+
+:where(.css-dev-only-do-not-override-k7429z).ant-form-item .ant-form-item-feedback-icon{
+  margin-bottom: 9px;
+}
+
+.ant-row.css-dev-only-do-not-override-k7429z {
+  /* margin-top: 72px; */
+}
+.ant-list.ant-list-vertical.ant-list-lg.ant-list-split.ant-list-something-after-last-item.css-dev-only-do-not-override-k7429z {
+  margin-top: 72px;
+}
+
 .ant-form {
-  /* justify-content: center; */
-  /* position: absolute;
-  padding: auto; */
-  /* top: 50%; */
-  /* left: 50%;
-  transform: translate(-50%, -50%); */
-  /* align-items: center; */
-  /* margin-top: 200px; */
+
   margin: 0 auto;
 }
 
@@ -149,44 +174,20 @@ h1{
   width: 100%;
 }
 
-
-
-
-/* .app {
-  text-align: center;
+a{
+  text-decoration: inherit;
+  color: inherit;
 }
 
-.class {
-  display: inline-block;
-  margin: 20px;
-  padding: 20px;
-  background-color: #f2f2f2;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.event{
+  margin-top: 72px;
 }
-
-.class.hovered {
-  background-color: #ccc;
-}
-
-.lesson-list {
-  display: none;
-}
-
-.class.hovered .lesson-list {
-  display: block;
-} */
-
-/* .ant-menu .ul{
-  width: 100px;
-  background-color: #000000;
-} */
 
 
  .footer{
   background-color: #c3c3c3;
   text-align: center;
-  color: #000000;
+  color: #1f2125;
   padding: 10px;
   margin-top: 20px;
   

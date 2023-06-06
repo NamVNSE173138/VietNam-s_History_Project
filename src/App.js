@@ -16,6 +16,9 @@ import Posts from './pages/Posts';
 import Grades from './pages/Grades';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPass from './pages/ForgotPass';
+import ChangePass from './pages/ChangePass';
+import Timeline from './pages/Timeline'
 // import Sign-In from './pages/Sign-in';
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
         <Route path='/Grade'  element={<Grades/>} />
         <Route path='/Login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>}/>
+        <Route path='/forgot' element={<ForgotPass/>}/>
+        <Route path='/changePass' element={<ChangePass/>}/>
+        <Route path='/timeline' element={<Timeline/>}/>
       </Routes>
   );
 }

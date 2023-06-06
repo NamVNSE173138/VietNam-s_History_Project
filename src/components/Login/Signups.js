@@ -6,7 +6,6 @@ import {
     Col,
     Form,
     Input,
-    // InputNumber,
     Row,
     Select,
   } from 'antd';
@@ -31,7 +30,7 @@ import { Link } from 'react-router-dom';
         span: 24,
       },
       sm: {
-        span: 8,
+        span: 6,
       },
     },
     wrapperCol: {
@@ -60,30 +59,7 @@ import { Link } from 'react-router-dom';
     const onFinish = (values) => {
       console.log('Received values of form: ', values);
     };
-    // const prefixSelector = (
-    //   <Form.Item name="prefix" noStyle>
-    //     <Select
-    //       style={{
-    //         width: 70,
-    //       }}
-    //     >
-    //       <Option value="86">+86</Option>
-    //       <Option value="87">+87</Option>
-    //     </Select>
-    //   </Form.Item>
-    // );
-    // const suffixSelector = (
-    //   <Form.Item name="suffix" noStyle>
-    //     <Select
-    //       style={{
-    //         width: 70,
-    //       }}
-    //     >
-    //       <Option value="USD">$</Option>
-    //       <Option value="CNY">¥</Option>
-    //     </Select>
-    //   </Form.Item>
-    // );
+  
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
     const onWebsiteChange = (value) => {
       if (!value) {
@@ -97,6 +73,8 @@ import { Link } from 'react-router-dom';
       value: website,
     }));
     return (
+      <>
+      <h1>Sign up</h1>
       <Form
         {...formItemLayout}
         form={form}
@@ -110,11 +88,11 @@ import { Link } from 'react-router-dom';
           maxWidth: 600,
         }}
         scrollToFirstError
+        labelAlign="left"
       >
         <Form.Item
           name="username"
           label="Username"
-          // tooltip="What do you want others to call you?"
           rules={[
             {
               required: true,
@@ -135,6 +113,7 @@ import { Link } from 'react-router-dom';
               message: 'Please input your password!',
             },
           ]}
+          
           hasFeedback
         >
           <Input.Password />
@@ -204,37 +183,13 @@ import { Link } from 'react-router-dom';
         <Form.Item
           name="linkcv"
           label="Link CV"
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: 'Please input your CV!',
-          //   },
-          // ]}
+      
         >
           <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="website">
             <Input />
           </AutoComplete>
         </Form.Item>
-  
-        
-  
-        {/* <Form.Item
-          name="gender"
-          label="Gender"
-          rules={[
-            {
-              required: true,
-              message: 'Please select gender!',
-            },
-          ]}
-        >
-          <Select placeholder="select your gender">
-            <Option value="male">Male</Option>
-            <Option value="female">Female</Option>
-            <Option value="other">Other</Option>
-          </Select>
-        </Form.Item> */}
-  
+
         <Form.Item label="Captcha" extra="We must make sure that your are a human.">
           <Row gutter={8}>
             <Col span={12}>
@@ -279,6 +234,8 @@ import { Link } from 'react-router-dom';
           Or <Link to={"/login"}>I have already account</Link>
         </Form.Item>
       </Form>
+      </>
+      
     );
   };
   export default App;

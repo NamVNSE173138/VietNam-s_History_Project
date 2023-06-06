@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../assets/image/vietera-logo.png"
+import logo from "../assets/image/logo-color.png"
 import { Link } from 'react-router-dom'
 export default function Header(){
     
