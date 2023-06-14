@@ -11,7 +11,7 @@ const Contacts = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    // { field: "registrarId", headerName: "Registrar ID" },
     {
       field: "name",
       headerName: "Name",
@@ -45,11 +45,11 @@ const Contacts = () => {
       headerName: "City",
       flex: 1,
     },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
+    // {
+    //   field: "zipCode",
+    //   headerName: "Zip Code",
+    //   flex: 1,
+    // },
   ];
 
   return (
