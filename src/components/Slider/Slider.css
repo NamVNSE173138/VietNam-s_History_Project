@@ -1,0 +1,15 @@
+.carousel {
+    height: 561px;
+      background: #d1cbcb;
+      padding: 0 10px 10px 10px;
+      background-color: #000000;
+      margin-top: 72px;
+   }
+   .carousel-control-next{
+    padding-bottom: 50px;
+   }
+   
+   .carousel-item img{
+    height: 561px;
+    width: 100%;
+   }

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-import marker from "../../assets/image/—Pngtree—location marker_5990782.png"
+// import marker from "../../assets/image/—Pngtree—location marker_5990782.png"
 import {  TileLayer } from "react-leaflet";
 import  osm from "../../utils/osm-providers";
 import { useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer } from "react-leaflet";
-import L, { Marker, Popup } from "leaflet";
+import "./Map.css"
+// import L, { Marker, Popup } from "leaflet";
 // const makerIcon = new L.Icon({
 //     iconUrl: require({marker}),
 //     iconSize: [35,45],

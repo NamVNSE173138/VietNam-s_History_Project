@@ -1,18 +1,23 @@
-import { Avatar, List, Space} from 'antd';
+import { Avatar, List, Space } from "antd";
 
-import {StarOutlined, LikeOutlined, MessageOutlined, FlagOutlined } from '@ant-design/icons';
-import React from 'react';
-import Icon from '@ant-design/icons/lib/components/Icon';
+import {
+  StarOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  FlagOutlined,
+} from "@ant-design/icons";
+import React from "react";
+import Icon from "@ant-design/icons/lib/components/Icon";
 const data = Array.from({
   length: 23,
 }).map((_, i) => ({
-  href: 'https://ant.design',
-  title: `ant design part ${i}`,
+  href: "",
+  title: `demo ${i}`,
   avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
   description:
-    'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    "Ant Design, a design language for background applications, is refined by Ant UED Team.",
   content:
-    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+    "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
 }));
 const IconText = ({ icon, text }) => (
   <Space>
@@ -20,7 +25,7 @@ const IconText = ({ icon, text }) => (
     {text}
   </Space>
 );
-const App = () => (
+const Post = () => (
   <List
     itemLayout="vertical"
     size="large"
@@ -31,19 +36,23 @@ const App = () => (
       pageSize: 3,
     }}
     dataSource={data}
-      // footer={
-      //   <div>
-      //     <b>ant design</b> footer part
-      //   </div>
-      // }
+    // footer={
+    //   <div>
+    //     <b>ant design</b> footer part
+    //   </div>
+    // }
     renderItem={(item) => (
       <List.Item
         key={item.title}
         actions={[
           // <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
           <IconText icon={LikeOutlined} text="69" key="list-vertical-like-o" />,
-          <IconText icon={MessageOutlined} text="69" key="list-vertical-message" />,
-          <IconText icon={FlagOutlined} text="6" key="list-vertical-report"/>
+          <IconText
+            icon={MessageOutlined}
+            text="69"
+            key="list-vertical-message"
+          />,
+          <IconText icon={FlagOutlined} text="6" key="list-vertical-report" />,
         ]}
         extra={
           <img
@@ -63,4 +72,4 @@ const App = () => (
     )}
   />
 );
-export default App;
+export default Post;
