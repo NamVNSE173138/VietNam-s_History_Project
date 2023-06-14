@@ -1,12 +1,13 @@
-import Pagination from './components/Pagination'
+import React from 'react';
+import EventTable from './EventTable';
 
-function App() {
+const App = () => {
   return (
-    <div className='post-container'>
-      <h1>VIETERA</h1>
-      <Pagination />
+    <div>
+      <h1>Event Table</h1>
+      <EventTable />
     </div>
   );
-}
+};
 
 export default App;
