@@ -1,17 +1,28 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
+import { Button } from "antd";
 import "./Slider.css";
 import img3 from "../Slider/z4424869346053_159e3b29a58877da799285fb13caf039.jpg";
+import { Link } from "react-router-dom";
 // export default class Slider extends Component{
 const Slider = () => {
   return (
     <Carousel>
       <Carousel.Item>
         <img className="d-block w-100" src={img3} alt="First slide" />
-        <Carousel.Caption>
-          {/* <h3>First slide label</h3> */}
-          {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-        </Carousel.Caption>
+        <div className="carouselCaption">
+          <h3>Trống đồng Đông Sơn</h3>
+          <p className="shadow-text">
+            {" "}
+            là một loại trống đồng tiêu biểu cho Văn hóa Đông Sơn (thế kỷ 7 TCN
+            - thế kỷ 6 CN ) của người Việt cổ.
+          </p>
+          <Link>
+            <Button className="carousel-btn" type="primary" size="large">
+              SEE MORE
+            </Button>
+          </Link>
+        </div>
       </Carousel.Item>
       <Carousel.Item>
         <img
@@ -20,25 +31,33 @@ const Slider = () => {
           alt="Second slide"
         />
 
-        <Carousel.Caption>
-          {/* <h3>Second slide label</h3> */}
-          {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
-        </Carousel.Caption>
+        <div className="carouselCaption">
+          <h3>Chiến thắng Điện Biên Phủ</h3>
+          <p className="shadow-text">(13 tháng 3 - 7 tháng 5 năm 1954)</p>
+          <Link>
+            <Button className="carousel-btn" type="primary" size="large">
+              SEE MORE
+            </Button>
+          </Link>
+        </div>
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://images.unsplash.com/photo-1447727214830-cbcbf097b52c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1296&q=80"
+          src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.15752-9/354485567_578472684460626_6856032707604160166_n.png?_nc_cat=111&ccb=1-7&_nc_sid=ae9488&_nc_ohc=_8kF1Ql028wAX_DWAv7&_nc_ht=scontent.fsgn2-6.fna&oh=03_AdQIryVN7hj-qDXhv3ineGddvbitygCY3X7HSZRcXIOQiw&oe=64B3952A"
           alt="Third slide"
           // style={{height : "561px"}}
         />
 
-        <Carousel.Caption>
-          {/* <h3>Third slide label</h3> */}
-          {/* <p> */}
-          {/* Praesent commodo cursus magna, vel scelerisque nisl consectetur. */}
-          {/* </p> */}
-        </Carousel.Caption>
+        <div className="carouselCaption">
+          <h3>Khởi nghĩa Hai Bà Trưng</h3>
+          <p className="shadow-text">(Năm 40 - 43 sau CN)</p>
+          <Link>
+            <Button className="carousel-btn" type="primary" size="large">
+              SEE MORE
+            </Button>
+          </Link>
+        </div>
       </Carousel.Item>
     </Carousel>
   );

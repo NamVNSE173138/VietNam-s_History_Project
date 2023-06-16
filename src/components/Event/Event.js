@@ -61,7 +61,7 @@ const Event = () => {
           </div>
           <div className="button">
             <Link to={"/events/allEvents"}>
-              <Button>SEE MORE</Button>
+              <Button size="large">SEE MORE</Button>
             </Link>
           </div>
         </div>
@@ -127,7 +127,7 @@ const Event = () => {
           </div>
           <div className="button">
             <Link to={"/events/allEvents"}>
-              <Button>SEE MORE</Button>
+              <Button size="large">SEE MORE</Button>
             </Link>
           </div>
         </div>

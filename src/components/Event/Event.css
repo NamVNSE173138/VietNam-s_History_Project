@@ -1,5 +1,5 @@
 .event{
-    margin-top: 72px;
+    margin-top: 90px;
     /* text-decoration: none; */
   }
   :where(.css-dev-only-do-not-override-k7429z).ant-result {
@@ -31,4 +31,9 @@ h3{
 
 button{
  margin: 0 auto;
+}
+
+.all-event{
+  padding-bottom: 30px;
+  margin: 30px 20px;
 }

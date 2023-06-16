@@ -15,8 +15,8 @@ const Home = () => {
       <Slider />
       <Timeline />
       <BasicMap />
-      <PopEvent />
-      <NewPost />
+      {/* <PopEvent /> */}
+      {/* <NewPost /> */}
       <Footer />
     </>
   );

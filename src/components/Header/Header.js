@@ -3,14 +3,27 @@ import logo from "../Header/351046179_6398133100232437_8474283944489690617_n (1)
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import { Input } from "antd";
+
 const Header = () => {
+  const { Search } = Input;
+  const onSearch = (value: string) => console.log(value);
   const [Mobile, setMobile] = useState(false);
+
+  const linkStyles = {
+    textDecoration: "none",
+    fontWeight: "bold",
+    color: "white",
+    fontSize: "15px",
+    fontFamily: "Open Sans",
+  };
+
   return (
     <>
       <nav className="header">
         <div className="logo">
           <Link to={"/"}>
-            <img src={logo} />
+            <img src={logo} alt="Logo" />
           </Link>
         </div>
 
@@ -18,24 +31,31 @@ const Header = () => {
           className={Mobile ? "nav-links-mobile" : "nav-links"}
           onClick={() => setMobile(false)}
         >
-          <li className="header">
-            <Link to={"/"}>HOME</Link>
-          </li>
-          <li className="header">
-            <Link to={"/events"}>EVENT</Link>
-          </li>
-          <li className="header">
-            <Link to={"/posts"}>POST</Link>
-          </li>
-          <li className="header">
-            <Link to={"/grade"}>GRADE</Link>
-          </li>
-          <li className="header">
-            <Link to={"/login"}>LOGIN</Link>
-          </li>
-          <li className="header">
-            <Link to={"/signup"}>SIGN UP</Link>
-          </li>
+          <Link to={"/"} style={linkStyles}>
+            <li className="header">HOME</li>
+          </Link>
+          <Link to={"/events"} style={linkStyles}>
+            <li className="header">EVENT</li>
+          </Link>
+          <Link to={"/posts"} style={linkStyles}>
+            <li className="header">POST</li>
+          </Link>
+          <Link to={"/grade"} style={linkStyles}>
+            <li className="header">GRADE</li>
+          </Link>
+          <Link to={"/login"} style={linkStyles}>
+            <li className="header">LOGIN</li>
+          </Link>
+          <Link to={"/signup"} style={linkStyles}>
+            <li className="header">SIGN UP</li>
+          </Link>
+          <Search
+            placeholder="input search text"
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={onSearch}
+          />
         </ul>
         <button className="menu-icon" onClick={() => setMobile(!Mobile)}>
           {Mobile ? <CloseOutlined /> : <MenuOutlined />}
@@ -44,4 +64,5 @@ const Header = () => {
     </>
   );
 };
+
 export default Header;

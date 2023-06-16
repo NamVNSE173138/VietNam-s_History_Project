@@ -1,139 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import { Timeline } from "antd";
 import "./Timeline.css";
 
-const Timeline = () => {
-  const [marginFirst, setMarginFirst] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const handleItemClick = (index, event) => {
-    event.preventDefault();
-    setSelectedIndex(index);
-    const change = marginFirst - (index - selectedIndex) * 150;
-    setMarginFirst(change);
-  };
+const EventTimeline = () => {
+  const events = [
+    { id: 1, title: "Event 1", date: "2023-01-01" },
+    { id: 2, title: "Event 2", date: "" },
+    { id: 3, title: "Event 3", date: "2023-03-01" },
+    { id: 4, title: "Event 4", date: "2023-04-01" },
+    { id: 5, title: "Event 5", date: "2023-05-01" },
+    { id: 6, title: "Event 6", date: "2023-06-01" },
+    { id: 7, title: "Event 7", date: "2023-07-01" },
+    { id: 8, title: "Event 8", date: "2023-08-01" },
+    { id: 9, title: "Event 9", date: "2023-09-01" },
+    { id: 10, title: "Event 10", date: "2023-10-01" },
+    { id: 11, title: "Event 11", date: "2023-11-01" },
+    { id: 12, title: "Event 12", date: "2023-12-01" },
+    { id: 13, title: "Event 13", date: "2024-01-01" },
+    { id: 14, title: "Event 14", date: "2024-02-01" },
+    { id: 15, title: "Event 15", date: "2024-03-01" },
+    { id: 16, title: "Event 16", date: "2024-04-01" },
+    { id: 17, title: "Event 17", date: "2024-05-01" },
+    { id: 18, title: "Event 18", date: "2024-06-01" },
+    { id: 19, title: "Event 19", date: "2024-07-01" },
+    { id: 20, title: "Event 20", date: "2024-08-01" },
+  ];
 
   return (
-    <>
-      <div>
-        <h3 className="my-heading">Timeline</h3>
-      </div>
-      <div className="container">
-        <ul className="change" style={{ marginLeft: `${marginFirst}px` }}>
-          <li className="detail">
-            <a
-              href="/#one"
-              className={selectedIndex === 0 ? "selected" : ""}
-              style={{ paddingLeft: "170px" }}
-              onClick={(event) => handleItemClick(0, event)}
-            >
-              Cundeptrai1
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#two"
-              className={selectedIndex === 1 ? "selected" : ""}
-              onClick={(event) => handleItemClick(1, event)}
-            >
-              Cundeptrai2
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 2 ? "selected" : ""}
-              onClick={(event) => handleItemClick(2, event)}
-            >
-              Cundeptrai3
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 3 ? "selected" : ""}
-              onClick={(event) => handleItemClick(3, event)}
-            >
-              Cundeptrai4
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 4 ? "selected" : ""}
-              onClick={(event) => handleItemClick(4, event)}
-            >
-              Cundeptrai5
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 5 ? "selected" : ""}
-              onClick={(event) => handleItemClick(5, event)}
-            >
-              Cundeptrai6
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 6 ? "selected" : ""}
-              onClick={(event) => handleItemClick(6, event)}
-            >
-              Cundeptrai7
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 7 ? "selected" : ""}
-              onClick={(event) => handleItemClick(7, event)}
-            >
-              Cundeptrai8
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 8 ? "selected" : ""}
-              onClick={(event) => handleItemClick(8, event)}
-            >
-              Cundeptrai9
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 9 ? "selected" : ""}
-              onClick={(event) => handleItemClick(9, event)}
-            >
-              Cundeptrai10
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 10 ? "selected" : ""}
-              onClick={(event) => handleItemClick(10, event)}
-            >
-              Cundeptrai11
-            </a>
-          </li>
-          <li className="detail">
-            <a
-              href="/#"
-              className={selectedIndex === 11 ? "selected" : ""}
-              onClick={(event) => handleItemClick(11, event)}
-            >
-              Cundeptrai12
-            </a>
-          </li>
-
-          {/* Rest of the list items */}
-        </ul>
-      </div>
-    </>
+    <div
+      className="timeline-body"
+      style={{ height: "400px", overflowY: "auto", width: "300px" }}
+    >
+      <Timeline mode="left">
+        {events.map((event) => (
+          <Timeline.Item key={event.id} label={event.date}>
+            {event.title}
+          </Timeline.Item>
+        ))}
+      </Timeline>
+    </div>
   );
 };
 
-export default Timeline;
+export default EventTimeline;

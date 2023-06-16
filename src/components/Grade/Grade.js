@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { AudioOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
+import "./Grade.css";
 const { Search } = Input;
 function getItem(label, key, children, type) {
   return {
@@ -116,15 +117,6 @@ const Grade = () => {
   return (
     <>
       <div className="grade">
-        <Space direction="vertical">
-          <Search
-            placeholder="input search text"
-            allowClear
-            enterButton="Search"
-            size="large"
-            onSearch={onSearch}
-          />
-        </Space>
         <Menu
           mode="inline"
           openKeys={openKeys}

@@ -1,7 +1,7 @@
 .footer{
-    background-color: #c7c7c7;
-    text-align: center;
-    color: #1f2125;
+    background-color: #353535;
+    /* text-align: center; */
+    color: white;
     padding-top: 10px;
     /* margin-top: 20px; */
     
@@ -20,7 +20,24 @@ a:visited {
     width: 25%;
 }
 
+.logo-footer p{
+    /* justify-content: left; */
+}
+
 .menu-footer{
     text-decoration: none;
-    color: #353535;
+    color: white;
+}
+
+.contact-footer{
+    text-decoration: none;
+    color: white;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.end-footer{
+    text-decoration: none;
+    color: white;
 }
