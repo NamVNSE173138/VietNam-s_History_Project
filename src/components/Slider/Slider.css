@@ -54,6 +54,9 @@
       height: 200px;
       width: 100%;
      }
+     .carouselCaption{
+      display: none;
+     }
   }
   
   @media (max-width: 576px) {
@@ -63,5 +66,8 @@
     .carousel-item img{
       height: 150px;
       width: 100%;
+     }
+     .carouselCaption{
+      display: none;
      }
   }

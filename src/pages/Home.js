@@ -7,15 +7,23 @@ import BasicMap from "../components/BasicMap/BasicMap";
 import Footer from "../components/Footer/Footer";
 import NewPost from "../components/New Posts/NewPost";
 import PopEvent from "../components/Popular Event/PopularEvent";
+import { Col, Row } from "antd";
 
 const Home = () => {
   return (
     <>
       <Header />
       <Slider />
-      <Timeline />
-      <BasicMap />
-      {/* <PopEvent /> */}
+      <Row>
+        <Col span={12}>
+          <Timeline />
+        </Col>
+        <Col span={12}>
+          <BasicMap />
+        </Col>
+      </Row>
+
+      <PopEvent />
       {/* <NewPost /> */}
       <Footer />
     </>

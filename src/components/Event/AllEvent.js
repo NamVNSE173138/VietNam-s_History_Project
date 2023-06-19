@@ -46,7 +46,12 @@ const AllEvent = () => (
           >
             <List.Item.Meta
               // avatar={<Avatar src={item.avatar} />}
-              title={<a href={item.href}>{item.title}</a>}
+              title={
+                <a href={item.href} style={{ textDecoration: "none" }}>
+                  {item.title}
+                </a>
+              }
+
               // description={item.description}
             />
             {item.content}
