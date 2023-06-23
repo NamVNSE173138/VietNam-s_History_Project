@@ -1,0 +1,50 @@
+h1{
+    text-align: center;
+    color: #007bff;
+    padding-top: 112px;
+    padding-bottom: 20px;
+    /* margin-top: 72px; */
+  }
+  button.ant-btn.css-dev-only-do-not-override-k7429z.ant-btn-primary {
+    margin-right: 15px;
+  }
+  
+  :where(.css-dev-only-do-not-override-k7429z).ant-form-item .ant-form-item-feedback-icon{
+    margin-bottom: 9px;
+  }
+  
+  .ant-space.css-dev-only-do-not-override-k7429z.ant-space-vertical {
+    margin: 15px 0 20px 30px;
+    /* float: right; */
+  }
+  
+  .ant-row.css-dev-only-do-not-override-k7429z {
+    /* margin-top: 72px; */
+  }
+  .ant-list.ant-list-vertical.ant-list-lg.ant-list-split.ant-list-something-after-last-item.css-dev-only-do-not-override-k7429z {
+    margin-top: 82px;
+  }
+  
+  .ant-form {
+  
+    margin: 0 auto;
+  }
+  
+  
+  .ant-col {
+    margin: 0 auto;
+  }
+  
+  .login-form {
+    max-width: 300px;
+  }
+   .login-form-forgot {
+    float: right;
+  }
+   .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+   .login-form-button {
+    width: 100%;
+  }
+  
