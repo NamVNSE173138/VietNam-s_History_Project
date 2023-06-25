@@ -1,0 +1,73 @@
+.carousel {
+    height: 561px;
+      background: #d1cbcb;
+      padding: 0 10px 10px 10px;
+      background-color: #000000;
+      margin-top: 72px;
+      height: 561px;
+   }
+   .carousel-control-next{
+    padding-bottom: 50px;
+   }
+   
+   .carousel-item img{
+    height: 561px;
+    width: 100%;
+   }
+
+   .carouselCaption {
+    position: absolute;
+    bottom: 60%;
+    left: 220px;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: #fff;
+    margin-top: auto;
+  margin-bottom: auto;
+}
+
+.carouselCaption h3{
+  font-size: 50px;
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+}
+.carouselCaption p{
+  font-style: italic;
+}
+
+.carousel-btn{
+  background: #ffffff;
+  color: #000000;
+}
+.carousel-btn:hover{
+  background: #000000;
+}
+
+.shadow-text{
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+}
+
+   @media (max-width: 768px) {
+    .carousel {
+      height: 200px; /* Chiều cao cho kích thước màn hình nhỏ hơn hoặc bằng 768px */
+    }
+    .carousel-item img{
+      height: 200px;
+      width: 100%;
+     }
+     .carouselCaption{
+      display: none;
+     }
+  }
+  
+  @media (max-width: 576px) {
+    .carousel {
+      height: 150px; /* Chiều cao cho kích thước màn hình nhỏ hơn hoặc bằng 576px */
+    }
+    .carousel-item img{
+      height: 150px;
+      width: 100%;
+     }
+     .carouselCaption{
+      display: none;
+     }
+  }

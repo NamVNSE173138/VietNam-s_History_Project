@@ -1,0 +1,8 @@
+.leaflet-tile-container{
+    width: 100%;
+   }
+  
+  .leaflet-container{
+    height: 700px;
+    margin: 30px ;
+  }

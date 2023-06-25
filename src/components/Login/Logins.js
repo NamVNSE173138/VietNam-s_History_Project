@@ -1,0 +1,82 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input, Select, Row, Col } from "antd";
+import { Link } from "react-router-dom";
+import "./Login.css";
+const login = () => {
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
+  return (
+    <>
+      {/* <Row> */}
+      {/* <Col span={12}> */}
+      <h1>Login</h1>
+      <Form
+        name="normal_login"
+        className="login-form"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+      >
+        <Form.Item label="Select">
+          <Select>
+            <Select.Option value="Mentor">Mentor</Select.Option>
+            <Select.Option value="Member">Member</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Username!",
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Password!",
+            },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+          <Link className="login-form-forgot" to={"/forgot"}>
+            Forgot Password
+          </Link>
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Log in
+          </Button>
+          Or <Link to={"/signup"}>Sign up</Link>
+        </Form.Item>
+      </Form>
+      {/* </Col> */}
+      {/* </Row> */}
+    </>
+  );
+};
+export default login;
