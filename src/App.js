@@ -5,11 +5,11 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Team from "./scenes/team";
 import Contacts from "./scenes/contacts";
+import Events from "./scenes/events";
 import Form from "./scenes/form";
-import FAQ from "./scenes/faq";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
-import Calendar from "./scenes/calendar/calendar";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -27,9 +27,8 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
+              <Route path="/events" element={<Events />} />
               <Route path="/form" element={<Form />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<Calendar />} />
             </Routes>
           </main>
         </div>
