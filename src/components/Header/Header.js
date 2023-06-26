@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../Header/351046179_6398133100232437_8474283944489690617_n (1).png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { Input } from "antd";
@@ -16,6 +16,12 @@ const Header = () => {
     color: "white",
     fontSize: "15px",
     fontFamily: "Open Sans",
+  };
+
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `searchlist`;
+    navigate(path);
   };
 
   return (
@@ -54,7 +60,7 @@ const Header = () => {
             allowClear
             enterButton="Search"
             size="large"
-            onSearch={onSearch}
+            onSearch={routeChange}
           />
         </ul>
         <button className="menu-icon" onClick={() => setMobile(!Mobile)}>

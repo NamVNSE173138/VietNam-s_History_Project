@@ -21,6 +21,9 @@ import ForgotPass from "./pages/ForgotPass";
 import ChangePass from "./pages/ChangePass";
 import Timeline from "./pages/Timeline";
 import AllEvent from "./pages/Event/AllEvent";
+import Profile from "./pages/Profile";
+import SearchList from "./pages/Event/Search";
+import CreatePost from "./pages/CreatePost";
 // import Sign-In from './pages/Sign-in';
 function App() {
   return (
@@ -30,12 +33,15 @@ function App() {
       <Route path="/eventDetail" element={<EventDetail />} />
       <Route path="/events/allEvents" element={<AllEvent />} />
       <Route path="/posts" element={<Posts />} />
+      <Route path="/events/createPost" element={<CreatePost />} />
       <Route path="/Grade" element={<Grades />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot" element={<ForgotPass />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/changePass" element={<ChangePass />} />
       <Route path="/timeline" element={<Timeline />} />
+      <Route path="/searchList" element={<SearchList />} />
     </Routes>
   );
 }

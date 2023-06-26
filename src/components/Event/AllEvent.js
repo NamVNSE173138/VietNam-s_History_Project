@@ -1,21 +1,29 @@
-import { Button, List, Space } from "antd";
+import { List } from "antd";
+import axios from "axios";
 import "./Event.css";
-import React from "react";
-import { Link } from "react-router-dom";
-const data = Array.from({
-  length: 23,
-}).map((_, i) => ({
-  href: "",
-  title: `demo ${i}`,
-  // avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
-  description:
-    "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-  content:
-    "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-}));
 
-const AllEvent = () => (
-  <>
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+const AllEvent = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
+        );
+        setEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
     <div className="all-event">
       <List
         itemLayout="vertical"
@@ -24,41 +32,36 @@ const AllEvent = () => (
           onChange: (page) => {
             console.log(page);
           },
-          pageSize: 5,
+          pageSize: 6,
         }}
-        dataSource={data}
-        renderItem={(item) => (
+        dataSource={events}
+        renderItem={(event) => (
           <List.Item
-            key={item.title}
-            actions={[
-              <Link to="/eventDetail">
-                <Button size="large">Read more</Button>,
-              </Link>,
-            ]}
-            extra={
-              <img
-                width={272}
-                alt="logo"
-                src="https://i.pinimg.com/564x/8e/81/53/8e8153f8bd9eecfc9939f49202742464.jpg"
-                style={{ height: "200px" }}
-              />
-            }
+            key={event.eventID}
+            extra={<img width={272} alt="logo" src={event.image} />}
           >
             <List.Item.Meta
-              // avatar={<Avatar src={item.avatar} />}
               title={
-                <a href={item.href} style={{ textDecoration: "none" }}>
-                  {item.title}
+                <a href={event.href}>
+                  <Link to={"/EventDetail"}>{event.eventName}</Link>
                 </a>
               }
-
-              // description={item.description}
+              description={event.timeline}
             />
-            {item.content}
           </List.Item>
         )}
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 2,
+          md: 2,
+          lg: 2,
+          xl: 2,
+          xxl: 2,
+        }}
       />
     </div>
-  </>
-);
+  );
+};
+
 export default AllEvent;

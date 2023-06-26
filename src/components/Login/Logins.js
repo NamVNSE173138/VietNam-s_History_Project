@@ -1,15 +1,47 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Select, Row, Col } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./Login.css";
-const login = () => {
+
+const Login = () => {
+  const navigate = useNavigate();
+
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    const { username, password, role } = values;
+
+    fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user")
+      .then((response) => response.json())
+      .then((data) => {
+        const user = data.find(
+          (user) =>
+            user.userName === username &&
+            user.password === password &&
+            (user.role === role || user.role === "admin")
+        );
+
+        if (user) {
+          if (user.role === "admin") {
+            navigate("/admin"); // Redirect to "/admin" route for admin user
+          } else {
+            // Handle successful login for member or mentor
+            localStorage.setItem("userName", user.userName);
+            localStorage.setItem("password", user.password);
+            console.log("Login successful");
+            // navigate("/");
+          }
+        } else {
+          // Handle wrong role or incorrect credentials
+          console.log("Wrong role or incorrect credentials");
+        }
+      })
+      .catch((error) => {
+        // Handle API fetch error
+        console.log("API fetch error:", error);
+      });
   };
+
   return (
     <>
-      {/* <Row> */}
-      {/* <Col span={12}> */}
       <h1>Login</h1>
       <Form
         name="normal_login"
@@ -19,7 +51,7 @@ const login = () => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item label="Select">
+        <Form.Item label="Select" name="role">
           <Select>
             <Select.Option value="Mentor">Mentor</Select.Option>
             <Select.Option value="Member">Member</Select.Option>
@@ -74,9 +106,8 @@ const login = () => {
           Or <Link to={"/signup"}>Sign up</Link>
         </Form.Item>
       </Form>
-      {/* </Col> */}
-      {/* </Row> */}
     </>
   );
 };
-export default login;
+
+export default Login;

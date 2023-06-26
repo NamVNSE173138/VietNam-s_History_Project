@@ -39,6 +39,9 @@
     right: 0;
  }
 
+
+
+
  @media screen and (max-width: 850px){
     .destination{
         margin: 4rem 2rem;
@@ -60,4 +63,6 @@
     .image-pop img{
         height: 250px;
     }
+
+    
  }
