@@ -95,6 +95,7 @@
 
 import { Avatar, List, Space } from "antd";
 import axios from 'axios';
+import { Link } from "react-router-dom"; // Import the Link component from react-router-dom
 import {
   StarOutlined,
   LikeOutlined,
@@ -119,12 +120,13 @@ const AllEvent = () => {
 
     fetchData();
   }, []);
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
+
+  const IconText = ({ icon, text }) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
 
   return (
     <List
@@ -158,7 +160,7 @@ const IconText = ({ icon, text }) => (
           }
         >
           <List.Item.Meta
-            title={<a href={event.href}>{event.eventName}</a>}
+            title={<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>} // Wrap the event name in the Link component with the event ID in the URL
             description={event.description}
           />
         </List.Item>
