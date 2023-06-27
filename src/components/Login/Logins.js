@@ -27,7 +27,7 @@ const Login = () => {
             localStorage.setItem("userName", user.userName);
             localStorage.setItem("password", user.password);
             console.log("Login successful");
-            // navigate("/");
+            navigate("/");
           }
         } else {
           // Handle wrong role or incorrect credentials

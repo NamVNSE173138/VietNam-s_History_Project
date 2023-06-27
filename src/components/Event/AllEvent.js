@@ -42,10 +42,10 @@ const AllEvent = () => {
           >
             <List.Item.Meta
               title={
-                <a href={event.href}>
-                  <Link to={"/EventDetail"}>{event.eventName}</Link>
-                </a>
-              }
+                <Link to={`/events/eventDetail/${event.eventID}`}>
+                  {event.eventName}
+                </Link>
+              } // Wrap the event name in the Link component with the event ID in the URL
               description={event.timeline}
             />
           </List.Item>

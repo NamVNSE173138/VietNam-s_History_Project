@@ -3,12 +3,15 @@ import logo from "../Header/351046179_6398133100232437_8474283944489690617_n (1)
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
-import { Input } from "antd";
+import { Button, Input } from "antd";
 
 const Header = () => {
   const { Search } = Input;
-  const onSearch = (value: string) => console.log(value);
+  const onSearch = (value) => console.log(value);
   const [Mobile, setMobile] = useState(false);
+  const isLogin = localStorage.getItem("userName");
+
+  console.log(isLogin);
 
   const linkStyles = {
     textDecoration: "none",
@@ -20,8 +23,14 @@ const Header = () => {
 
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = `searchlist`;
+    let path = `searchList`;
     navigate(path);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("password");
+    navigate("/login");
   };
 
   return (
@@ -49,12 +58,26 @@ const Header = () => {
           <Link to={"/grade"} style={linkStyles}>
             <li className="header">GRADE</li>
           </Link>
-          <Link to={"/login"} style={linkStyles}>
-            <li className="header">LOGIN</li>
-          </Link>
-          <Link to={"/signup"} style={linkStyles}>
-            <li className="header">SIGN UP</li>
-          </Link>
+          {!isLogin ? (
+            <>
+              <Link to={"/login"} style={linkStyles}>
+                <li className="header">LOGIN</li>
+              </Link>
+              <Link to={"/signup"} style={linkStyles}>
+                <li className="header">SIGN UP</li>
+              </Link>
+            </>
+          ) : (
+            <>
+              <li className="header" style={linkStyles} onClick={handleLogout}>
+                LOGOUT
+              </li>
+              <Link to={"/signup"} style={linkStyles}>
+                <li className="header">PROFILE</li>
+              </Link>
+            </>
+          )}
+
           <Search
             placeholder="input search text"
             allowClear
