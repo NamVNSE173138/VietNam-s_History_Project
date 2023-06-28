@@ -104,7 +104,7 @@ const Post = () => {
           <InputGroup className="my-3">
             <Form.Control
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search Event"
+              placeholder="Search Post"
             />
           </InputGroup>
         </Form>
