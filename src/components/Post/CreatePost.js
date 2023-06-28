@@ -16,9 +16,12 @@ import {
   Modal,
 } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+
 const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
@@ -26,29 +29,80 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
+
 const FormDisabledDemo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal2Open, setModal2Open] = useState(false);
+  const navigate = useNavigate();
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  // console.log(localStorage.getItem(username));
+  const onFinish = async (values) => {
+    const {
+      authorID,
+      like,
+      description,
+      reportCounter,
+      commentCounter,
+      commentID,
+      createAt,
+      id,
+    } = values;
 
-  // const [componentDisabled, setComponentDisabled] = useState(true);
+    const newPost = {
+      authorID: localStorage.getItem("username"),
+      like: 0,
+      description: TextArea,
+      reportCounter: 0,
+      commentCounter: 0,
+      commentID: null,
+      createAt: 123123123,
+      id: 0,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",
+        newPost
+      );
+      console.log("Post created successfully:", response.data);
+      Modal.success({
+        title: "User created successfully",
+        // content: `The user "${username}" was created successfully!`,
+        onOk: () => {
+          navigate("/post");
+        },
+      });
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
+  };
+
   return (
     <>
       <div className="post">
-        {/* <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        >
-          Form disabled
-        </Checkbox> */}
         <Form
           labelCol={{
             span: 4,
@@ -57,116 +111,49 @@ const FormDisabledDemo = () => {
             span: 14,
           }}
           layout="horizontal"
-          // disabled={componentDisabled}
           style={{
             maxWidth: 600,
           }}
+          onFinish={onFinish}
         >
-          {/* <Form.Item label="Checkbox" name="disabled" valuePropName="checked">
-            <Checkbox>Checkbox</Checkbox>
-          </Form.Item> */}
-          {/* <Form.Item label="Radio">
-            <Radio.Group>
-              <Radio value="apple"> Apple </Radio>
-              <Radio value="pear"> Pear </Radio>
-            </Radio.Group>
-          </Form.Item> */}
-          <Form.Item label="Title of post">
-            <Input />
-          </Form.Item>
-          {/* <Form.Item label="Select">
-            <Select>
-              <Select.Option value="demo">Demo</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="TreeSelect">
-            <TreeSelect
-              treeData={[
-                {
-                  title: "Light",
-                  value: "light",
-                  children: [
-                    {
-                      title: "Bamboo",
-                      value: "bamboo",
-                    },
-                  ],
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label="Cascader">
-            <Cascader
-              options={[
-                {
-                  value: "zhejiang",
-                  label: "Zhejiang",
-                  children: [
-                    {
-                      value: "hangzhou",
-                      label: "Hangzhou",
-                    },
-                  ],
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label="DatePicker">
-            <DatePicker />
-          </Form.Item>
-          <Form.Item label="RangePicker">
-            <RangePicker />
-          </Form.Item>
-          <Form.Item label="InputNumber">
-            <InputNumber />
-          </Form.Item> */}
-          <Form.Item label="TextArea">
+          <Form.Item label="TextArea" name="textarea">
             <TextArea rows={4} />
           </Form.Item>
-          {/* <Form.Item label="Switch" valuePropName="checked">
-            <Switch />
-          </Form.Item> */}
+
           <Form.Item
-            label="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(new Error("Please accept the agreement")),
+              },
+            ]}
+            {...tailFormItemLayout}
           >
-            <Upload action="/upload.do" listType="picture-card">
-              <div>
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </div>
-            </Upload>
+            <Checkbox>
+              I have read the{" "}
+              <Link onClick={() => setModal2Open(true)}>agreement</Link>
+            </Checkbox>
           </Form.Item>
-          {/* <Form.Item label="Button">
-            <Button>Button</Button>
-          </Form.Item>
-          <Form.Item label="Slider">
-            <Slider />
-          </Form.Item> */}
-          <Checkbox>
-            I have read the{" "}
-            <Link onClick={() => setModal2Open(true)}>agreement</Link>
-          </Checkbox>
+
           <Modal
-            title="Post đồ rứa"
+            title="User Agreement"
             visible={modal2Open}
             onOk={() => setModal2Open(false)}
             onCancel={() => setModal2Open(false)}
           >
-            <p>Quy định khi post.</p>
-            <p>Quy định post gì đó</p>
+            <p>This is the user agreement.</p>
+            <p>
+              By clicking "I have read the agreement", you agree to the terms.
+            </p>
           </Modal>
 
-          <Form.Item>
+          <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
-              Create
+              Register
             </Button>
           </Form.Item>
         </Form>
@@ -174,4 +161,5 @@ const FormDisabledDemo = () => {
     </>
   );
 };
+
 export default FormDisabledDemo;

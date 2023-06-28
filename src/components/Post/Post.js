@@ -1,7 +1,14 @@
 import { Avatar, List, Space, Button, Modal } from "antd";
-import { LikeOutlined, MessageOutlined, FlagOutlined } from "@ant-design/icons";
+import {
+  LikeOutlined,
+  MessageOutlined,
+  FlagOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Post.css";
+import { Link } from "react-router-dom";
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -70,78 +77,85 @@ const Post = () => {
   console.log(likeState, posts);
 
   return (
-    <List
-      itemLayout="vertical"
-      size="large"
-      pagination={{
-        onChange: (page) => {
-          console.log(page);
-        },
-        pageSize: 10,
-      }}
-      dataSource={posts}
-      renderItem={(post) => (
-        <List.Item
-          key={post.id}
-          actions={[
-            <Button
-              type={post.isLiked ? "primary" : "default"}
-              onClick={() => handleLike(post)}
-            >
-              <IconText
-                icon={LikeOutlined}
-                text={post.isLiked ? post.like + 1 : post.like}
-                key="list-vertical-like-o"
-              />
-            </Button>,
+    <>
+      <div className="post">
+        <Link to={"/events/createPost"}>
+          <Button icon={<PlusOutlined />}>New Post</Button>
+        </Link>
+        <List
+          itemLayout="vertical"
+          size="large"
+          pagination={{
+            onChange: (page) => {
+              console.log(page);
+            },
+            pageSize: 10,
+          }}
+          dataSource={posts}
+          renderItem={(post) => (
+            <List.Item
+              key={post.id}
+              actions={[
+                <Button
+                  type={post.isLiked ? "primary" : "default"}
+                  onClick={() => handleLike(post)}
+                >
+                  <IconText
+                    icon={LikeOutlined}
+                    text={post.isLiked ? post.like + 1 : post.like}
+                    key="list-vertical-like-o"
+                  />
+                </Button>,
 
-            <Button type="default" onClick={showModal}>
-              <IconText
-                icon={MessageOutlined}
-                text={post.commentCounter}
-                key="list-vertical-message"
-              />
-            </Button>,
-            <Modal
-              title="Basic Modal"
-              centered
-              open={isModalOpen}
-              footer=""
-              onCancel={handleCancel}
-            >
-              Comments being shown here...
-            </Modal>,
+                <Button type="default" onClick={showModal}>
+                  <IconText
+                    icon={MessageOutlined}
+                    text={post.commentCounter}
+                    key="list-vertical-message"
+                  />
+                </Button>,
+                <Modal
+                  title="Basic Modal"
+                  centered
+                  open={isModalOpen}
+                  footer=""
+                  onCancel={handleCancel}
+                >
+                  Comments being shown here...
+                </Modal>,
 
-            <IconText
-              icon={FlagOutlined}
-              text={post.reportCounter}
-              key="list-vertical-report"
-            />,
-          ]}
-          extra={
-            <img
-              width={272}
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
-          }
-        >
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
-            }
-            title={post.name}
-            description={
-              <p>
-                <i>post by </i>
-                <a href="">{post.authorName}</a>
-              </p>
-            }
-          />
-          {post.description}
-        </List.Item>
-      )}
-    />
+                <IconText
+                  icon={FlagOutlined}
+                  text={post.reportCounter}
+                  key="list-vertical-report"
+                />,
+              ]}
+              extra={
+                <img
+                  width={272}
+                  alt="logo"
+                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                />
+              }
+            >
+              <List.Item.Meta
+                avatar={
+                  <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
+                }
+                title={post.name}
+                description={
+                  <p>
+                    <i>post by </i>
+                    <a href="">{post.authorID}</a>
+                  </p>
+                }
+              />
+              {post.description}
+            </List.Item>
+          )}
+        />
+      </div>
+    </>
   );
 };
 export default Post;

@@ -78,13 +78,13 @@ const Header = () => {
             </>
           )}
 
-          <Search
+          {/* <Search
             placeholder="input search text"
             allowClear
             enterButton="Search"
             size="large"
             onSearch={routeChange}
-          />
+          /> */}
         </ul>
         <button className="menu-icon" onClick={() => setMobile(!Mobile)}>
           {Mobile ? <CloseOutlined /> : <MenuOutlined />}
