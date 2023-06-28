@@ -83,12 +83,27 @@
 
 
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select, Modal } from "antd";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const session = JSON.parse(sessionStorage.getItem("session"));
+    if (session) {
+      Modal.warning({
+        title: "Already Logged In",
+        content: "You have already logged in. Please log out to continue.",
+        okText: "OK",
+        onOk: () => {
+          navigate("/");
+        },
+      });
+    }
+  }, [navigate]);
 
   const onFinish = (values) => {
     const { username, password, role } = values;
@@ -111,6 +126,11 @@ const Login = () => {
             console.log("Login successful");
             navigate("/"); // Redirect to "/events" route for non-admin users
           }
+          const session = {
+            username: user.userName,
+            role: user.role,
+          };
+          sessionStorage.setItem("session", JSON.stringify(session));
         } else {
           // Handle wrong role or incorrect credentials
           console.log("Wrong role or incorrect credentials");
