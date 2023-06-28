@@ -9,6 +9,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Post.css";
 import { Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -18,6 +20,8 @@ const IconText = ({ icon, text }) => (
 );
 
 const Post = () => {
+
+  const [search, setSearch] = useState("");
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -79,6 +83,15 @@ const Post = () => {
   return (
     <>
       <div className="post">
+      <h1 className="text-center mt-4">Post List</h1>
+        <Form>
+          <InputGroup className="my-3">
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search Post"
+            />
+          </InputGroup>
+        </Form>
         <Link to={"/events/createPost"}>
           <Button icon={<PlusOutlined />}>New Post</Button>
         </Link>
@@ -91,7 +104,11 @@ const Post = () => {
             },
             pageSize: 10,
           }}
-          dataSource={posts}
+          dataSource={posts.filter((post) => {
+            return search.toLowerCase() === ""
+              ? post
+              : post.description.toLowerCase().includes(search);
+          })}
           renderItem={(post) => (
             <List.Item
               key={post.id}

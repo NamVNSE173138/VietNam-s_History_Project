@@ -1,11 +1,16 @@
 import { List } from "antd";
 import axios from "axios";
 import "./Event.css";
-
+import { Form } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+// import Search from "antd/es/transfer/search";
+// import SearchList from "../Event/SearchList";
 
 const AllEvent = () => {
+
+  const [search, setSearch] = useState("");
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -24,7 +29,17 @@ const AllEvent = () => {
   }, []);
 
   return (
+
     <div className="all-event">
+      <Form>
+      <h1 className="text-center mt-4">Event List</h1>
+          <InputGroup className="my-3">
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search Event"
+            />
+          </InputGroup>
+        </Form>
       <List
         itemLayout="vertical"
         size="large"
@@ -34,7 +49,11 @@ const AllEvent = () => {
           },
           pageSize: 6,
         }}
-        dataSource={events}
+        dataSource={events.filter((event) => {
+          return search.toLowerCase() === ""
+            ? event
+            : event.eventName.toLowerCase().includes(search);
+        })}
         renderItem={(event) => (
           <List.Item
             key={event.eventID}

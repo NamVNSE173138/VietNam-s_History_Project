@@ -44,7 +44,7 @@ function SearchList() {
                 <th>Event Name</th>
                 <th>Location</th>
                 <th>Description</th>
-                <th>Timeline</th>
+                <th>Image</th>
               </tr>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@ function SearchList() {
                     <td>{event.eventName}</td>
                     <td>{event.location}</td>
                     <td>{event.description}</td>
-                    <td>{event.timeline}</td>
+                    <td><img src = {event.image}/></td>
                   </tr>
                 ))}
             </tbody>
