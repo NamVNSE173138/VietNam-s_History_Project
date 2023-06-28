@@ -1,16 +1,13 @@
-import { Avatar, List, Space, Button, Modal } from "antd";
-import {
-  LikeOutlined,
-  MessageOutlined,
-  FlagOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import "./Post.css";
+import { Avatar, List, Space, Button, message, Popconfirm } from "antd";
+import { LikeOutlined, MessageOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -39,32 +36,13 @@ const Post = () => {
     fetchData();
   }, []);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function showModal() {
-    setIsModalOpen(true);
-  }
-
-  function handleCancel() {
-    setIsModalOpen(false);
-  }
-
-  const [likeState, setLikeState] = useState(false);
-
-  // const postData = posts.map((post) => ({
-  //   id: post.id,
-  //   name: post.name,
-  //   authorName: post.authorID,
-  //   like: post.like,
-  //   description: post.description,
-  //   reportCounter: post.reportCounter,
-  //   commentCounter: post.commentCounter,
-  //   isLiked: false,
-  // }));
-
+  const [likeCounter, setLikeCounter] = useState(0);
   const handleLike = (post) => {
     setLikeState(post.id);
+    setLikeCounter(post.like);
   };
+
+  const [likeState, setLikeState] = useState(false);
 
   useEffect(() => {
     setPosts(
@@ -72,7 +50,6 @@ const Post = () => {
         if (item.id === likeState) {
           return { ...item, isLiked: !item.isLiked };
         }
-
         return item;
       })
     );
@@ -80,99 +57,133 @@ const Post = () => {
 
   console.log(likeState, posts);
 
+  const [isReported, setIsReported] = useState(false);
+
+  const confirm = (e) => {
+    console.log(e);
+    message.success('Thanks');
+    setIsReported(true);
+  };
+
+  const cancel = (e) => {
+    console.log(e);
+    message.error('Click on No');
+  };
+
+  const updatedPost = {};
+  
+  useEffect(() => {
+    axios.post("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post", updatedPost)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, posts.map((item) => {
+    return item;
+  }));
+
+  // useEffect(() => {
+  //   const postData = async () => {
+  //     try {
+  //       const response = await axios.post(
+  //         "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",updatedPost);
+  //       console.log("post updated", response.data);
+  //     } catch (error) {
+  //       console.error("Error updating post:", error);
+  //     }
+  //   }
+  //   postData();
+  // }, posts);
+
   return (
-    <>
-      <div className="post">
-      <h1 className="text-center mt-4">Post List</h1>
+    <div className="Post List">
+    <h1 className="text-center mt-4">Post List</h1>
         <Form>
           <InputGroup className="my-3">
             <Form.Control
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search Post"
+              placeholder="Search Event"
             />
           </InputGroup>
         </Form>
-        <Link to={"/events/createPost"}>
-          <Button icon={<PlusOutlined />}>New Post</Button>
-        </Link>
-        <List
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
-            pageSize: 10,
-          }}
-          dataSource={posts.filter((post) => {
-            return search.toLowerCase() === ""
-              ? post
-              : post.description.toLowerCase().includes(search);
-          })}
-          renderItem={(post) => (
-            <List.Item
-              key={post.id}
-              actions={[
-                <Button
-                  type={post.isLiked ? "primary" : "default"}
-                  onClick={() => handleLike(post)}
-                >
-                  <IconText
-                    icon={LikeOutlined}
-                    text={post.isLiked ? post.like + 1 : post.like}
-                    key="list-vertical-like-o"
-                  />
-                </Button>,
-
-                <Button type="default" onClick={showModal}>
-                  <IconText
-                    icon={MessageOutlined}
-                    text={post.commentCounter}
-                    key="list-vertical-message"
-                  />
-                </Button>,
-                <Modal
-                  title="Basic Modal"
-                  centered
-                  open={isModalOpen}
-                  footer=""
-                  onCancel={handleCancel}
-                >
-                  Comments being shown here...
-                </Modal>,
-
-                <IconText
-                  icon={FlagOutlined}
-                  text={post.reportCounter}
-                  key="list-vertical-report"
-                />,
-              ]}
-              extra={
-                <img
-                  width={272}
-                  alt="logo"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                />
-              }
+    <List
+      itemLayout="vertical"
+      size="large"
+      pagination={{
+        onChange: (page) => {
+          console.log(page);
+        },
+        pageSize: 10,
+      }}
+      dataSource={posts.filter((post) => {
+        return search.toLowerCase() === ""
+          ? post
+          : post.description.toLowerCase().includes(search);
+      })}
+      renderItem={(post) => (
+        <List.Item
+          key={post.id}
+          actions={[
+            <Button
+              type={post.isLiked ? "primary" : "default"}
+              onClick={() => handleLike(post)}
+              size="large"
             >
-              <List.Item.Meta
-                avatar={
-                  <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
-                }
-                title={post.name}
-                description={
-                  <p>
-                    <i>post by </i>
-                    <a href="">{post.authorID}</a>
-                  </p>
-                }
+              <IconText
+                icon={LikeOutlined}
+                text={post.isLiked ? post.like + 1 : post.like}
+                key="list-vertical-like-o"
               />
-              {post.description}
-            </List.Item>
-          )}
-        />
-      </div>
-    </>
+            </Button>,
+
+            <Button type="default" size="large">
+              <IconText
+                icon={MessageOutlined}
+                text={post.commentCounter}
+                key="list-vertical-message"
+              />
+            </Button>,
+
+            <Popconfirm
+              title="Report"
+              description="Are you sure to report this post ?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="default" size="large">
+                <IconText
+                  icon={ExclamationCircleOutlined}
+                  key="list-vertical-report"
+                />
+              </Button>
+            </Popconfirm>,
+          ]}
+          extra={
+            <img
+              width={272}
+              alt="logo"
+              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+            />
+          }
+        >
+          <List.Item.Meta
+            avatar={
+              <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
+            }
+            title={<a href="">{post.authorID}</a>}
+            description={
+              <p>posted on {post.createdAt}</p>
+            }
+          />
+          {post.description}
+        </List.Item>
+      )}
+    />
+    </div>
   );
 };
 export default Post;
