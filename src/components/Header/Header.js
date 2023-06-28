@@ -72,7 +72,7 @@ const Header = () => {
               <li className="header" style={linkStyles} onClick={handleLogout}>
                 LOGOUT
               </li>
-              <Link to={"/signup"} style={linkStyles}>
+              <Link to={"/profile"} style={linkStyles}>
                 <li className="header">PROFILE</li>
               </Link>
             </>

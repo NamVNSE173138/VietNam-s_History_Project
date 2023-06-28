@@ -27,6 +27,7 @@ const Login = () => {
             localStorage.setItem("userName", user.userName);
             localStorage.setItem("password", user.password);
             console.log("Login successful");
+            console.log(localStorage.getItem(user.username));
             navigate("/");
           }
         } else {
