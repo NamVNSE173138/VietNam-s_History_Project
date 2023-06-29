@@ -1,4 +1,4 @@
-.post {
+/* .post {
      padding-top: 90px;
   }
 
@@ -6,4 +6,59 @@
 .anticon {
   margin-bottom: 3px;
   vertical-align: middle;
+} */
+
+.Post {
+  margin: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: 4rem;
+}
+
+.my-3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.List {
+  background-color: #f0f2f5;
+  padding: 20px;
+}
+
+.List .ant-list-item {
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.List .ant-list-item-extra img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.List .ant-list-item-meta-title a {
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.List .ant-list-item-meta-description p {
+  color: #888;
+}
+
+.List .ant-btn-lg {
+  font-size: 14px;
+  height: auto;
+  padding: 8px 25px;
+}
+
+.List .anticon-like,
+.List .anticon-message,
+.List .anticon-exclamation-circle {
+  margin-right: 5px;
 }
