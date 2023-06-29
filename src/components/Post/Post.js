@@ -40,20 +40,32 @@ const Post = () => {
   const handleLike = (post) => {
     setLikeState(post.id);
     setLikeCounter(post.like);
+    setPosts((prevPosts) => 
+    prevPosts.map((item) => {
+      if(item.id === post.id){
+        return{
+          ...item,
+          isLiked: !item.isLiked,
+          like: item.isLiked ? item.like - 1 : item.like + 1,
+        };
+      }
+      return item;
+    })
+    );
   };
 
   const [likeState, setLikeState] = useState(false);
 
-  useEffect(() => {
-    setPosts(
-      posts.map((item) => {
-        if (item.id === likeState) {
-          return { ...item, isLiked: !item.isLiked };
-        }
-        return item;
-      })
-    );
-  }, [likeState]);
+  // useEffect(() => {
+  //   setPosts(
+  //     posts.map((item) => {
+  //       if (item.id === likeState) {
+  //         return { ...item, isLiked: !item.isLiked };
+  //       }
+  //       return item;
+  //     })
+  //   );
+  // }, [likeState]);
 
   console.log(likeState, posts);
 
@@ -133,7 +145,7 @@ const Post = () => {
             >
               <IconText
                 icon={LikeOutlined}
-                text={post.isLiked ? post.like + 1 : post.like}
+                text={post.isLiked ? post.like : post.like}
                 key="list-vertical-like-o"
               />
             </Button>,
