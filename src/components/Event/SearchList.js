@@ -3,6 +3,8 @@ import { Table } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
+import { List } from "antd";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
@@ -37,33 +39,44 @@ function SearchList() {
             />
           </InputGroup>
         </Form>
-        <div>
-          <Table>
-            <thead>
-              <tr>
-                <th>Event Name</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Timeline</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events
-                .filter((event) => {
-                  return search.toLowerCase() === ""
-                    ? event
-                    : event.eventName.toLowerCase().includes(search);
-                })
-                .map((event) => (
-                  <tr key={event.eventID}>
-                    <td>{event.eventName}</td>
-                    <td>{event.location}</td>
-                    <td>{event.description}</td>
-                    <td>{event.timeline}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+        <div className="all-event">
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 6,
+            }}
+            dataSource={events.filter((event) =>
+              event.eventName.toLowerCase().includes(search.toLowerCase())
+            )}
+            renderItem={(event) => (
+              <List.Item
+                key={event.eventID}
+                extra={<img width={272} alt="logo" src={event.image} />}
+              >
+                <List.Item.Meta
+                  title={
+                    <Link to={`/events/eventDetail/${event.eventID}`}>
+                      {event.eventName}
+                    </Link>
+                  } // Wrap the event name in the Link component with the event ID in the URL
+                  description={event.timeline}
+                />
+              </List.Item>
+            )}
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 2,
+              md: 2,
+              lg: 2,
+              xl: 2,
+              xxl: 2,
+            }}
+          />
         </div>
       </Container>
     </div>

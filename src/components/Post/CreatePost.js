@@ -1,4 +1,3 @@
-import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Cascader,
@@ -45,6 +44,8 @@ const tailFormItemLayout = {
 const FormDisabledDemo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal2Open, setModal2Open] = useState(false);
+  const [description, setDescription] = useState("");
+  const storedSession = JSON.parse(sessionStorage.getItem("session"));
   const navigate = useNavigate();
 
   const showModal = () => {
@@ -72,9 +73,9 @@ const FormDisabledDemo = () => {
     } = values;
 
     const newPost = {
-      authorID: localStorage.getItem("username"),
+      authorID: storedSession.username,
       like: 0,
-      description: TextArea,
+      description,
       reportCounter: 0,
       commentCounter: 0,
       commentID: null,
@@ -89,14 +90,14 @@ const FormDisabledDemo = () => {
       );
       console.log("Post created successfully:", response.data);
       Modal.success({
-        title: "User created successfully",
+        title: "Post created successfully",
         // content: `The user "${username}" was created successfully!`,
         onOk: () => {
-          navigate("/post");
+          navigate("/posts");
         },
       });
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error creating post:", error);
     }
   };
 
@@ -116,8 +117,8 @@ const FormDisabledDemo = () => {
           }}
           onFinish={onFinish}
         >
-          <Form.Item label="TextArea" name="textarea">
-            <TextArea rows={4} />
+          <Form.Item name="description" label="Descriptuon">
+            <Input.TextArea rows={4} />
           </Form.Item>
 
           <Form.Item
@@ -153,7 +154,7 @@ const FormDisabledDemo = () => {
 
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
-              Register
+              Create
             </Button>
           </Form.Item>
         </Form>

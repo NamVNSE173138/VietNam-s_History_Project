@@ -6,7 +6,6 @@ import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 
 const Header = () => {
-  const { Search } = Input;
   const onSearch = (value) => console.log(value);
   const [Mobile, setMobile] = useState(false);
   const isLogin = localStorage.getItem("userName");
@@ -77,14 +76,6 @@ const Header = () => {
               </Link>
             </>
           )}
-
-          {/* <Search
-            placeholder="input search text"
-            allowClear
-            enterButton="Search"
-            size="large"
-            onSearch={routeChange}
-          /> */}
         </ul>
         <button className="menu-icon" onClick={() => setMobile(!Mobile)}>
           {Mobile ? <CloseOutlined /> : <MenuOutlined />}

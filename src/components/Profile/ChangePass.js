@@ -64,7 +64,7 @@ const changePass = () => {
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue("password") === value) {
-                        // return Promise.resolve();
+                        return Promise.resolve();
                       }
                       return Promise.reject(
                         new Error(
