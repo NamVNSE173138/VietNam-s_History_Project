@@ -41,10 +41,12 @@ const EventDetail = () => {
 
   return (
     <div>
+      
       <h2>Event Detail</h2>
       <p>Event ID: {event.eventID}</p>
       <p>Event Name: {event.eventName}</p>
       <p>Description: {event.description}</p>
+      
       {/* Display other event details */}
     </div>
   );

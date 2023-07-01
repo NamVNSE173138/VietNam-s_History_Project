@@ -10,17 +10,18 @@ import {
   Select,
   Modal,
 } from "antd";
-import { Link } from "react-router-dom";
+
 import { useState } from "react";
 import axios from "axios";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 const { Option } = Select;
 const residences = [
   {
-    value: "mentor",
+    value: "Mentor",
     label: "Mentor",
   },
   {
-    value: "member",
+    value: "Member",
     label: "Member",
   },
 ];
@@ -79,7 +80,7 @@ const Signup = () => {
   const [form] = Form.useForm();
   const [usernameExists, setUsernameExists] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
-
+  const navigate = useNavigate();
 
 
   const onFinish = async (values) => {
@@ -104,6 +105,7 @@ const Signup = () => {
           title: 'Email already exists',
           content: `The email "${email}" already exists. Please choose a different email.`,
         });
+        
         return;
       }
     } catch (error) {
@@ -127,6 +129,7 @@ const Signup = () => {
         title: 'User created successfully',
         content: `The user "${username}" was created successfully!`,
       });
+      navigate('/login');
     } catch (error) {
       console.error('Error creating user:', error);
     }

@@ -87,6 +87,7 @@ import { Button, Checkbox, Form, Input, Select, Modal } from "antd";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import "./Login.css";
+import CreatePost from "../../pages/CreatePost";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -127,10 +128,12 @@ const Login = () => {
             navigate("/"); // Redirect to "/events" route for non-admin users
           }
           const session = {
+            id: user.id,
             username: user.userName,
             role: user.role,
           };
           sessionStorage.setItem("session", JSON.stringify(session));
+          <><changePass session={session} /><CreatePost session={session} /></>
         } else {
           // Handle wrong role or incorrect credentials
           console.log("Wrong role or incorrect credentials");
@@ -144,6 +147,7 @@ const Login = () => {
 
   return (
     <>
+    
       <h1>Login</h1>
       <Form
         name="normal_login"
