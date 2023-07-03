@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import logo from "../Header/351046179_6398133100232437_8474283944489690617_n (1).png";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import { MenuOutlined, CloseOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 
 const Header = () => {
+  const { Search } = Input;
   const onSearch = (value) => console.log(value);
   const [Mobile, setMobile] = useState(false);
-  const isLogin = localStorage.getItem("userName");
+  const isLogin = sessionStorage.getItem("session");
 
-  console.log(isLogin);
+  // console.log(isLogin);
 
   const linkStyles = {
     textDecoration: "none",
@@ -27,8 +28,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("password");
+    sessionStorage.removeItem("session");
     navigate("/login");
   };
 
@@ -72,10 +72,21 @@ const Header = () => {
                 LOGOUT
               </li>
               <Link to={"/profile"} style={linkStyles}>
-                <li className="header">PROFILE</li>
+                <li className="header">
+                  <UserOutlined size="large" />
+                  PROFILE
+                </li>
               </Link>
             </>
           )}
+
+          {/* <Search
+            placeholder="input search text"
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={routeChange}
+          /> */}
         </ul>
         <button className="menu-icon" onClick={() => setMobile(!Mobile)}>
           {Mobile ? <CloseOutlined /> : <MenuOutlined />}

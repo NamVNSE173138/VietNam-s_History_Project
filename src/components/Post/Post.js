@@ -59,8 +59,6 @@ const Post = () => {
     );
   }, [likeState]);
 
-  console.log(likeState, posts);
-
   const [isReported, setIsReported] = useState(false);
 
   const confirm = (e) => {
@@ -75,25 +73,6 @@ const Post = () => {
   };
 
   const updatedPost = {};
-
-  useEffect(
-    () => {
-      axios
-        .post(
-          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",
-          updatedPost
-        )
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    posts.map((item) => {
-      return item;
-    })
-  );
 
   return (
     <div className="post">
@@ -175,8 +154,8 @@ const Post = () => {
               avatar={
                 <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
               }
-              title={<a href="">{post.authorID}</a>}
-              description={<p>posted on {post.createdAt}</p>}
+              title={<p>{post.authorID}</p>}
+              description={<p>posted on {post.createAt}</p>}
             />
             {post.description}
           </List.Item>
@@ -185,4 +164,5 @@ const Post = () => {
     </div>
   );
 };
+
 export default Post;

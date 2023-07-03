@@ -1,32 +1,9 @@
-import {
-  Button,
-  Cascader,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
-  Upload,
-  Modal,
-} from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Button, Checkbox, Form, Input, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -39,6 +16,33 @@ const tailFormItemLayout = {
       offset: 8,
     },
   },
+};
+
+const formatDate = () => {
+  const locale = "en";
+  const today = new Date();
+
+  const day = today.toLocaleDateString(locale, { weekday: "long" });
+  const date = `${day}, ${today.getDate()} ${today.toLocaleDateString(locale, {
+    month: "long",
+  })}\n\n`;
+
+  const hour = today.getHours();
+  const wish = `Good ${
+    (hour < 12 && "Morning") || (hour < 17 && "Afternoon") || "Evening"
+  }, `;
+
+  const time = today.toLocaleTimeString(locale, {
+    hour: "numeric",
+    hour12: true,
+    minute: "numeric",
+  });
+
+  return {
+    date,
+    time,
+    wish,
+  };
 };
 
 const FormDisabledDemo = () => {
@@ -59,18 +63,9 @@ const FormDisabledDemo = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  // console.log(localStorage.getItem(username));
+
   const onFinish = async (values) => {
-    const {
-      authorID,
-      like,
-      description,
-      reportCounter,
-      commentCounter,
-      commentID,
-      createAt,
-      id,
-    } = values;
+    const { description } = values;
 
     const newPost = {
       authorID: storedSession.username,
@@ -79,7 +74,7 @@ const FormDisabledDemo = () => {
       reportCounter: 0,
       commentCounter: 0,
       commentID: null,
-      createAt: 123123123,
+      createAt: formatDate().date,
       id: 0,
     };
 
@@ -89,9 +84,9 @@ const FormDisabledDemo = () => {
         newPost
       );
       console.log("Post created successfully:", response.data);
+
       Modal.success({
         title: "Post created successfully",
-        // content: `The user "${username}" was created successfully!`,
         onOk: () => {
           navigate("/posts");
         },
@@ -117,8 +112,8 @@ const FormDisabledDemo = () => {
           }}
           onFinish={onFinish}
         >
-          <Form.Item name="description" label="Descriptuon">
-            <Input.TextArea rows={4} />
+          <Form.Item name="description" label="Description">
+            <TextArea rows={4} />
           </Form.Item>
 
           <Form.Item

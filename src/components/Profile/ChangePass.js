@@ -1,11 +1,76 @@
 import { MailOutlined, CodeOutlined, LockOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Row, Col } from "antd";
+import { Button, Form, Input, Row, Col, message, Modal } from "antd";
 import { Link } from "react-router-dom";
-import "./Profile.css";
-const changePass = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const ChangePass = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    const session = JSON.parse(sessionStorage.getItem("session"));
+    if (session) {
+      console.log(session);
+    }
+  }, []);
+
+  const handleModalOk = () => {
+    setIsModalVisible(false); // Hide the modal
   };
+
+  const ChangePassword = () => {
+    const navigate = useNavigate();
+
+    const onFinish = async (values) => {
+      const session = JSON.parse(sessionStorage.getItem("session"));
+      if (!session) {
+        message.error("User session not found");
+        return;
+      }
+
+      const { username, role } = session;
+
+      try {
+        const response = await axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user?userName=${username}&role=${role}`
+        );
+        const user = response.data[0];
+        if (!user) {
+          message.error("User not found");
+          return;
+        }
+
+        // Perform checks and update password
+        if (values.oldpassword !== user.password) {
+          message.error("Old password is incorrect");
+          return;
+        }
+
+        if (values.password !== values.confirm) {
+          message.error("New password and confirm password do not match");
+          return;
+        }
+
+        // Update the password
+        const updatedUser = { ...user, password: values.password };
+        await axios.put(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${user.id}`,
+          updatedUser
+        );
+
+        setIsModalVisible(true);
+        navigate("/profile");
+        // Display the modal
+      } catch (error) {
+        console.error("Error updating password:", error);
+        message.error("Failed to update password");
+      }
+    };
+
+    return onFinish;
+  };
+
   return (
     <>
       <div className="profile">
@@ -18,7 +83,7 @@ const changePass = () => {
               initialValues={{
                 remember: true,
               }}
-              onFinish={onFinish}
+              onFinish={ChangePassword()}
             >
               <Form.Item
                 name="oldpassword"
@@ -53,7 +118,6 @@ const changePass = () => {
 
               <Form.Item
                 name="confirm"
-                //   label="Confirm Password"
                 dependencies={["password"]}
                 hasFeedback
                 rules={[
@@ -92,7 +156,17 @@ const changePass = () => {
           </Col>
         </Row>
       </div>
+
+      <Modal
+        title="Password Updated"
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        // onCancel={handleModalOk}
+      >
+        <p>Password has been updated successfully.</p>
+      </Modal>
     </>
   );
 };
-export default changePass;
+
+export default ChangePass;

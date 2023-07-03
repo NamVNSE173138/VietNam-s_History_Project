@@ -1,10 +1,26 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select, Modal } from "antd";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import "./Login.css";
+import CreatePost from "../../pages/CreatePost";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const session = JSON.parse(sessionStorage.getItem("session"));
+    if (session) {
+      Modal.warning({
+        title: "Already Logged In",
+        content: "You have already logged in. Please log out to continue.",
+        okText: "OK",
+        onOk: () => {
+          navigate("/");
+        },
+      });
+    }
+  }, [navigate]);
 
   const onFinish = (values) => {
     const { username, password, role } = values;
@@ -24,12 +40,19 @@ const Login = () => {
             navigate("/admin"); // Redirect to "/admin" route for admin user
           } else {
             // Handle successful login for member or mentor
-            localStorage.setItem("userName", user.userName);
-            localStorage.setItem("password", user.password);
             console.log("Login successful");
-            console.log(localStorage.getItem(user.username));
-            navigate("/");
+            navigate("/"); // Redirect to "/events" route for non-admin users
           }
+          const session = {
+            id: user.id,
+            username: user.userName,
+            role: user.role,
+          };
+          sessionStorage.setItem("session", JSON.stringify(session));
+          <>
+            <changePass session={session} />
+            <CreatePost session={session} />
+          </>;
         } else {
           // Handle wrong role or incorrect credentials
           console.log("Wrong role or incorrect credentials");

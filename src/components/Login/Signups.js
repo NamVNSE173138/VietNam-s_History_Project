@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -11,12 +10,11 @@ import {
   Select,
   Modal,
 } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-// import { useHistory } from "react-router-dom";
+
+import { useState } from "react";
 import axios from "axios";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 const { Option } = Select;
-
 const residences = [
   {
     value: "Mentor",
@@ -27,7 +25,6 @@ const residences = [
     label: "Member",
   },
 ];
-
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -46,7 +43,6 @@ const formItemLayout = {
     },
   },
 };
-
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -59,13 +55,31 @@ const tailFormItemLayout = {
     },
   },
 };
+// const Signup = () => {
+//   const [form] = Form.useForm();
+//   const onFinish = (values) => {
+//     console.log("Received values of form: ", values);
+//   };
 
+//   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+//   const onWebsiteChange = (value) => {
+//     if (!value) {
+//       setAutoCompleteResult([]);
+//     } else {
+//       setAutoCompleteResult(
+//         [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
+//       );
+//     }
+//   };
+//   const websiteOptions = autoCompleteResult.map((website) => ({
+//     label: website,
+//     value: website,
+//   }));
+//   const [modal2Open, setModal2Open] = useState(false);
 const Signup = () => {
   const [form] = Form.useForm();
   const [usernameExists, setUsernameExists] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  const [modal2Open, setModal2Open] = useState(false);
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -95,6 +109,7 @@ const Signup = () => {
           title: "Email already exists",
           content: `The email "${email}" already exists. Please choose a different email.`,
         });
+
         return;
       }
     } catch (error) {
@@ -120,15 +135,14 @@ const Signup = () => {
       Modal.success({
         title: "User created successfully",
         content: `The user "${username}" was created successfully!`,
-        onOk: () => {
-          navigate("/login");
-        },
       });
+      navigate("/login");
     } catch (error) {
       console.error("Error creating user:", error);
     }
   };
 
+  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const onWebsiteChange = (value) => {
     if (!value) {
       setAutoCompleteResult([]);
@@ -138,11 +152,11 @@ const Signup = () => {
       );
     }
   };
-
   const websiteOptions = autoCompleteResult.map((website) => ({
     label: website,
     value: website,
   }));
+  const [modal2Open, setModal2Open] = useState(false);
 
   return (
     <>
@@ -221,7 +235,7 @@ const Signup = () => {
           rules={[
             {
               type: "email",
-              message: "The input is not a valid E-mail!",
+              message: "The input is not valid E-mail!",
             },
             {
               required: true,
@@ -234,7 +248,7 @@ const Signup = () => {
 
         <Form.Item
           name="role"
-          label="Sign up as"
+          label="Sign up as "
           rules={[
             {
               type: "array",
@@ -258,7 +272,7 @@ const Signup = () => {
 
         <Form.Item
           label="Captcha"
-          extra="We must make sure that you are a human."
+          extra="We must make sure that your are a human."
         >
           <Row gutter={8}>
             <Col span={12}>
@@ -268,7 +282,7 @@ const Signup = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input the captcha you received!",
+                    message: "Please input the captcha you got!",
                   },
                 ]}
               >
@@ -297,29 +311,54 @@ const Signup = () => {
           <Checkbox>
             I have read the{" "}
             <Link onClick={() => setModal2Open(true)}>agreement</Link>
+            <Modal
+              title=""
+              centered
+              open={modal2Open}
+              onOk={() => setModal2Open(false)}
+              onCancel={() => setModal2Open(false)}
+            >
+              <p>
+                1. Acceptance of Terms: Users are required to acknowledge that
+                they have read, understood, and agreed to the terms and
+                conditions of the website.
+              </p>
+              <p>
+                2. User Obligations: Users agree to use the website and its
+                content in a lawful manner, respect intellectual property
+                rights, and not engage in activities that may harm the website
+                or other users.
+              </p>
+              <p>
+                3. Privacy Policy: The agreement often includes information
+                about how the website collects, uses, and protects user data. It
+                outlines the types of information collected, such as personal
+                details or browsing habits, and how that information is handled.
+              </p>
+              <p>
+                4. Content Ownership: The agreement specifies the ownership
+                rights of the website's content, such as articles, images,
+                videos, or any other materials provided on the platform. It may
+                also outline the permitted use of the content by users.
+              </p>
+              <p>
+                5. Limitations of Liability: The agreement typically includes
+                disclaimers that limit the website's liability for any damages
+                or losses incurred by users. It may specify that the website
+                cannot guarantee the accuracy, completeness, or reliability of
+                the information provided.
+              </p>
+            </Modal>
           </Checkbox>
         </Form.Item>
-
-        <Modal
-          title="User Agreement"
-          visible={modal2Open}
-          onOk={() => setModal2Open(false)}
-          onCancel={() => setModal2Open(false)}
-        >
-          <p>This is the user agreement.</p>
-          <p>
-            By clicking "I have read the agreement", you agree to the terms.
-          </p>
-        </Modal>
-
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
             Register
           </Button>
+          Or <Link to={"/login"}>I already have an account</Link>
         </Form.Item>
       </Form>
     </>
   );
 };
-
 export default Signup;

@@ -11,10 +11,11 @@ const storedSession = JSON.parse(sessionStorage.getItem("session"));
 const App = () => (
   <>
     <div className="profile">
-      {/* <h4>Username: {user.username}</h4>
+      <h4>Username: {storedSession.username}</h4>
+
       <p>role: {storedSession.role}</p>
       <p>id: {storedSession.id}</p>
-      <p>email: {storedSession.email}</p> */}
+      <p>email: {storedSession.email}</p>
       <Link to={"/changePassUser"}>Change Password</Link>
     </div>
   </>
