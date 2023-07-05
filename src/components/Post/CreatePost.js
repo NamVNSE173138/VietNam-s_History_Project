@@ -163,3 +163,53 @@ const FormDisabledDemo = () => {
 };
 
 export default FormDisabledDemo;
+
+
+
+
+// import { useState, useContext } from "react";
+// import { Input, Button, message } from "antd";
+// import axios from "axios";
+// import EventContext from "../Event/EventContext";
+
+// const CreatePost = () => {
+//   const [description, setDescription] = useState("");
+//   const eventID = useContext(EventContext);
+
+//   const handleCreatePost = async () => {
+//     if (description.trim().length === 0) {
+//       message.error("Post description cannot be empty");
+//       return;
+//     }
+
+//     try {
+//       console.log("Received eventID:", eventID);
+//       const response = await axios.post("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post", {
+//         description,
+//         eventID,
+//       });
+//       console.log(response.data);
+//       message.success("Post successfully created");
+//       setDescription("");
+//     } catch (error) {
+//       console.error("Error creating post:", error);
+//       message.error("Failed to create post");
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <Input.TextArea
+//         rows={4}
+//         placeholder="Enter post description"
+//         value={description}
+//         onChange={(e) => setDescription(e.target.value)}
+//       />
+//       <Button type="primary" onClick={handleCreatePost}>
+//         Create Post
+//       </Button>
+//     </div>
+//   );
+// };
+
+// export default CreatePost;
