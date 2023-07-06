@@ -1,161 +1,74 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Modal } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { Input, Button, message } from "antd";
 import axios from "axios";
+import EventContext from "../Event/EventContext";
+import { useNavigate } from "react-router-dom";
 
-const { TextArea } = Input;
-
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
-
-const formatDate = () => {
-  const locale = "en";
-  const today = new Date();
-
-  const day = today.toLocaleDateString(locale, { weekday: "long" });
-  const date = `${day}, ${today.getDate()} ${today.toLocaleDateString(locale, {
-    month: "long",
-  })}\n\n`;
-
-  const hour = today.getHours();
-  const wish = `Good ${
-    (hour < 12 && "Morning") || (hour < 17 && "Afternoon") || "Evening"
-  }, `;
-
-  const time = today.toLocaleTimeString(locale, {
-    hour: "numeric",
-    hour12: true,
-    minute: "numeric",
-  });
-
-  return {
-    date,
-    time,
-    wish,
-  };
-};
-
-const FormDisabledDemo = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modal2Open, setModal2Open] = useState(false);
+const CreatePost = () => {
+  const session = JSON.parse(sessionStorage.getItem("session"));
   const [description, setDescription] = useState("");
-  const storedSession = JSON.parse(sessionStorage.getItem("session"));
+  const eventID = useContext(EventContext);
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  const handleRefresh = () => {
+    setRefresh(!refresh); // Toggle the state value to trigger re-render
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
+  useEffect(() => {
+    if (refresh) {
+      // Perform any necessary actions or API calls after the component reloads
+      setRefresh(false); // Reset the refresh state
+    }
+  }, [refresh]);
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const onFinish = async (values) => {
-    const { description } = values;
-
-    const newPost = {
-      authorID: storedSession.username,
-      like: 0,
-      description,
-      reportCounter: 0,
-      commentCounter: 0,
-      commentID: null,
-      createAt: formatDate().date,
-      id: 0,
-    };
+  const handleCreatePost = async () => {
+    if (description.trim().length === 0) {
+      message.error("Post description cannot be empty");
+      return;
+    }
 
     try {
+      console.log("Received eventID:", eventID);
+      const currentDate = new Date();
+      const like = 0;
+      const authorID = session.username;
+      const createAt = `${currentDate.getDate()}/${
+        currentDate.getMonth() + 1
+      }/${currentDate.getFullYear()}`;
       const response = await axios.post(
         "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",
-        newPost
+        {
+          authorID,
+          like,
+          description,
+          createAt,
+          eventID,
+        }
       );
-      console.log("Post created successfully:", response.data);
-
-      Modal.success({
-        title: "Post created successfully",
-        onOk: () => {
-          navigate("/posts");
-        },
-      });
+      console.log(response.data);
+      message.success("Post successfully created");
+      setDescription("");
+      setRefresh(true); // Trigger component reload by updating the refresh state
     } catch (error) {
       console.error("Error creating post:", error);
+      message.error("Failed to create post");
     }
   };
 
   return (
-    <>
-      <div className="post">
-        <Form
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          layout="horizontal"
-          style={{
-            maxWidth: 600,
-          }}
-          onFinish={onFinish}
-        >
-          <Form.Item name="description" label="Description">
-            <TextArea rows={4} />
-          </Form.Item>
-
-          <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(new Error("Please accept the agreement")),
-              },
-            ]}
-            {...tailFormItemLayout}
-          >
-            <Checkbox>
-              I have read the{" "}
-              <Link onClick={() => setModal2Open(true)}>agreement</Link>
-            </Checkbox>
-          </Form.Item>
-
-          <Modal
-            title="User Agreement"
-            visible={modal2Open}
-            onOk={() => setModal2Open(false)}
-            onCancel={() => setModal2Open(false)}
-          >
-            <p>This is the user agreement.</p>
-            <p>
-              By clicking "I have read the agreement", you agree to the terms.
-            </p>
-          </Modal>
-
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Create
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    </>
+    <div>
+      <Input.TextArea
+        rows={4}
+        placeholder="Enter post description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <Button type="primary" onClick={handleCreatePost}>
+        Create Post
+      </Button>
+    </div>
   );
 };
 
-export default FormDisabledDemo;
+export default CreatePost;

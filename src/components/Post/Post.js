@@ -10,8 +10,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Post.css";
 import { Link } from "react-router-dom";
-import { Form } from "react-bootstrap";
-import { InputGroup } from "react-bootstrap";
+// import { Form } from "react-bootstrap";
+// import { InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const IconText = ({ icon, text }) => (
@@ -72,22 +72,22 @@ const Post = () => {
     message.error("Click on No");
   };
 
-  const updatedPost = {};
+  // const updatedPost = {};
 
   return (
     <div className="post">
-      <Link to={"/events/createPost"}>
+      <Link to={"/posts/createPost"}>
         <Button icon={<PlusOutlined />}>New Post</Button>{" "}
       </Link>
       <h1 className="text-center mt-4">Post List</h1>
-      <Form>
+      {/* <Form>
         <InputGroup className="my-3">
           <Form.Control
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Post"
           />
         </InputGroup>
-      </Form>
+      </Form> */}
       <List
         itemLayout="vertical"
         size="large"

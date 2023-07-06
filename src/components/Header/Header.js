@@ -3,15 +3,10 @@ import logo from "../Header/351046179_6398133100232437_8474283944489690617_n (1)
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { MenuOutlined, CloseOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
 
 const Header = () => {
-  const { Search } = Input;
-  const onSearch = (value) => console.log(value);
   const [Mobile, setMobile] = useState(false);
   const isLogin = sessionStorage.getItem("session");
-
-  // console.log(isLogin);
 
   const linkStyles = {
     textDecoration: "none",
@@ -22,10 +17,6 @@ const Header = () => {
   };
 
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = `searchList`;
-    navigate(path);
-  };
 
   const handleLogout = () => {
     sessionStorage.removeItem("session");
@@ -46,47 +37,39 @@ const Header = () => {
           onClick={() => setMobile(false)}
         >
           <Link to={"/"} style={linkStyles}>
-            <li className="header">HOME</li>
+            <li className="header">TRANG CHỦ</li>
           </Link>
           <Link to={"/events"} style={linkStyles}>
-            <li className="header">EVENT</li>
+            <li className="header">SỰ KIỆN</li>
           </Link>
-          <Link to={"/posts"} style={linkStyles}>
+          {/* <Link to={"/posts"} style={linkStyles}>
             <li className="header">POST</li>
-          </Link>
+          </Link> */}
           <Link to={"/grade"} style={linkStyles}>
-            <li className="header">GRADE</li>
+            <li className="header">LỚP</li>
           </Link>
           {!isLogin ? (
             <>
               <Link to={"/login"} style={linkStyles}>
-                <li className="header">LOGIN</li>
+                <li className="header">ĐĂNG NHẬP</li>
               </Link>
               <Link to={"/signup"} style={linkStyles}>
-                <li className="header">SIGN UP</li>
+                <li className="header">ĐĂNG KÝ</li>
               </Link>
             </>
           ) : (
             <>
               <li className="header" style={linkStyles} onClick={handleLogout}>
-                LOGOUT
+                ĐĂNG XUẤT
               </li>
               <Link to={"/profile"} style={linkStyles}>
                 <li className="header">
                   <UserOutlined size="large" />
-                  PROFILE
+                  TRANG CÁ NHÂN
                 </li>
               </Link>
             </>
           )}
-
-          {/* <Search
-            placeholder="input search text"
-            allowClear
-            enterButton="Search"
-            size="large"
-            onSearch={routeChange}
-          /> */}
         </ul>
         <button className="menu-icon" onClick={() => setMobile(!Mobile)}>
           {Mobile ? <CloseOutlined /> : <MenuOutlined />}
