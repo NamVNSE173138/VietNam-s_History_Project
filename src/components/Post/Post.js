@@ -69,6 +69,16 @@ const Post = () => {
 
   console.log(likeState, posts);
 
+  const [commentInput, setCommentInput] = useState('');
+  const [comments, setComments] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const tooglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  
+
   const [isReported, setIsReported] = useState(false);
 
   const confirm = (e) => {
@@ -150,13 +160,36 @@ const Post = () => {
               />
             </Button>,
 
-            <Button type="default" size="large">
-              <IconText
-                icon={MessageOutlined}
-                text={post.commentCounter}
-                key="list-vertical-message"
-              />
+            // <Button type="default" size="large">
+            //   <IconText
+            //     icon={MessageOutlined}
+            //     text={post.commentCounter}
+            //     key="list-vertical-message"
+            //   />
+            // </Button>,
+            <Button
+              type="default" size="large"
+              onClick={tooglePopup}
+            >
+            <IconText
+              icon={MessageOutlined}
+              text={post.commentCounter}
+              key="list-vertical-message"
+            />
+              {showPopup && (
+                <div className="popup">
+                  <textarea
+                    rows={4}
+                    cols={50}
+                    value={commentInput}
+                    onChange={(e) => setCommentInput(e.target.value)}
+                    ></textarea>
+                    <button onClick={setComments}>Submit</button>
+                    <button onClick={tooglePopup}>Close</button>
+                </div>
+              )}
             </Button>,
+            
 
             <Popconfirm
               title="Report"

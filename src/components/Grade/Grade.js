@@ -176,7 +176,7 @@ const Grade = () => {
           mode="inline"
           openKeys={openKeys}
           onOpenChange={onOpenChange}
-          items={items}    
+          items={items}      
         />
       </div>
     </>

@@ -17,48 +17,78 @@
 }
 
 .mt-4 {
-  margin-top: 4rem;
+  margin-top: 16px;
 }
 
 .my-3 {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .List {
-  background-color: #f0f2f5;
-  padding: 20px;
+  background-color: #f5f5f5;
+  padding: 16px;
 }
 
 .List .ant-list-item {
   background-color: #fff;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.List .ant-list-item-extra img {
-  width: 100%;
-  border-radius: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
 }
 
 .List .ant-list-item-meta-title a {
-  font-weight: bold;
   color: #1890ff;
+  font-weight: bold;
 }
 
 .List .ant-list-item-meta-description p {
+  margin-top: 4px;
   color: #888;
 }
 
-.List .ant-btn-lg {
-  font-size: 14px;
-  height: auto;
-  padding: 8px 25px;
+.List .ant-list-item-action > * + * {
+  margin-left: 8px;
 }
 
-.List .anticon-like,
-.List .anticon-message,
+.List .ant-popover-inner-content {
+  padding: 8px 16px;
+}
+
+.List .anticon-like-o,
+.List .anticon-like {
+  vertical-align: middle;
+}
+
+.List .anticon-message {
+  vertical-align: middle;
+}
+
 .List .anticon-exclamation-circle {
-  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.List .ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
+
+.List .ant-btn-default {
+  background-color: transparent;
+  border-color: #d9d9d9;
+  color: #888;
+}
+
+.List .ant-btn-default:hover {
+  color: #1890ff;
+}
+
+.List .ant-btn-link {
+  padding-left: 0;
+}
+
+.List img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
 }
