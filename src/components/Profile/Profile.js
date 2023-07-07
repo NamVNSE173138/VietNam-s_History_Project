@@ -14,7 +14,7 @@ const App = () => (
       <h2
         style={{ textAlign: "center", fontSize: "50px", paddingBottom: "20px" }}
       >
-        Your Profile
+        Trang cá nhân
       </h2>
       <Row
         style={{
@@ -40,7 +40,7 @@ const App = () => (
           <div>
             <div>
               <h3 className="h2 text-black mb-0">
-                User name: {storedSession.username}
+                Tên người dùng: {storedSession.username}
               </h3>
             </div>
             <ul className="list-unstyled mb-1-9">
@@ -49,7 +49,7 @@ const App = () => (
                 style={{ fontFamily: "Archivo Narrow" }}
               >
                 <span className="display-26 text-secondary me-2 font-weight-600">
-                  Role:
+                  Chức vụ:
                 </span>{" "}
                 {storedSession.role}
               </li>
@@ -70,7 +70,7 @@ const App = () => (
                   to={"/changePassUser"}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <Button size="large">Change Password</Button>
+                  <Button size="large">Đổi mật khẩu</Button>
                 </Link>
               </li>
             </ul>

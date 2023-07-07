@@ -6,24 +6,26 @@ const popEvent = () => {
     <>
       <div className="destination">
         <Link to={"/events"}>
-          <h3>Popular Events</h3>
+          <h3 className="popPost">Sự kiện nổi bật</h3>
         </Link>
 
         <div className="first-des">
           <div className="des-text">
-            <h4>World War I</h4>
-            <p>
-              For four years, from 1914 to 1918, World War I raged across
-              Europe's western and eastern fronts after growing tensions and
-              then the assassination of Archduke Franz Ferdinand of Austria
-              ignited the war. Trench warfare and the early use of tanks,
-              submarines and airplanes meant the war’s battles were
-              devastatingly bloody, claiming an estimated 40 million military
-              and civilian casualties, including 20 million deaths. Fighting
-              under brutal conditions, World War I battles on both land and at
-              sea saw mass carnage, but few decisive victories, with some
-              conflicts waging for months on end.
-            </p>
+            <Link to={"/events/eventDetail/16"}>
+              <h4 className="popPost">Chiến tranh thế giới lần thứ nhất</h4>
+            </Link>
+            <i>
+              Trong bốn năm, từ năm 1914 đến 1918, Thế chiến thứ nhất đã nổi
+              giận Mặt trận phía Tây và Đông của Châu Âu sau khi căng thẳng và
+              Sau đó, vụ ám sát Archduke Franz Ferdinand của Áo đốt cháy cuộc
+              chiến. Chiến tranh chiến hào và sử dụng sớm các xe tăng, tàu ngầm
+              và máy bay có nghĩa là các trận chiến chiến tranh là tàn khốc đẫm
+              máu, tuyên bố ước tính khoảng 40 triệu quân đội và thương vong dân
+              sự, bao gồm 20 triệu trường hợp tử vong. Chiến đấu Trong điều kiện
+              tàn khốc, Thế chiến I chiến đấu trên cả đất và tại biển đã thấy
+              tàn sát hàng loạt, nhưng một vài chiến thắng quyết định, với một
+              số Xung đột tiến triển trong nhiều tháng.
+            </i>
           </div>
           <div className="image-pop">
             <img
@@ -50,17 +52,19 @@ const popEvent = () => {
             />
           </div>
           <div className="des-text">
-            <h4>World War II</h4>
+            <Link to={"/events/eventDetail/17"}>
+              <h4 className="popPost">Chiến tranh thế giới lần thứ hai</h4>
+            </Link>
             <p>
-              With Adolf Hitler leading a German invasion of Poland in 1939,
-              World War II was launched, a deadly global conflict waged across
-              Europe and the Pacific until 1945. Bloody battles raged between
-              the Allied powers, which included Britain, France, the Soviet
-              Union and the United States, along with other nations, and the
-              Axis, notably Germany and Japan. When the Axis ultimately
-              surrendered, some 20 million soldiers were dead, along with an
-              estimated 40 million civilians. Below is a timeline of the war's
-              most significant battles.
+              Với Adolf Hitler dẫn đầu cuộc xâm lược Ba Lan của Đức vào năm
+              1939, Thế chiến II đã được ra mắt, một cuộc xung đột toàn cầu chết
+              người được tiến hành Châu Âu và Thái Bình Dương cho đến năm 1945.
+              Trận chiến đẫm máu hoành hành giữa các cường quốc đồng minh, bao
+              gồm Anh, Pháp, Liên Xô Liên minh và Hoa Kỳ, cùng với các quốc gia
+              khác và Trục, đáng chú ý là Đức và Nhật Bản. Khi trục cuối cùng
+              đầu hàng, khoảng 20 triệu binh sĩ đã chết, cùng với một Ước tính
+              40 triệu thường dân. Dưới đây là dòng thời gian của cuộc chiến Các
+              trận chiến quan trọng nhất.
             </p>
           </div>
         </div>

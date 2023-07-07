@@ -76,7 +76,16 @@ const ChangePass = () => {
       <div className="profile">
         <Row>
           <Col span={12}>
-            <h2 style={{ textAlign: "center" }}>Change Password</h2>
+            <h2
+              style={{
+                textAlign: "center",
+                marginTop: "20px",
+                marginBottom: "30px",
+                color: "#1677ff",
+              }}
+            >
+              Đổi mật khẩu
+            </h2>
             <Form
               name="normal_login"
               className="login-form"
@@ -90,14 +99,14 @@ const ChangePass = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your old Password!",
+                    message: "Vui lòng nhập mật khẩu cũ!",
                   },
                 ]}
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
-                  placeholder="Old Password"
+                  placeholder="Mật khẩu cũ"
                 />
               </Form.Item>
               <Form.Item
@@ -105,14 +114,14 @@ const ChangePass = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your new Password!",
+                    message: "Vui lòng nhập mật khẩu mới!",
                   },
                 ]}
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
-                  placeholder="New Password"
+                  placeholder="Mật khẩu mới"
                 />
               </Form.Item>
 
@@ -123,7 +132,7 @@ const ChangePass = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please confirm your password!",
+                    message: "Vui lòng xác nhận mật khẩu!",
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
@@ -131,9 +140,7 @@ const ChangePass = () => {
                         return Promise.resolve();
                       }
                       return Promise.reject(
-                        new Error(
-                          "The two passwords that you entered do not match!"
-                        )
+                        new Error("Hai mật khẩu không trùng khớp!")
                       );
                     },
                   }),
@@ -142,7 +149,7 @@ const ChangePass = () => {
                 <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
-                  placeholder="Confirm Password"
+                  placeholder="Xác nhận mật khẩu"
                 />
               </Form.Item>
               <Button
@@ -150,7 +157,7 @@ const ChangePass = () => {
                 htmlType="submit"
                 className="login-form-button"
               >
-                Change Pass
+                Lưu thay đổi
               </Button>
             </Form>
           </Col>
@@ -161,9 +168,10 @@ const ChangePass = () => {
         title="Password Updated"
         visible={isModalVisible}
         onOk={handleModalOk}
+
         // onCancel={handleModalOk}
       >
-        <p>Password has been updated successfully.</p>
+        <p>Thay đổi mật khẩu thành công.</p>
       </Modal>
     </>
   );

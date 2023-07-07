@@ -55,27 +55,7 @@ const tailFormItemLayout = {
     },
   },
 };
-// const Signup = () => {
-//   const [form] = Form.useForm();
-//   const onFinish = (values) => {
-//     console.log("Received values of form: ", values);
-//   };
 
-//   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-//   const onWebsiteChange = (value) => {
-//     if (!value) {
-//       setAutoCompleteResult([]);
-//     } else {
-//       setAutoCompleteResult(
-//         [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-//       );
-//     }
-//   };
-//   const websiteOptions = autoCompleteResult.map((website) => ({
-//     label: website,
-//     value: website,
-//   }));
-//   const [modal2Open, setModal2Open] = useState(false);
 const Signup = () => {
   const [form] = Form.useForm();
   const [usernameExists, setUsernameExists] = useState(false);

@@ -19,7 +19,7 @@ const Slider = () => {
           </p>
           <Link>
             <Button className="carousel-btn" type="primary" size="large">
-              SEE MORE
+              XEM THÊM
             </Button>
           </Link>
         </div>
@@ -36,7 +36,7 @@ const Slider = () => {
           <p className="shadow-text">(13 tháng 3 - 7 tháng 5 năm 1954)</p>
           <Link>
             <Button className="carousel-btn" type="primary" size="large">
-              SEE MORE
+              XEM THÊM
             </Button>
           </Link>
         </div>
@@ -54,7 +54,7 @@ const Slider = () => {
           <p className="shadow-text">(Năm 40 - 43 sau CN)</p>
           <Link>
             <Button className="carousel-btn" type="primary" size="large">
-              SEE MORE
+              XEM THÊM
             </Button>
           </Link>
         </div>

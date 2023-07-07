@@ -51,3 +51,8 @@ button{
 .card-img-top img {
   transition: transform 0.3s ease-in-out;
 }
+
+/* @media screen and (max-width: 850px) {
+  grid: none
+  
+} */

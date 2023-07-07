@@ -39,7 +39,12 @@
     right: 0;
  }
 
-
+.popPost  h3 {
+    text-decoration: none;
+}
+a .popPost{
+    color: black;
+}
 
 
  @media screen and (max-width: 850px){

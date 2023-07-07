@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
-import { List } from "antd";
+import { List, Card } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,7 +27,7 @@ function SearchList() {
 
     fetchData();
   }, []);
-
+  const { Meta } = Card;
   return (
     <div className="SearchList">
       <Container>
@@ -54,19 +54,46 @@ function SearchList() {
               event.eventName.toLowerCase().includes(search.toLowerCase())
             )}
             renderItem={(event) => (
-              <List.Item
-                key={event.eventID}
-                extra={<img width={272} alt="logo" src={event.image} />}
+              // <Card hoverable style={{ margin: "20px" }}>
+              //   <List.Item
+              //     key={event.eventID}
+              //     extra={
+              //       <img
+              //         width={272}
+              //         height={210}
+              //         alt="logo"
+              //         src={event.image}
+              //       />
+              //     }
+              //   >
+              //     <List.Item.Meta
+              //       title={
+              //         <Link to={`/events/eventDetail/${event.eventID}`}>
+              //           {event.eventName}
+              //         </Link>
+              //       } // Wrap the event name in the Link com  nent with the event ID in the URL
+              //       description={event.timeline}
+              //     />
+              //   </List.Item>
+              // </Card>
+              <Link
+                to={`/events/eventDetail/${event.eventID}`}
+                style={{ textDecoration: "none" }}
               >
-                <List.Item.Meta
-                  title={
-                    <Link to={`/events/eventDetail/${event.eventID}`}>
-                      {event.eventName}
-                    </Link>
-                  } // Wrap the event name in the Link com  nent with the event ID in the URL
-                  description={event.timeline}
-                />
-              </List.Item>
+                <Card
+                  key={event.eventID}
+                  hoverable
+                  style={{ maxWidth: 500, margin: 10, height: 350 }}
+                  cover={
+                    <img width={272} height={250} alt="" src={event.image} />
+                  }
+                >
+                  <Meta
+                    title="Europe Street beat"
+                    description={event.timeline}
+                  />
+                </Card>
+              </Link>
             )}
             grid={{
               gutter: 16,
