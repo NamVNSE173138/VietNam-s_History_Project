@@ -110,39 +110,39 @@ const Grade = () => {
   const items = [
     getItem("Grade 4", "sub4", 
       events.filter((event) => String(event.grade).includes('4'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub4-${event.eventID}`)),
     ),
     getItem("Grade 5", "sub5", 
       events.filter((event) => String(event.grade).includes('5'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub5-${event.eventID}`)),
     ),
     getItem("Grade 6", "sub6", 
       events.filter((event) => String(event.grade).includes('6'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub6-${event.eventID}`)),
     ),
     getItem("Grade 7", "sub7", 
       events.filter((event) => String(event.grade).includes('7'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub7-${event.eventID}`)),
     ),
     getItem("Grade 8", "sub8", 
       events.filter((event) => String(event.grade).includes('8'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub8-${event.eventID}`)),
     ),
     getItem("Grade 9", "sub9", 
       events.filter((event) => String(event.grade).includes('9'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub9-${event.eventID}`)),
     ),
     getItem("Grade 10", "sub10", 
       events.filter((event) => String(event.grade).includes('10'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub10-${event.eventID}`)),
     ),
     getItem("Grade 11", "sub11", 
       events.filter((event) => String(event.grade).includes('11'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub11-${event.eventID}`)),
     ),
     getItem("Grade 12", "sub12", 
       events.filter((event) => String(event.grade).includes('12'))
-      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>)),
+      .map((event) => getItem(<Link to={`/events/eventDetail/${event.eventID}`}>{event.eventName}</Link>, `sub12-${event.eventID}`)), 
     ),
   ];
 
