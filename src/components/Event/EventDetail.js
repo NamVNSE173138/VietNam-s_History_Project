@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Avatar, List, Space, Button, message, Modal } from "antd";
 import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
@@ -12,25 +12,39 @@ const EventDetail = () => {
   const [event, setEvent] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isReported, setIsReported] = useState(false);
+  const isLogin = sessionStorage.getItem("session");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+    navigate("/login");
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const PostItem = ({ post }) => (
     <List.Item
       key={post.id}
       actions={[
         <Button
           type={post.isLiked ? "primary" : "default"}
-          onClick={() => handleLike(post)}
+          onClick={!isLogin ? showModal : () => handleLike(post)}
         >
           <Space>
             {post.isLiked ? (
               <>
                 <LikeOutlined />
-                Liked {post.like}
+                Thích {post.like}
               </>
             ) : (
               <>
                 <LikeOutlined />
-                Like {post.like}
+                Thích {post.like}
               </>
             )}
           </Space>
@@ -45,17 +59,37 @@ const EventDetail = () => {
           cancelText="No"
         >
           <Button type="default">
-            <ExclamationCircleOutlined /> Report
+            <ExclamationCircleOutlined /> Báo cáo
           </Button>
         </Popconfirm>,
+        <Modal
+          title={
+            <span>
+              <ExclamationCircleOutlined
+                style={{ color: "#ff4d4f", fontSize: "30px" }}
+              />{" "}
+              Cảnh báo
+            </span>
+          }
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <h4 style={{ textAlign: "center" }}>Bạn cần đăng nhập trước</h4>
+        </Modal>,
       ]}
     >
       <List.Item.Meta
         avatar={
           <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
         }
-        title={<a href="">{post.authorID}</a>}
-        description={<p>posted on {post.createAt}</p>}
+        title={
+          <div>
+            <a>{post.authorID} </a>{" "}
+            <i style={{ fontWeight: "inherit" }}>({post.roleOfAuthor})</i>
+          </div>
+        }
+        description={<p> {post.createAt}</p>}
       />
       {post.description}
     </List.Item>
@@ -123,13 +157,39 @@ const EventDetail = () => {
   }
 
   return (
-    <div className="event">
-      <h2>Event Detail</h2>
-      <p>Event ID: {event.eventID}</p>
-      <p>Event Name: {event.eventName}</p>
-      <p>Description: {event.description}</p>
+    <div
+      className="event"
+      style={{
+        fontFamily: "Archivo Narrow",
+        width: "700px",
+        alignItems: "center",
+        margin: "100px auto",
+      }}
+    >
+      {/* <h2>Event Detail</h2> */}
+      <p
+        style={{
+          fontSize: "30px",
+          fontWeight: "bold",
+        }}
+      >
+        {" "}
+        {event.eventName}
+      </p>
+      <i>{event.timeline}</i>
+      <p>Thời kỳ: {event.dysnaty}</p>
+      <div style={{ textAlign: "center" }}>
+        <img
+          src={event.image}
+          style={{ height: "400px", width: "auto", borderRadius: "7px" }}
+        />
+      </div>
 
-      <h2>Posts</h2>
+      <p style={{ marginTop: "20px", fontSize: "20px", marginBottom: "50px" }}>
+        {event.description}
+      </p>
+
+      <h4>Bình luận</h4>
       <EventContext.Provider value={event.eventID}>
         <CreatePost />
       </EventContext.Provider>

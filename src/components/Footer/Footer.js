@@ -17,43 +17,38 @@ const Footer = () => {
           <div className="row">
             <div className="logo-footer col-md-6 mt-md-0 mt-3">
               <img src={logo} />
-              <h5>Vietnam' History</h5>
-              <p>
-                Let's learn about the country and people of Vietnam through the
-                nation's heroic history, long-standing customs and culture.
-              </p>
+              <h4>Vietnam' History</h4>
+              <i style={{ fontSize: "24px", fontFamily: "Fasthand" }}>
+                Khám phá quá khứ. Hiểu hiện tại. Hướng tới tương lai.
+              </i>
             </div>
 
             <hr className="clearfix w-100 d-md-none pb-0" />
 
             <div className="col-md-3 mb-md-0 mb-3">
-              <h5>Menu</h5>
+              <h4 style={{ fontWeight: "Fasthand" }}>VietEra</h4>
               <ul className="list-unstyled">
                 <li className="footer">
                   <Link className="menu-footer" to={"/"}>
-                    Home
+                    Trang chủ
                   </Link>
                 </li>
                 <li className="footer">
                   <Link className="menu-footer" to={"/events"}>
-                    Event
+                    Sự kiện
                   </Link>
                 </li>
-                <li className="footer">
-                  <Link className="menu-footer" to={"/posts"}>
-                    Post
-                  </Link>
-                </li>
+
                 <li className="footer">
                   <Link className="menu-footer" to={"/grade"}>
-                    Grade
+                    Lớp
                   </Link>
                 </li>
               </ul>
             </div>
 
             <div className="col-md-3 mb-md-0 mb-3">
-              <h5>Contact</h5>
+              <h5>Liên hệ</h5>
               <ul className="list-unstyled">
                 <li className="footer">
                   <Link
@@ -61,7 +56,7 @@ const Footer = () => {
                     to={"https://goo.gl/maps/ZcskJxPMTMEQZrvv7"}
                   >
                     <HomeOutlined style={{ marginRight: "5px" }} />
-                    FPT University HCMC
+                    Đại học FPT - Tp.Hồ Chí Minh
                   </Link>
                 </li>
                 <li className="footer">
@@ -72,7 +67,7 @@ const Footer = () => {
                 </li>
                 <li className="footer">
                   <Link className="contact-footer" to={""}>
-                    <PhoneOutlined style={{ marginRight: "5px" }} /> 0941697009
+                    <PhoneOutlined style={{ marginRight: "5px" }} /> 0987654321
                   </Link>
                 </li>
                 <li className="footer">

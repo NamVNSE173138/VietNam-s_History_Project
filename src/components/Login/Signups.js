@@ -316,7 +316,7 @@ const Signup = () => {
               centered
               open={modal2Open}
               onOk={() => setModal2Open(false)}
-              onCancel={() => setModal2Open(false)}
+              // onCancel={() => setModal2Open(false)}
             >
               <p>
                 1. Acceptance of Terms: Users are required to acknowledge that

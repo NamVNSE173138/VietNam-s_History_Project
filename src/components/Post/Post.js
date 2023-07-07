@@ -4,14 +4,13 @@ import {
   LikeOutlined,
   MessageOutlined,
   ExclamationCircleOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Post.css";
 import { Link } from "react-router-dom";
-// import { Form } from "react-bootstrap";
-// import { InputGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const IconText = ({ icon, text }) => (
@@ -44,20 +43,42 @@ const Post = () => {
   const handleLike = (post) => {
     setLikeState(post.id);
     setLikeCounter(post.like);
-  };
-
-  const [likeState, setLikeState] = useState(false);
-
-  useEffect(() => {
-    setPosts(
-      posts.map((item) => {
-        if (item.id === likeState) {
-          return { ...item, isLiked: !item.isLiked };
+    setPosts((prevPosts) =>
+      prevPosts.map((item) => {
+        if (item.id === post.id) {
+          return {
+            ...item,
+            isLiked: !item.isLiked,
+            like: item.isLiked ? item.like - 1 : item.like + 1,
+          };
         }
         return item;
       })
     );
-  }, [likeState]);
+  };
+
+  const [likeState, setLikeState] = useState(false);
+
+  // useEffect(() => {
+  //   setPosts(
+  //     posts.map((item) => {
+  //       if (item.id === likeState) {
+  //         return { ...item, isLiked: !item.isLiked };
+  //       }
+  //       return item;
+  //     })
+  //   );
+  // }, [likeState]);
+
+  console.log(likeState, posts);
+
+  const [commentInput, setCommentInput] = useState("");
+  const [comments, setComments] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const tooglePopup = () => {
+    setShowPopup(!showPopup);
+  };
 
   const [isReported, setIsReported] = useState(false);
 
@@ -72,22 +93,51 @@ const Post = () => {
     message.error("Click on No");
   };
 
-  // const updatedPost = {};
+  const updatedPost = {};
+
+  useEffect(
+    () => {
+      axios
+        .post(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",
+          updatedPost
+        )
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    posts.map((item) => {
+      return item;
+    })
+  );
+
+  // useEffect(() => {
+  //   const postData = async () => {
+  //     try {
+  //       const response = await axios.post(
+  //         "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",updatedPost);
+  //       console.log("post updated", response.data);
+  //     } catch (error) {
+  //       console.error("Error updating post:", error);
+  //     }
+  //   }
+  //   postData();
+  // }, posts);
 
   return (
-    <div className="post">
-      <Link to={"/posts/createPost"}>
-        <Button icon={<PlusOutlined />}>New Post</Button>{" "}
-      </Link>
+    <div className="Post List">
       <h1 className="text-center mt-4">Post List</h1>
-      {/* <Form>
+      <Form>
         <InputGroup className="my-3">
           <Form.Control
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Post"
           />
         </InputGroup>
-      </Form> */}
+      </Form>
       <List
         itemLayout="vertical"
         size="large"
@@ -113,17 +163,29 @@ const Post = () => {
               >
                 <IconText
                   icon={LikeOutlined}
-                  text={post.isLiked ? post.like + 1 : post.like}
+                  text={post.isLiked ? post.like : post.like}
                   key="list-vertical-like-o"
                 />
               </Button>,
 
-              <Button type="default" size="large">
+              <Button type="default" size="large" onClick={tooglePopup}>
                 <IconText
                   icon={MessageOutlined}
                   text={post.commentCounter}
                   key="list-vertical-message"
                 />
+                {showPopup && (
+                  <div className="popup">
+                    <textarea
+                      rows={4}
+                      cols={50}
+                      value={commentInput}
+                      onChange={(e) => setCommentInput(e.target.value)}
+                    ></textarea>
+                    <button onClick={setComments}>Submit</button>
+                    <button onClick={tooglePopup}>Close</button>
+                  </div>
+                )}
               </Button>,
 
               <Popconfirm
@@ -154,8 +216,8 @@ const Post = () => {
               avatar={
                 <Avatar src="https://cartoonavatar.com/wp-content/uploads/2022/01/Business-Avatar-On-Circle-Background.png" />
               }
-              title={<p>{post.authorID}</p>}
-              description={<p>posted on {post.createAt}</p>}
+              title={<a href="">{post.authorID}</a>}
+              description={<p>posted on {post.createdAt}</p>}
             />
             {post.description}
           </List.Item>
@@ -164,5 +226,4 @@ const Post = () => {
     </div>
   );
 };
-
 export default Post;

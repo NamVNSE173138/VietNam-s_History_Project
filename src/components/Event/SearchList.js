@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
 import { List } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
@@ -30,12 +31,12 @@ function SearchList() {
   return (
     <div className="SearchList">
       <Container>
-        <h1 className="text-center mt-4">Event List</h1>
+        <h1 className="text-center mt-4">Sự kiện</h1>
         <Form>
-          <InputGroup className="my-3">
+          <InputGroup prefix={<SearchOutlined />} className="my-3">
             <Form.Control
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search Event"
+              placeholder="Tìm kiếm sự kiện"
             />
           </InputGroup>
         </Form>
@@ -62,7 +63,7 @@ function SearchList() {
                     <Link to={`/events/eventDetail/${event.eventID}`}>
                       {event.eventName}
                     </Link>
-                  } // Wrap the event name in the Link component with the event ID in the URL
+                  } // Wrap the event name in the Link com  nent with the event ID in the URL
                   description={event.timeline}
                 />
               </List.Item>

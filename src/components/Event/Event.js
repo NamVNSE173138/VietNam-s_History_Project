@@ -6,7 +6,7 @@ const Event = () => {
     <>
       <div className="event">
         <div className="pop-event">
-          <h3>Vietnam's Events</h3>
+          <h3>Lịch sử Việt Nam</h3>
           <div className="row row-cols-1 row-cols-md-3 g-4">
             <Link to={"/eventDetail"} className="pop-event-card">
               <div className="col">
@@ -21,7 +21,7 @@ const Event = () => {
                   </div>
                   <div className="card-body">
                     <h5 className="card-title">Cách mạng tháng Tám</h5>
-                    <p className="card-text">1945</p>
+                    <p className="card-text">Năm 1945</p>
                   </div>
                 </div>
               </div>
@@ -59,7 +59,7 @@ const Event = () => {
                   </div>
                   <div className="card-body">
                     <h5 className="card-title">Chiến thắng Điện Biên Phủ</h5>
-                    <p className="card-text">March 13 - May 7, 1954</p>
+                    <p className="card-text">13 tháng 3 - 7 tháng 5, 1954</p>
                   </div>
                 </div>
               </div>
@@ -67,14 +67,14 @@ const Event = () => {
           </div>
           <div className="button">
             <Link to={"/searchList"}>
-              <Button size="large">SEE MORE</Button>
+              <Button size="large">XEM THÊM</Button>
             </Link>
           </div>
         </div>
 
         {/* Poppular Event */}
         <div id="pop-event" className="pop-event">
-          <h3>Popular Events</h3>
+          <h3>Sự kiện nổi bật</h3>
           <div className="row row-cols-1 row-cols-md-3 g-4">
             <Link to={"/eventDetail"} className="pop-event-card">
               <div className="col">
@@ -88,9 +88,11 @@ const Event = () => {
                     />
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title">World War I</h5>
+                    <h5 className="card-title">
+                      Chiến tranh Thế giới lần thứ nhất
+                    </h5>
                     <p className="card-text">
-                      July 28, 1914 - November 11, 1918
+                      28 tháng 7, 1914 - 11 tháng 11, 1918
                     </p>
                   </div>
                 </div>
@@ -109,9 +111,11 @@ const Event = () => {
                     />
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title">World War II</h5>
+                    <h5 className="card-title">
+                      Chiến tranh Thế giới lần thứ hai
+                    </h5>
                     <p className="card-text">
-                      September 1, 1939 - September 2, 1945
+                      1 tháng 9, 1939 - 2 tháng 9, 1945
                     </p>
                   </div>
                 </div>
@@ -130,10 +134,8 @@ const Event = () => {
                     />
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title">Cold War</h5>
-                    <p className="card-text">
-                      After the end of World War II in 1945 and ended in 1991
-                    </p>
+                    <h5 className="card-title">Chiến tranh lạnh</h5>
+                    <p className="card-text">Năm 1945 và kết thúc năm 1991</p>
                   </div>
                 </div>
               </div>
@@ -141,7 +143,7 @@ const Event = () => {
           </div>
           <div className="button">
             <Link to={"/searchList"}>
-              <Button size="large">SEE MORE</Button>
+              <Button size="large">XEM THÊM</Button>
             </Link>
           </div>
         </div>

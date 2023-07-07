@@ -66,7 +66,7 @@ const Login = () => {
 
   return (
     <>
-      <h1>Login</h1>
+      <h1>Đăng nhập</h1>
       <Form
         name="normal_login"
         className="login-form"
@@ -75,7 +75,7 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item label="Select" name="role">
+        <Form.Item label="Chức vụ" name="role">
           <Select>
             <Select.Option value="Mentor">Mentor</Select.Option>
             <Select.Option value="Member">Member</Select.Option>
