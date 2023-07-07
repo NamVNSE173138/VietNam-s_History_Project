@@ -36,24 +36,44 @@ const Header = () => {
           className={Mobile ? "nav-links-mobile" : "nav-links"}
           onClick={() => setMobile(false)}
         >
-          <Link to={"/"} style={linkStyles}>
+          <Link
+            to={"/"}
+            style={linkStyles}
+            onClick={() => window.scrollTo(0, 0)}
+          >
             <li className="header">TRANG CHỦ</li>
           </Link>
-          <Link to={"/events"} style={linkStyles}>
+          <Link
+            to={"/events"}
+            style={linkStyles}
+            onClick={() => window.scrollTo(0, 0)}
+          >
             <li className="header">SỰ KIỆN</li>
           </Link>
           {/* <Link to={"/posts"} style={linkStyles}>
             <li className="header">POST</li>
           </Link> */}
-          <Link to={"/grade"} style={linkStyles}>
+          <Link
+            to={"/grade"}
+            style={linkStyles}
+            onClick={() => window.scrollTo(0, 0)}
+          >
             <li className="header">LỚP</li>
           </Link>
           {!isLogin ? (
             <>
-              <Link to={"/login"} style={linkStyles}>
+              <Link
+                to={"/login"}
+                style={linkStyles}
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 <li className="header">ĐĂNG NHẬP</li>
               </Link>
-              <Link to={"/signup"} style={linkStyles}>
+              <Link
+                to={"/signup"}
+                style={linkStyles}
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 <li className="header">ĐĂNG KÝ</li>
               </Link>
             </>

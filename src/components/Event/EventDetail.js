@@ -176,7 +176,8 @@ const EventDetail = () => {
         {" "}
         {event.eventName}
       </p>
-      <i>{event.timeline}</i>
+      <p style={{ marginBottom: "0" }}>Lớp: {event.grade}</p>
+      <i>Thời gian: {event.timeline}</i>
       <p>Thời kỳ: {event.dysnaty}</p>
       <div style={{ textAlign: "center" }}>
         <img

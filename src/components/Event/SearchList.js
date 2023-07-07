@@ -88,10 +88,7 @@ function SearchList() {
                     <img width={272} height={250} alt="" src={event.image} />
                   }
                 >
-                  <Meta
-                    title="Europe Street beat"
-                    description={event.timeline}
-                  />
+                  <Meta title={event.eventName} description={event.timeline} />
                 </Card>
               </Link>
             )}

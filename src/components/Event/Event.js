@@ -8,7 +8,7 @@ const Event = () => {
         <div className="pop-event">
           <h3>Lịch sử Việt Nam</h3>
           <div className="row row-cols-1 row-cols-md-3 g-4">
-            <Link to={"/eventDetail"} className="pop-event-card">
+            <Link to={"/events/eventDetail/91"} className="pop-event-card">
               <div className="col">
                 <div className="card h-100">
                   <div className="card-img-top">
@@ -27,7 +27,7 @@ const Event = () => {
               </div>
             </Link>
 
-            <Link to={"/eventDetail"} className="pop-event-card">
+            <Link to={"/events/eventDetail/94"} className="pop-event-card">
               <div className="col">
                 <div className="card h-100">
                   <div className="card-img-top">
@@ -46,7 +46,7 @@ const Event = () => {
               </div>
             </Link>
 
-            <Link to={"/eventDetail"} className="pop-event-card">
+            <Link to={"/events/eventDetail/20"} className="pop-event-card">
               <div className="col">
                 <div className="card h-100">
                   <div className="card-img-top">
@@ -122,7 +122,7 @@ const Event = () => {
               </div>
             </Link>
 
-            <Link to={"/eventDetail"} className="pop-event-card">
+            <Link to={"/events/eventDetail/18"} className="pop-event-card">
               <div className="col">
                 <div className="card h-100">
                   <div className="card-img-top">

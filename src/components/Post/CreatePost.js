@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Input, Button, message, Modal } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { WarningOutlined } from "@ant-design/icons";
 import axios from "axios";
 import EventContext from "../Event/EventContext";
 import { useNavigate } from "react-router-dom";
@@ -95,10 +95,10 @@ const CreatePost = () => {
           <Modal
             title={
               <span>
-                <ExclamationCircleOutlined
+                <WarningOutlined
                   style={{ color: "#ff4d4f", fontSize: "30px" }}
                 />{" "}
-                Cảnh báo
+                Lưu ý
               </span>
             }
             open={isModalOpen}

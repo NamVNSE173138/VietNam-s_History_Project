@@ -10,7 +10,7 @@ import {
   Select,
   Modal,
 } from "antd";
-
+import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
 import axios from "axios";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -100,7 +100,7 @@ const Signup = () => {
       userName: username,
       password,
       email,
-      role: role[0],
+      role: "Member",
       cv: linkcv,
       age,
       phon_number,
@@ -137,19 +137,19 @@ const Signup = () => {
     value: website,
   }));
   const [modal2Open, setModal2Open] = useState(false);
-
+  const [verfied, setVerfied] = useState(false);
+  function onChange(value) {
+    console.log("Captcha value:", value);
+    setVerfied(true);
+  }
   return (
     <>
-      <h1>Sign up</h1>
+      <h1>Đăng ký</h1>
       <Form
         {...formItemLayout}
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ["zhejiang", "hangzhou", "xihu"],
-          prefix: "86",
-        }}
         style={{
           maxWidth: 600,
         }}
@@ -158,11 +158,11 @@ const Signup = () => {
       >
         <Form.Item
           name="username"
-          label="Username"
+          label="Tên người dùng"
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: "Vui lòng nhập tên người dùng!",
               whitespace: true,
             },
           ]}
@@ -172,11 +172,11 @@ const Signup = () => {
 
         <Form.Item
           name="password"
-          label="Password"
+          label="Mật khẩu"
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "Vui lòng nhập mật khẩu",
             },
           ]}
           hasFeedback
@@ -186,13 +186,13 @@ const Signup = () => {
 
         <Form.Item
           name="confirm"
-          label="Confirm Password"
+          label="Xác nhận mật khẩu"
           dependencies={["password"]}
           hasFeedback
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Vui lòng xác nhận mật khẩu!",
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -200,7 +200,7 @@ const Signup = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
+                  new Error("Hai mật khẩu không trùng khớp!")
                 );
               },
             }),
@@ -215,32 +215,32 @@ const Signup = () => {
           rules={[
             {
               type: "email",
-              message: "The input is not valid E-mail!",
+              message: "Sai định dạng e-mail!",
             },
             {
               required: true,
-              message: "Please input your E-mail!",
+              message: "Vui lòng nhập E-mail!",
             },
           ]}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           name="role"
-          label="Sign up as "
+          label="Chức vụ "
           rules={[
             {
               type: "array",
               required: true,
-              message: "Please select your role!",
+              message: "Chọn chức vụ!",
             },
           ]}
         >
           <Cascader options={residences} />
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item name="linkcv" label="Link CV">
+        {/* <Form.Item name="linkcv" label="CV">
           <AutoComplete
             options={websiteOptions}
             onChange={onWebsiteChange}
@@ -248,9 +248,9 @@ const Signup = () => {
           >
             <Input />
           </AutoComplete>
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           label="Captcha"
           extra="We must make sure that your are a human."
         >
@@ -273,7 +273,7 @@ const Signup = () => {
               <Button>Get captcha</Button>
             </Col>
           </Row>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           name="agreement"
@@ -289,8 +289,8 @@ const Signup = () => {
           {...tailFormItemLayout}
         >
           <Checkbox>
-            I have read the{" "}
-            <Link onClick={() => setModal2Open(true)}>agreement</Link>
+            Tôi đồng ý với tất cả các{" "}
+            <Link onClick={() => setModal2Open(true)}>điều khoản</Link>
             <Modal
               title=""
               centered
@@ -299,40 +299,48 @@ const Signup = () => {
               // onCancel={() => setModal2Open(false)}
             >
               <p>
-                1. Acceptance of Terms: Users are required to acknowledge that
-                they have read, understood, and agreed to the terms and
-                conditions of the website.
+                1. Điều khoản sử dụng: Trang web học lịch sử sẽ có một bộ quy
+                định và điều khoản sử dụng mà bạn cần đồng ý khi đăng ký. Điều
+                khoản này có thể bao gồm những quyền và trách nhiệm của người
+                dùng, quyền sở hữu trí tuệ, chính sách bảo mật và các hạn chế sử
+                dụng dịch vụ.
               </p>
               <p>
-                2. User Obligations: Users agree to use the website and its
-                content in a lawful manner, respect intellectual property
-                rights, and not engage in activities that may harm the website
-                or other users.
+                2. Chính sách bảo mật: Bạn nên đọc và hiểu chính sách bảo mật
+                của trang web. Chính sách này sẽ giải thích cách thông tin cá
+                nhân của bạn được thu thập, sử dụng và bảo vệ. Đảm bảo rằng
+                trang web tuân thủ các quy định bảo mật và đảm bảo an toàn thông
+                tin của bạn.
               </p>
               <p>
-                3. Privacy Policy: The agreement often includes information
-                about how the website collects, uses, and protects user data. It
-                outlines the types of information collected, such as personal
-                details or browsing habits, and how that information is handled.
+                3. Quyền sở hữu trí tuệ: Trang web học lịch sử có thể có nội
+                dung bản quyền hoặc tư liệu được bảo vệ bởi quyền sở hữu trí
+                tuệ. Bạn cần xác định rõ quyền sở hữu trí tuệ của trang web và
+                ràng buộc khi sử dụng nội dung từ trang web đó. Tránh việc vi
+                phạm bản quyền hoặc sử dụng sai mục đích.
               </p>
               <p>
-                4. Content Ownership: The agreement specifies the ownership
-                rights of the website's content, such as articles, images,
-                videos, or any other materials provided on the platform. It may
-                also outline the permitted use of the content by users.
+                4. Quyền và trách nhiệm của người dùng: Điều khoản đăng ký
+                thường sẽ nêu rõ quyền và trách nhiệm của người dùng trên trang
+                web. Ví dụ, quyền truy cập vào nội dung, quyền tải lên tài liệu,
+                và trách nhiệm tuân thủ các quy định và chính sách.
               </p>
               <p>
-                5. Limitations of Liability: The agreement typically includes
-                disclaimers that limit the website's liability for any damages
-                or losses incurred by users. It may specify that the website
-                cannot guarantee the accuracy, completeness, or reliability of
-                the information provided.
+                5. Chính sách thanh toán (nếu có): Nếu trang web yêu cầu thanh
+                toán phí để truy cập nội dung hoặc dịch vụ, bạn nên tìm hiểu
+                chính sách thanh toán. Điều này bao gồm các chi phí, phương thức
+                thanh toán được chấp nhận, chính sách hoàn trả và các điều khoản
+                liên quan đến giao dịch tài chính.
               </p>
             </Modal>
           </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
+          <ReCAPTCHA
+            sitekey="6LdaZwQnAAAAAKhL7i9G_wPUilCjDry-oXErGuMY"
+            onChange={onChange}
+          />
+          <Button type="primary" htmlType="submit" disabled={!verfied}>
             Register
           </Button>
           Or <Link to={"/login"}>I already have an account</Link>

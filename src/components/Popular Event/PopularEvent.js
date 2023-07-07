@@ -5,13 +5,16 @@ const popEvent = () => {
   return (
     <>
       <div className="destination">
-        <Link to={"/events"}>
+        <Link to={"/events"} style={{ textDecoration: "none" }}>
           <h3 className="popPost">Sự kiện nổi bật</h3>
         </Link>
 
         <div className="first-des">
           <div className="des-text">
-            <Link to={"/events/eventDetail/16"}>
+            <Link
+              to={"/events/eventDetail/16"}
+              style={{ textDecoration: "none" }}
+            >
               <h4 className="popPost">Chiến tranh thế giới lần thứ nhất</h4>
             </Link>
             <i>
@@ -52,10 +55,13 @@ const popEvent = () => {
             />
           </div>
           <div className="des-text">
-            <Link to={"/events/eventDetail/17"}>
+            <Link
+              to={"/events/eventDetail/17"}
+              style={{ textDecoration: "none" }}
+            >
               <h4 className="popPost">Chiến tranh thế giới lần thứ hai</h4>
             </Link>
-            <p>
+            <i>
               Với Adolf Hitler dẫn đầu cuộc xâm lược Ba Lan của Đức vào năm
               1939, Thế chiến II đã được ra mắt, một cuộc xung đột toàn cầu chết
               người được tiến hành Châu Âu và Thái Bình Dương cho đến năm 1945.
@@ -65,7 +71,7 @@ const popEvent = () => {
               đầu hàng, khoảng 20 triệu binh sĩ đã chết, cùng với một Ước tính
               40 triệu thường dân. Dưới đây là dòng thời gian của cuộc chiến Các
               trận chiến quan trọng nhất.
-            </p>
+            </i>
           </div>
         </div>
       </div>
