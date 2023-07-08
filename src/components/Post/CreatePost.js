@@ -66,7 +66,8 @@ const CreatePost = () => {
       console.log(response.data);
       message.success("Post successfully created");
       setDescription("");
-      setRefresh(true); // Trigger component reload by updating the refresh state
+      setRefresh(true);
+      window.location.reload(); // Trigger component reload by updating the refresh state
       // window.location.reload();
     } catch (error) {
       console.error("Error creating post:", error);

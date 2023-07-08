@@ -16,12 +16,12 @@ const ChangePass = () => {
   }, []);
 
   const handleModalOk = () => {
-    setIsModalVisible(false); // Hide the modal
+    setIsModalVisible(false);
+    navigate("/"); // Hide the modal
   };
 
+  const navigate = useNavigate();
   const ChangePassword = () => {
-    const navigate = useNavigate();
-
     const onFinish = async (values) => {
       const session = JSON.parse(sessionStorage.getItem("session"));
       if (!session) {
@@ -73,103 +73,98 @@ const ChangePass = () => {
 
   return (
     <>
-      <div className="profile">
-        <Row>
-          <Col span={12}>
-            <h2
-              style={{
-                textAlign: "center",
-                marginTop: "20px",
-                marginBottom: "30px",
-                color: "#1677ff",
-              }}
-            >
-              Đổi mật khẩu
-            </h2>
-            <Form
-              name="normal_login"
-              className="login-form"
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={ChangePassword()}
-            >
-              <Form.Item
-                name="oldpassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập mật khẩu cũ!",
-                  },
-                ]}
-              >
-                <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Mật khẩu cũ"
-                />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập mật khẩu mới!",
-                  },
-                ]}
-              >
-                <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Mật khẩu mới"
-                />
-              </Form.Item>
+      <div style={{ marginLeft: 0, marginTop: "10px" }}>
+        {/* <h2
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            marginBottom: "30px",
+            color: "#1677ff",
+          }}
+        >
+          Đổi mật khẩu
+        </h2> */}
+        <Form
+          name="normal_login"
+          className="login-form"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={ChangePassword()}
+          style={{ marginLeft: 0 }}
+        >
+          <Form.Item
+            name="oldpassword"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập mật khẩu cũ!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Mật khẩu cũ"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập mật khẩu mới!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Mật khẩu mới"
+            />
+          </Form.Item>
 
-              <Form.Item
-                name="confirm"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng xác nhận mật khẩu!",
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        new Error("Hai mật khẩu không trùng khớp!")
-                      );
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Xác nhận mật khẩu"
-                />
-              </Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Lưu thay đổi
-              </Button>
-            </Form>
-          </Col>
-        </Row>
+          <Form.Item
+            name="confirm"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng xác nhận mật khẩu!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Hai mật khẩu không trùng khớp!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Xác nhận mật khẩu"
+            />
+          </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Lưu thay đổi
+          </Button>
+        </Form>
       </div>
 
       <Modal
         title="Password Updated"
         visible={isModalVisible}
         onOk={handleModalOk}
-
-        // onCancel={handleModalOk}
       >
         <p>Thay đổi mật khẩu thành công.</p>
       </Modal>

@@ -337,7 +337,7 @@ const Signup = () => {
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <ReCAPTCHA
-            sitekey="6LdaZwQnAAAAAKhL7i9G_wPUilCjDry-oXErGuMY"
+            sitekey="6Ld4KQYnAAAAACyg4ux87ji7Hb4facIgui35Sp49"
             onChange={onChange}
           />
           <Button type="primary" htmlType="submit" disabled={!verfied}>

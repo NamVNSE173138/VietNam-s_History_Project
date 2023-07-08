@@ -13,6 +13,7 @@ import Timeline from "./pages/Timeline";
 import AllEvent from "./pages/Event/AllEvent";
 import Profile from "./pages/Profile/Profile";
 import ChangePassUser from "./pages/Profile/ChangePass";
+import UpToMentor from "./pages/Profile/UpToMentor";
 import SearchList from "./pages/Event/Search";
 import CreatePost from "./pages/CreatePost";
 
@@ -31,6 +32,7 @@ function App() {
       <Route path="/forgot" element={<ForgotPass />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/changePassUser" element={<ChangePassUser />} />
+      <Route path="/upToMentor" element={<UpToMentor />} />
       <Route path="/changePass" element={<ChangePass />} />
       <Route path="/timeline" element={<Timeline />} />
       <Route path="/searchList" element={<SearchList />} />
