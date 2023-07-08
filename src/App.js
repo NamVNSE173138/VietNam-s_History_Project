@@ -16,6 +16,11 @@ import ChangePassUser from "./pages/Profile/ChangePass";
 import UpToMentor from "./pages/Profile/UpToMentor";
 import SearchList from "./pages/Event/Search";
 import CreatePost from "./pages/CreatePost";
+//admin
+import Admin from "./pages/admin/dashboard/Dashboard";
+import AdEvent from "./pages/admin/events/Event";
+import AdUser from "./pages/admin/user/User";
+import AdPost from "./pages/admin/posts/Post";
 
 function App() {
   return (
@@ -36,6 +41,11 @@ function App() {
       <Route path="/changePass" element={<ChangePass />} />
       <Route path="/timeline" element={<Timeline />} />
       <Route path="/searchList" element={<SearchList />} />
+      {/* admin */}
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/events" element={<AdEvent />} />
+      <Route path="/admin/user" element={<AdUser />} />
+      <Route path="/admin/post" element={<AdPost />} />
     </Routes>
   );
 }

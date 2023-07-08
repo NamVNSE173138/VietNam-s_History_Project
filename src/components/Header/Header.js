@@ -50,9 +50,7 @@ const Header = () => {
           >
             <li className="header">SỰ KIỆN</li>
           </Link>
-          {/* <Link to={"/posts"} style={linkStyles}>
-            <li className="header">POST</li>
-          </Link> */}
+
           <Link
             to={"/grade"}
             style={linkStyles}
