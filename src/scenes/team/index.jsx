@@ -1,214 +1,126 @@
-// import { Box, Typography, useTheme } from "@mui/material";
-// import { DataGrid } from "@mui/x-data-grid";
-// import { tokens } from "../../theme";
-// import { mockDataTeam } from "../../data/mockData";
-// import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-// import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-// import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-// import Header from "../../components/Header";
-
-import React, {useEffect, useState} from "react";
-import { Table } from 'react-bootstrap';
-import { Container } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
-import { InputGroup } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
-
+import { Box, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import React, { useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import { Button, Modal } from "react-bootstrap";
 
 const Team = () => {
-  
-  // const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-
-  // const [teamData,setTeamData] = useState([])
-
-  // useEffect(() => {
-  //   getListTeam()
-  // },[])
-  
-  // const getListTeam = () => {
-  //   fetch ("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user",{
-  //     method: "GET"
-  //   }).then((res) => {
-  //     return res.json()
-  //   }).then((res) => {
-  //           console.log(res);
-  //           if (res) {
-  //             setTeamData(res.teamData)
-  //           }
-  //         })
-  //         .catch((err) => {
-  //          console.log(err);
-  //         });
-  // }
-
-
-  // const columns = [
-  //   { field:"id", headerName: "ID" },
-  //   {
-  //     field: "name",
-  //     headerName: "Name",
-  //     flex: 1,
-  //     cellClassName: "name-column--cell",
-  //   },
-  //   // {
-  //   //   field: "age",
-  //   //   headerName: "Age",
-  //   //   type: "number",
-  //   //   headerAlign: "left",
-  //   //   align: "left",
-  //   // },
-  //   {
-  //     field: "phone",
-  //     headerName: "Phone Number",
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "email",
-  //     headerName: "Email",
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "accessLevel",
-  //     headerName: "Access Level",
-  //     flex: 1,
-  //     renderCell: ({ row: { access } }) => {
-  //       return (
-  //         <Box
-  //           width="60%"
-  //           m="0 auto"
-  //           p="5px"
-  //           display="flex"
-  //           justifyContent="center"
-  //           alignItems="center"
-  //           backgroundColor={
-  //             access === "admin"
-  //               ? colors.greenAccent[600]
-  //               : access === "manager"
-  //               ? colors.greenAccent[700]
-  //               : colors.greenAccent[700]
-  //           }
-  //           borderRadius="4px"
-  //         >
-  //           {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-  //           {access === "manager" && <SecurityOutlinedIcon />}
-  //           {access === "user" && <LockOpenOutlinedIcon />}
-  //           <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-  //             {access}
-  //           </Typography>
-  //         </Box>
-          
-  //       );
-  //     }, 
-  //   },
-  // ];
-
-  // return (
-  //   <Box m="20px">
-  //     <Header title="TEAM" subtitle="Managing the Members" />
-  //     <Box
-  //       m=" "
-  //       height="75vh"
-  //       sx={{
-  //         "& .MuiDataGrid-root": {
-  //           border: "none",
-  //         },
-  //         "& .MuiDataGrid-cell": {
-  //           borderBottom: "none",
-  //         },
-  //         "& .name-column--cell": {
-  //           color: colors.greenAccent[300],
-  //         },
-  //         "& .MuiDataGrid-columnHeaders": {
-  //           backgroundColor: colors.blueAccent[700],
-  //           borderBottom: "none",
-  //         },
-  //         "& .MuiDataGrid-virtualScroller": {
-  //           backgroundColor: colors.primary[400],
-  //         },
-  //         "& .MuiDataGrid-footerContainer": {
-  //           borderTop: "none",
-  //           backgroundColor: colors.blueAccent[700],
-  //         },
-  //         "& .MuiCheckbox-root": {
-  //           color: `${colors.greenAccent[200]} !important`,
-  //         },
-  //       }}
-  //     >
-  //       {/* <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} /> */}
-  //     </Box>
-  //   </Box>
-  // );
-
-
-  
-
-  const [search, setSearch] = useState('');
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
-      const fetchData = async () => {
-       
-        try {
-          const response = await axios.get(
-            "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user"
-          );
-          setUsers(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user"
+        );
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const deleteUser = async (id) => {
+    await fetch(
+      `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((response) => {
+      if (response.status === 200) {
+        setUsers(
+          users.filter((user) => {
+            return user.id !== id;
+          })
+        );
+      } else {
+        return;
+      }
+    });
+  };
 
   return (
-      <div className='SearchList'>
-          <Container>
-              <h1 className='text-left fw-bold mt-4'>Team Manager</h1>
-              <Form>
-                  <InputGroup className='my-3'>
-                      <Form.Control
-                      onChange={(e) => setSearch(e.target.value)} 
-                      placeholder='Search User'
-                      />
-                  </InputGroup>
-              </Form>
-              <div className="mt-100">
-              <Table>
-                  <thead>
-                      <tr>
-                          <th>ID</th>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Access Level</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {users
-                          .filter((user) => {
-                              return search.toLowerCase() === ''
-                              ? user
-                              : user.userName.toLowerCase().includes(search);
-                      })
-                      .map((user) => (
-                          <tr key={user.id}>
-                              <td>{user.id}</td>
-                              <td>{user.userName}</td>
-                              <td>{user.email}</td>
-                              <td>{user.access_level}</td>
-                          </tr>
-                      ))}
-                      
-                  </tbody>
-              </Table>
-              </div>
-          </Container>
-      </div>
+    <Box m="20px">
+      <Header title="TEAM" subtitle="Managing the Members" />
+      <Box>
+        <Form>
+          <InputGroup className="my-3 ">
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search User"
+            />
+          </InputGroup>
+        </Form>
+
+        <Table striped bordered hover>
+          <thead className="table-primary">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>CV</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users
+              .filter((user) => {
+                return search.toLowerCase() === ""
+                  ? user
+                  : user.userName.toLowerCase().includes(search);
+              })
+              .map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.userName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.cv}</td>
+                  <td>{user.role}</td>
+                  <td className="d-flex justify-content-around">
+                    {/* <button className="btn btn-outline-warning">Edit</button> */}
+                    <button
+                      onClick={() => deleteUser(user.id)}
+                      className="btn btn-outline-danger"
+                    >
+                      Delete
+                    </button>
+                    <button onClick={handleShow} className="nextButton btn btn-outline-info">Detail</button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+          <Modal show={show} onHide={handleClose} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>User Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+        </Table>
+        
+      </Box>
+    </Box>
   );
- };
+};
 
 export default Team;
-
-
