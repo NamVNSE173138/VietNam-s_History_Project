@@ -1,5 +1,5 @@
 import { Box, IconButton, useTheme } from "@mui/material";
-import { ColorModeContext, tokens } from "../../../theme";
+import { tokens } from "../../../theme";
 import InputBase from "@mui/material/InputBase";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  // const isLogin = sessionStorage.getItem("session");
   let navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.removeItem("session");
@@ -31,15 +30,6 @@ const Topbar = () => {
 
       {/* ICONS */}
       <Box display="flex">
-        {/* <IconButton onClick={colorMode.toggleColorMode}>
-        
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton> */}
         <Button variant="light" onClick={handleLogout}>
           <LogoutIcon  /> LOG OUT
         </Button>

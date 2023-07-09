@@ -1,7 +1,7 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Select, Modal } from "antd";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 import "./Login.css";
 import CreatePost from "../../pages/CreatePost";
 
