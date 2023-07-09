@@ -184,6 +184,8 @@ const EventDetail = () => {
       <div style={{ textAlign: "center" }}>
         <img
           src={event.image}
+          alt=""
+          aria-hidden="true"
           style={{ height: "400px", width: "auto", borderRadius: "7px" }}
         />
       </div>

@@ -1,9 +1,9 @@
-import { MailOutlined, CodeOutlined, LockOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Row, Col, message, Modal } from "antd";
-import { Link } from "react-router-dom";
+import { LockOutlined, CheckCircleFilled } from "@ant-design/icons";
+import { Button, Form, Input, message, Modal } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Profile.css";
 
 const ChangePass = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -162,7 +162,19 @@ const ChangePass = () => {
       </div>
 
       <Modal
-        title="Password Updated"
+        title={
+          <>
+            <div className="pop">
+              <CheckCircleFilled
+                style={{
+                  color: "#52c41a",
+                  paddingRight: "2px",
+                }}
+              />{" "}
+              Password Updated
+            </div>
+          </>
+        }
         visible={isModalVisible}
         onOk={handleModalOk}
       >
