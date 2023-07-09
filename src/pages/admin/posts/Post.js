@@ -10,11 +10,12 @@ import Error from "../../Error";
 function Admin() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const storedSession = JSON.parse(sessionStorage.getItem("session"));
 
   return (
     <>
       <div>
-        {sessionStorage.role === "admin" ? (
+        {storedSession.role === "admin" ? (
           <>
             <ColorModeContext.Provider value={colorMode}>
               <ThemeProvider theme={theme}>

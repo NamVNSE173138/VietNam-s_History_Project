@@ -3,6 +3,8 @@ h1{
     color: #007bff;
     padding-top: 112px;
     padding-bottom: 20px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
     /* margin-top: 72px; */
   }
   button.ant-btn.css-dev-only-do-not-override-k7429z.ant-btn-primary {

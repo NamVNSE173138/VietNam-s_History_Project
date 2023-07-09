@@ -26,9 +26,6 @@ const CreatePost = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const handleRefresh = () => {
-    setRefresh(!refresh); // Toggle the state value to trigger re-render
-  };
 
   useEffect(() => {
     if (refresh) {
@@ -68,7 +65,6 @@ const CreatePost = () => {
       setDescription("");
       setRefresh(true);
       window.location.reload(); // Trigger component reload by updating the refresh state
-      // window.location.reload();
     } catch (error) {
       console.error("Error creating post:", error);
       message.error("Failed to create post");
@@ -76,7 +72,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "20px" }}>
       <Input.TextArea
         rows={4}
         placeholder="Viết bình luận..."

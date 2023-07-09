@@ -6,6 +6,7 @@ import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import CreatePost from "../Post/CreatePost";
 import EventContext from "./EventContext";
+import "./Event.css";
 
 const EventDetail = () => {
   const { eventID } = useParams();
@@ -85,8 +86,10 @@ const EventDetail = () => {
         }
         title={
           <div>
-            <a>{post.authorID} </a>{" "}
-            <i style={{ fontWeight: "inherit" }}>({post.roleOfAuthor})</i>
+            <p className="inline">{post.authorID} </p>{" "}
+            <i className="inline" style={{ fontWeight: "inherit" }}>
+              ({post.roleOfAuthor})
+            </i>
           </div>
         }
         description={<p> {post.createAt}</p>}
@@ -166,7 +169,6 @@ const EventDetail = () => {
         margin: "100px auto",
       }}
     >
-      {/* <h2>Event Detail</h2> */}
       <p
         style={{
           fontSize: "30px",
@@ -191,10 +193,8 @@ const EventDetail = () => {
       </p>
 
       <h4>Bình luận</h4>
-      <EventContext.Provider value={event.eventID}>
-        <CreatePost />
-      </EventContext.Provider>
       <List
+        style={{ marginTop: 0 }}
         itemLayout="vertical"
         size="large"
         pagination={{
@@ -206,6 +206,9 @@ const EventDetail = () => {
         dataSource={posts}
         renderItem={(post) => <PostItem post={post} />}
       />
+      <EventContext.Provider value={event.eventID}>
+        <CreatePost />
+      </EventContext.Provider>
     </div>
   );
 };

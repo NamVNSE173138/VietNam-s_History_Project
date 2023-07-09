@@ -56,3 +56,6 @@ button{
   grid: none
   
 } */
+.inline{
+  display: inline;
+}
