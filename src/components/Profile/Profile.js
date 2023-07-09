@@ -1,18 +1,8 @@
-import { Col, Row, Button, Switch } from "antd";
+import { Col, Row, Button } from "antd";
 import "./Profile.css";
-import { Link } from "react-router-dom";
 import ChangePass from "./ChangePass";
 import ToMentor from "./UpToMentor";
 import { useState } from "react";
-import { FastBackwardFilled } from "@ant-design/icons";
-
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
 const storedSession = JSON.parse(sessionStorage.getItem("session"));
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -108,12 +98,6 @@ const App = () => {
                       </div>
                     )}
                   </div>
-                  {/* <Link
-                    to={"/changePassUser"}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <Button size="large">Đổi mật khẩu</Button>
-                  </Link> */}
                 </li>
                 <li
                   className="h4 mb-2 mb-xl-3 display-28"
@@ -134,12 +118,6 @@ const App = () => {
                       </div>
                     )}
                   </div>
-                  {/* <Link
-                    to={"/ToMentor"}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <Button size="large">Đăng ký Mentor</Button>
-                  </Link> */}
                 </li>
               </ul>
             </div>

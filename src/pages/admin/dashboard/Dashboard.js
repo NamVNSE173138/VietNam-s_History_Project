@@ -10,27 +10,36 @@ function Admin() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const storedSession = JSON.parse(sessionStorage.getItem("session"));
+  const isLogin = sessionStorage.getItem("session");
 
   return (
     <>
       <div>
-        {storedSession.role === "admin" ? (
+        {!isLogin ? (
           <>
-            <ColorModeContext.Provider value={colorMode}>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <div className="app">
-                  <Sidebar isSidebar={isSidebar} />
-                  <main className="content">
-                    <Topbar setIsSidebar={setIsSidebar} />
-                    <AdDashboard />
-                  </main>
-                </div>
-              </ThemeProvider>
-            </ColorModeContext.Provider>
+            <Error />
           </>
         ) : (
-          <Error />
+          <>
+            {storedSession.role === "admin" ? (
+              <>
+                <ColorModeContext.Provider value={colorMode}>
+                  <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <div className="app">
+                      <Sidebar isSidebar={isSidebar} />
+                      <main className="content">
+                        <Topbar setIsSidebar={setIsSidebar} />
+                        <AdDashboard />
+                      </main>
+                    </div>
+                  </ThemeProvider>
+                </ColorModeContext.Provider>
+              </>
+            ) : (
+              <Error />
+            )}
+          </>
         )}
       </div>
     </>

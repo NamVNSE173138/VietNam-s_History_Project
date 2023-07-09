@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
+import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 const Events = () => {
@@ -59,6 +59,7 @@ const Events = () => {
         className="nextButton text-bg-warning mb-2 fw-bold fs-6"
       >
         <i style={{ marginRight: "10px" }} class="fa fa-plus"></i>
+        <AddIcon />
         Add event
       </Button>
       <Modal show={show} onHide={handleClose} size="lg">

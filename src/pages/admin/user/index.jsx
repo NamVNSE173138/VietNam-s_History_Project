@@ -1,5 +1,4 @@
-import { Box, useTheme } from "@mui/material";
-import { tokens } from "../../../theme";
+import { Box } from "@mui/material";
 import Header from "../../../components/admin/Header";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
@@ -10,8 +9,6 @@ import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 
 const Team = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
@@ -53,7 +50,7 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Members" />
+      <Header title="USER" subtitle="Managing the users" />
       <Box>
         <Form>
           <InputGroup className="my-3 ">
@@ -90,34 +87,42 @@ const Team = () => {
                   <td>{user.cv}</td>
                   <td>{user.role}</td>
                   <td className="d-flex justify-content-around">
-                    {/* <button className="btn btn-outline-warning">Edit</button> */}
+                    {user.role === "admin" ? null : (
+                      <button
+                        onClick={() => deleteUser(user.id)}
+                        className="btn btn-outline-danger"
+                      >
+                        Delete
+                      </button>
+                    )}
+
                     <button
-                      onClick={() => deleteUser(user.id)}
-                      className="btn btn-outline-danger"
+                      onClick={handleShow}
+                      className="nextButton btn btn-outline-info"
                     >
-                      Delete
+                      Detail
                     </button>
-                    <button onClick={handleShow} className="nextButton btn btn-outline-info">Detail</button>
                   </td>
                 </tr>
               ))}
           </tbody>
           <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>User Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Modal.Header closeButton>
+              <Modal.Title>User Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Woohoo, you're reading this text in a modal!
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleClose}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Table>
-        
       </Box>
     </Box>
   );
