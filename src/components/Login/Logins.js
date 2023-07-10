@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import "./Login.css";
 import CreatePost from "../../pages/CreatePost";
+import upToMentor from "../Profile/UpToMentor";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,13 +24,14 @@ const Login = () => {
   }, [navigate]);
 
   const onFinish = (values) => {
-    const { username, password, role } = values;
+    const { username, password, role, id } = values;
 
     fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user")
       .then((response) => response.json())
       .then((data) => {
         const user = data.find(
           (user) =>
+            
             user.userName === username &&
             user.password === password &&
             (user.role === role || user.role === "admin")
@@ -52,10 +54,15 @@ const Login = () => {
           <>
             <changePass session={session} />
             <CreatePost session={session} />
+            <upToMentor session={session} />
           </>;
         } else {
           // Handle wrong role or incorrect credentials
           console.log("Wrong role or incorrect credentials");
+          Modal.error({
+            title: "Invalid Credentials",
+            content: "Wrong role or incorrect credentials. Please try again.",
+          });
         }
       })
       .catch((error) => {

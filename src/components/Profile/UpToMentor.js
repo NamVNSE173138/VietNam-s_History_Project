@@ -1,8 +1,9 @@
 import { Button, Form, Input } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 import "./Profile.css";
-
+const storedSession = JSON.parse(sessionStorage.getItem("session"));
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: "${label} is required!",
@@ -16,10 +17,25 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const onFinish = (values) => {
-  console.log(values);
-};
-const upToMentor = () => (
+const upToMentor = () => {
+
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${storedSession.id}/request`,
+        { cv: values.linkcv },
+      );
+      
+      if (response.status === 201) {
+        console.log("CV link submitted successfully");
+        // Handle success case, show a success message, or perform any other actions as needed.
+      }
+    } catch (error) {
+      console.error("Error submitting CV link:", error);
+      // Handle error case, show an error message, or perform any other actions as needed.
+    }
+  };
+return (
   <>
     <div style={{ marginLeft: 0 }}>
       <Form
@@ -55,4 +71,5 @@ const upToMentor = () => (
     </div>
   </>
 );
+        };
 export default upToMentor;
