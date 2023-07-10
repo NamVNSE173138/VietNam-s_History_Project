@@ -1,11 +1,7 @@
-import { Box } from "@mui/material";
-import Header from "../../../components/admin/Header";
 import React, { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 import { Table } from "react-bootstrap";
-import { Form } from "react-bootstrap";
-import { InputGroup } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Modal } from "react-bootstrap";
+import { Form, InputGroup, Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,8 +11,87 @@ const Events = () => {
   const [search, setSearch] = useState("");
   const [events, setEvents] = useState([]);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const [eventName, setEventName] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const [timeline, setTimeline] = useState("");
+  const [dysnaty, setDysnaty] = useState("");
+  const [image, setImage] = useState("");
+  const [grade, setGrade] = useState("");
+  const [eventID, setEventID] = useState("");
+
+  const handleClose = () => {
+    setShow(false);
+    resetForm();
+  };
   const handleShow = () => setShow(true);
+
+  const resetForm = () => {
+    setEventName("");
+    setLocation("");
+    setDescription("");
+    setTimeline("");
+    setDysnaty("");
+    setImage("");
+    setGrade("");
+    setEventID("");
+  };
+
+  const onFinish = async (e) => {
+    e.preventDefault();
+
+    try {
+      const [eventNameResponse, eventIDResponse] = await Promise.all([
+        axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event?userName=${eventName}`
+        ),
+        axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event?eventID=${eventID}`
+        ),
+      ]);
+
+      if (
+        eventNameResponse.data.some((event) => event.eventName === eventName)
+      ) {
+        alert(
+          `The event name "${eventName}" already exists. Please choose a different event name.`
+        );
+        return;
+      }
+
+      if (eventIDResponse.data.some((event) => event.eventID === eventID)) {
+        alert(
+          `The event ID "${eventID}" already exists. Please choose a different event ID.`
+        );
+        return;
+      }
+    } catch (error) {
+      console.error("Error checking fields:", error);
+    }
+
+    const newEvent = {
+      eventName: eventName,
+      location,
+      description,
+      timeline,
+      dysnaty,
+      image,
+      grade,
+      eventID: eventID,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event",
+        newEvent
+      );
+      console.log("Event created successfully:", response.data);
+      alert(`The event "${eventName}" was created successfully!`);
+      handleClose();
+    } catch (error) {
+      console.error("Error creating event:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,32 +108,28 @@ const Events = () => {
   }, []);
 
   const deleteEvent = async (id) => {
-    await fetch(
-      `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${id}`,
-      {
-        method: "DELETE",
-      }
-    ).then((response) => {
+    try {
+      const response = await axios.delete(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${id}`
+      );
       if (response.status === 200) {
-        setEvents(
-          events.filter((event) => {
-            return event.eventID !== id;
-          })
-        );
+        setEvents(events.filter((event) => event.eventID !== id));
       } else {
-        return;
+        console.error("Error deleting event:", response);
       }
-    });
+    } catch (error) {
+      console.error("Error deleting event:", error);
+    }
   };
 
   return (
     <Box m="20px">
-      <Header title="Event" subtitle="Managing Events" />
+      <h1>Event</h1>
       <Button
         onClick={handleShow}
         className="nextButton text-bg-warning mb-2 fw-bold fs-6"
       >
-        <i style={{ marginRight: "10px" }} class="fa fa-plus"></i>
+        <i style={{ marginRight: "10px" }} className="fa fa-plus"></i>
         <AddIcon />
         Add event
       </Button>
@@ -67,67 +138,89 @@ const Events = () => {
           <Modal.Title>Thêm sự kiện</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={onFinish}>
             <Form.Group className="mb-3" controlId="eventName">
               <Form.Label>Sự kiện</Form.Label>
-              <Form.Control placeholder="Tên sự kiện" />
+              <Form.Control
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+                placeholder="Tên sự kiện"
+              />
             </Form.Group>
-
             <Row className="mb-3">
               <Form.Group as={Col} controlId="location">
                 <Form.Label>Địa điểm</Form.Label>
-                <Form.Control placeholder="Vd: Gia Định..." />
+                <Form.Control
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Vd: Gia Định..."
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="dysnaty">
                 <Form.Label>Thời kỳ</Form.Label>
-                <Form.Control placeholder="Vd: Nhà Nguyễn..." />
+                <Form.Control
+                  value={dysnaty}
+                  onChange={(e) => setDysnaty(e.target.value)}
+                  placeholder="Vd: Nhà Nguyễn..."
+                />
               </Form.Group>
             </Row>
-
             <Row className="mb-3">
               <Form.Group as={Col} controlId="timeline">
                 <Form.Label>Thời gian</Form.Label>
-                <Form.Control placeholder="Vd: 1859..." />
+                <Form.Control
+                  value={timeline}
+                  onChange={(e) => setTimeline(e.target.value)}
+                  placeholder="Vd: 1859..."
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="grade">
                 <Form.Label>Lớp</Form.Label>
-                <Form.Control placeholder="Vd: 8..." />
+                <Form.Control
+                  value={grade}
+                  onChange={(e) => setGrade(e.target.value)}
+                  placeholder="Vd: 8..."
+                />
               </Form.Group>
             </Row>
-
             <Form.Group className="mb-3" controlId="description">
               <Form.Label>Tư liệu</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                as="textarea"
+                rows={3}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="image">
               <Form.Label>Link ảnh</Form.Label>
-              <Form.Control placeholder="ad@..." />
+              <Form.Control
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+                placeholder="ad@..."
+              />
             </Form.Group>
-
             <Form.Group className="md-3" controlId="eventID">
               <Form.Label>ID</Form.Label>
-              <Form.Control placeholder="Khác với ID đã có" />
+              <Form.Control
+                value={eventID}
+                onChange={(e) => setEventID(e.target.value)}
+                placeholder="Khác với ID đã có"
+              />
             </Form.Group>
 
-            <Button
-              style={{ marginTop: "20px" }}
-              variant="primary"
-              type="submit"
-            >
-              Submit
-            </Button>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Hủy
+              </Button>
+              <Button variant="primary" type="submit">
+                Thêm
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Hủy
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Thêm
-          </Button>
-        </Modal.Footer>
       </Modal>
       <Form>
         <InputGroup className="my-3">
@@ -163,7 +256,7 @@ const Events = () => {
                   <td>{event.eventName}</td>
                   <td>{event.location}</td>
                   <td>{event.grade}</td>
-                  <td>{event.dynasty}</td>
+                  <td>{event.dysnaty}</td>
                   <td>{event.timeline}</td>
                   <td className="d-flex justify-content-around">
                     <button className="btn btn-outline-warning">Edit</button>
