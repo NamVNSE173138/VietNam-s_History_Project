@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
-
+import Header from "../../../components/admin/Header";
 const Events = () => {
   const [search, setSearch] = useState("");
   const [events, setEvents] = useState([]);
@@ -54,7 +54,7 @@ const Events = () => {
         eventNameResponse.data.some((event) => event.eventName === eventName)
       ) {
         alert(
-          `The event name "${eventName}" already exists. Please choose a different event name.`
+          `The event "${eventName}" already exists. Please create a different event.`
         );
         return;
       }
@@ -91,6 +91,17 @@ const Events = () => {
     } catch (error) {
       console.error("Error creating event:", error);
     }
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
+        );
+        setEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   };
 
   useEffect(() => {
@@ -124,7 +135,7 @@ const Events = () => {
 
   return (
     <Box m="20px">
-      <h1>Event</h1>
+      <Header title="Event" subtitle="Managing Events" />
       <Button
         onClick={handleShow}
         className="nextButton text-bg-warning mb-2 fw-bold fs-6"
@@ -215,7 +226,7 @@ const Events = () => {
               <Button variant="secondary" onClick={handleClose}>
                 Hủy
               </Button>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit"  >
                 Thêm
               </Button>
             </Modal.Footer>
