@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import Header from "../../../components/admin/Header";
+
 const Events = () => {
   const [search, setSearch] = useState("");
   const [events, setEvents] = useState([]);
@@ -19,16 +20,17 @@ const Events = () => {
   const [image, setImage] = useState("");
   const [grade, setGrade] = useState("");
   const [eventID, setEventID] = useState("");
- 
+
   const [showEditModal, setShowEditModal] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [editedData, setEditedData] = useState({});
-  const [objectId, setObjectId] = useState('');
+  const [objectId, setObjectId] = useState("");
 
   const handleClose = () => {
     setShow(false);
     resetForm();
   };
+
   const handleShow = () => setShow(true);
 
   const resetForm = () => {
@@ -75,14 +77,14 @@ const Events = () => {
     }
 
     const newEvent = {
-      eventName: eventName,
+      eventName,
       location,
       description,
       timeline,
       dysnaty,
       image,
       grade,
-      eventID: eventID,
+      eventID,
     };
 
     try {
@@ -93,33 +95,24 @@ const Events = () => {
       console.log("Event created successfully:", response.data);
       alert(`The event "${eventName}" was created successfully!`);
       handleClose();
+      fetchData();
     } catch (error) {
       console.error("Error creating event:", error);
     }
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
-        );
-        setEvents(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
+      );
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
-        );
-        setEvents(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -139,26 +132,32 @@ const Events = () => {
   };
 
   const openModal = (id) => {
-    axios.get(`https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${id}`)
-      .then(response => {
+    axios
+      .get(`https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${id}`)
+      .then((response) => {
         setModalData(response.data);
-        // setObjectId(id);
+        setObjectId(id);
         setEditedData(response.data);
         setShowEditModal(true);
       })
-      .catch(error => {
-        console.error('Error fetching object data:', error);
+      .catch((error) => {
+        console.error("Error fetching object data:", error);
       });
   };
 
-  const handleSave = (id) => {
-    axios.put(`https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${id}`, editedData)
-      .then(response => {
+  const handleSave = () => {
+    axios
+      .put(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${objectId}`,
+        editedData
+      )
+      .then((response) => {
         setModalData(editedData);
         setShowEditModal(false);
+        fetchData();
       })
-      .catch(error => {
-        console.error('Error updating object data:', error);
+      .catch((error) => {
+        console.error("Error updating object data:", error);
       });
   };
 
@@ -166,7 +165,7 @@ const Events = () => {
     <Box m="20px">
       <Header title="Event" subtitle="Managing Events" />
       <Button
-        onClick={handleShow} 
+        onClick={handleShow}
         className="nextButton text-bg-warning mb-2 fw-bold fs-6"
       >
         <i style={{ marginRight: "10px" }} className="fa fa-plus"></i>
@@ -182,9 +181,8 @@ const Events = () => {
             <Form.Group className="mb-3" controlId="eventName">
               <Form.Label>Sự kiện</Form.Label>
               <Form.Control
-                value={editedData.eventName}
+                value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
-                // onChange={(e) => setEditedData({ ...editedData, eventname: e.target.value })}
                 placeholder="Tên sự kiện"
               />
             </Form.Group>
@@ -253,12 +251,11 @@ const Events = () => {
               <Button variant="secondary" onClick={handleClose}>
                 Hủy
               </Button>
-              <Button variant="primary" type="submit"  >
+              <Button variant="primary" type="submit">
                 Thêm
               </Button>
             </Modal.Footer>
           </Form>
-          
         </Modal.Body>
       </Modal>
       <Form>
@@ -298,101 +295,145 @@ const Events = () => {
                   <td>{event.dysnaty}</td>
                   <td>{event.timeline}</td>
                   <td className="d-flex justify-content-around">
-                    <button onClick={() => openModal(event.eventID)} className="nextButton btn btn-outline-warning">Edit</button>
+                    <button
+                      onClick={() => openModal(event.eventID)}
+                      className="nextButton btn btn-outline-warning"
+                    >
+                      Edit
+                    </button>
                     <button
                       onClick={() => deleteEvent(event.eventID)}
                       className="btn btn-outline-danger"
                     >
                       Delete
                     </button>
-                    {/* <button onClick={handleShow} className="nextButton btn btn-outline-info">Detail</button> */}
                   </td>
                 </tr>
               ))}
           </tbody>
-          <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Thông tin đối tượng</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {modalData && (
-            <Form>
-              <Form.Group controlId="eventName">
-                <Form.Label>Tên sự kiện</Form.Label>
-                <Form.Control
-                  value={editedData.eventName}
-                  onChange={(e) => setEditedData({ ...editedData, eventName: e.target.value })}
-                />
-              </Form.Group>
-              <Row className="mb-3">
-              <Form.Group as={Col} controlId="location">
-                <Form.Label>Địa điểm</Form.Label>
-                <Form.Control
-                  value={editedData.location}
-                  onChange={(e) => setEditedData({ ...editedData, location: e.target.value })}
-                  
-                />
-              </Form.Group>
-              <Form.Group as={Col} controlId="dysnaty">
-                <Form.Label>Thời kỳ</Form.Label>
-                <Form.Control
-                  value={editedData.dysnaty}
-                  onChange={(e) => setEditedData({ ...editedData, dysnaty: e.target.value })}
-                />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="timeline">
-                <Form.Label>Thời gian</Form.Label>
-                <Form.Control
-                  value={editedData.timeline}
-                  onChange={(e) => setEditedData({ ...editedData, timeline: e.target.value })}
-                  
-                />
-              </Form.Group>
-              <Form.Group as={Col} controlId="grade">
-                <Form.Label>Lớp</Form.Label>
-                <Form.Control
-                  value={editedData.grade}
-                  onChange={(e) => setEditedData({ ...editedData, grade: e.target.value })}
-                />
-              </Form.Group>
-            </Row>
-            <Form.Group className="mb-3" controlId="description">
-              <Form.Label>Tư liệu</Form.Label>
-              <Form.Control
-                value={editedData.description}
-                onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                as="textarea"
-                rows={3}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="image">
-              <Form.Label>Link ảnh</Form.Label>
-              <Form.Control
-                value={editedData.image}
-                onChange={(e) =>  setEditedData({ ...editedData, image: e.target.value })}
-                
-              />
-            </Form.Group>
-            <Form.Group className="md-3" controlId="eventID">
-              <Form.Label>ID</Form.Label>
-              <Form.Control
-                value={editedData.eventID}
-                onChange={(e) => setEditedData({ ...editedData, eventID: e.target.value })}
-                
-              />
-            </Form.Group>
-            </Form>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleSave}>
-            Cập nhật
-          </Button>
-        </Modal.Footer>
-      </Modal>
         </Table>
+        <Modal
+          show={showEditModal}
+          onHide={() => setShowEditModal(false)}
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Thông tin đối tượng</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {modalData && (
+              <Form>
+                <Form.Group controlId="eventName">
+                  <Form.Label>Tên sự kiện</Form.Label>
+                  <Form.Control
+                    value={editedData.eventName || ""}
+                    onChange={(e) =>
+                      setEditedData({
+                        ...editedData,
+                        eventName: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="location">
+                    <Form.Label>Địa điểm</Form.Label>
+                    <Form.Control
+                      value={editedData.location || ""}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          location: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group as={Col} controlId="dysnaty">
+                    <Form.Label>Thời kỳ</Form.Label>
+                    <Form.Control
+                      value={editedData.dysnaty || ""}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          dysnaty: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="timeline">
+                    <Form.Label>Thời gian</Form.Label>
+                    <Form.Control
+                      value={editedData.timeline || ""}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          timeline: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group as={Col} controlId="grade">
+                    <Form.Label>Lớp</Form.Label>
+                    <Form.Control
+                      value={editedData.grade || ""}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          grade: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                </Row>
+                <Form.Group className="mb-3" controlId="description">
+                  <Form.Label>Tư liệu</Form.Label>
+                  <Form.Control
+                    value={editedData.description || ""}
+                    onChange={(e) =>
+                      setEditedData({
+                        ...editedData,
+                        description: e.target.value,
+                      })
+                    }
+                    as="textarea"
+                    rows={3}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="image">
+                  <Form.Label>Link ảnh</Form.Label>
+                  <Form.Control
+                    value={editedData.image || ""}
+                    onChange={(e) =>
+                      setEditedData({
+                        ...editedData,
+                        image: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+                <Form.Group className="md-3" controlId="eventID">
+                  <Form.Label>ID</Form.Label>
+                  <Form.Control
+                    value={editedData.eventID || ""}
+                    onChange={(e) =>
+                      setEditedData({
+                        ...editedData,
+                        eventID: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Form>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handleSave}>
+              Cập nhật
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Box>
     </Box>
   );
