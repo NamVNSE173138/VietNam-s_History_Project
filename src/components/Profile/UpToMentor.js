@@ -18,14 +18,13 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const upToMentor = () => {
-
   const onFinish = async (values) => {
     try {
       const response = await axios.post(
         `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${storedSession.id}/request`,
-        { cv: values.linkcv },
+        { cv: values.linkcv }
       );
-      
+
       if (response.status === 201) {
         console.log("CV link submitted successfully");
         // Handle success case, show a success message, or perform any other actions as needed.
@@ -35,41 +34,41 @@ const upToMentor = () => {
       // Handle error case, show an error message, or perform any other actions as needed.
     }
   };
-return (
-  <>
-    <div style={{ marginLeft: 0 }}>
-      <Form
-        name="nest-messages"
-        onFinish={onFinish}
-        style={{
-          maxWidth: 600,
-          marginLeft: 0,
-          marginTop: "10px",
-        }}
-        validateMessages={validateMessages}
-      >
-        <Form.Item
-          name="linkcv"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng điền link CV!",
-            },
-          ]}
+  return (
+    <>
+      <div style={{ marginLeft: 0 }}>
+        <Form
+          name="nest-messages"
+          onFinish={onFinish}
+          style={{
+            maxWidth: 600,
+            marginLeft: 0,
+            marginTop: "10px",
+          }}
+          validateMessages={validateMessages}
         >
-          <Input
-            prefix={<LinkOutlined className="site-form-item-icon" />}
-            type="linkcv"
-            placeholder="Link CV"
-          />
-        </Form.Item>
+          <Form.Item
+            name="linkcv"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng điền link CV!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<LinkOutlined className="site-form-item-icon" />}
+              type="linkcv"
+              placeholder="Link CV"
+            />
+          </Form.Item>
 
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form>
-    </div>
-  </>
-);
-        };
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form>
+      </div>
+    </>
+  );
+};
 export default upToMentor;
