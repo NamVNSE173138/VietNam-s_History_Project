@@ -24,7 +24,7 @@ const Login = () => {
   }, [navigate]);
 
   const onFinish = (values) => {
-    const { username, password, role, id } = values;
+    const { username, password, role } = values;
 
     fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user")
       .then((response) => response.json())
