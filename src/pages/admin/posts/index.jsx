@@ -11,6 +11,9 @@ const Posts = () => {
   const [search, setSearch] = useState("");
   const [posts, setPosts] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,6 +47,25 @@ const Posts = () => {
     });
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Logic for pagination
+  const indexOfLastPost = currentPage * pageSize;
+  const indexOfFirstPost = indexOfLastPost - pageSize;
+  const displayedPosts = posts
+    .filter((post) => {
+        return search.toLowerCase() === ""
+        ? post
+        : post.authorID.toLowerCase().includes(search);
+      
+    })
+    .slice(indexOfFirstPost, indexOfLastPost);
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(posts.length / pageSize);
+
   return (
     <Box m="20px">
       <Header title="POST" subtitle="Managing Posts" />
@@ -69,13 +91,13 @@ const Posts = () => {
             </tr>
           </thead>
           <tbody>
-            {posts
+            {/* {posts
               .filter((post) => {
                 return search.toLowerCase() === ""
                   ? post
                   : post.authorID.toLowerCase().includes(search);
-              })
-              .map((post) => (
+              }) */}
+              {displayedPosts.map((post) => (
                 <tr key={post.id}>
                   <td>{post.id}</td>
                   <td>{post.authorID}</td>
@@ -96,6 +118,24 @@ const Posts = () => {
               ))}
           </tbody>
         </Table>
+         {/* Pagination */}
+         <nav>
+          <ul className="pagination justify-content-center">
+            {Array.from(Array(totalPages).keys()).map((page) => (
+              <li
+                key={page}
+                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(page + 1)}
+                >
+                  {page + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Box>
     </Box>
   );
