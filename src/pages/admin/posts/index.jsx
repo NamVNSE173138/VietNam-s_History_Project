@@ -81,10 +81,9 @@ const Posts = () => {
                   <td>{post.authorID}</td>
                   <td>{post.like}</td>
                   <td>{post.isReported}</td>
-                  <td>{post.commentCounter}</td>
+                  <td>{post.description}</td>
                   <td>{post.createAt}</td>
                   <td className="d-flex justify-content-around">
-                    <button className="btn btn-outline-warning">Edit</button>
                     <button
                       onClick={() => deletePost(post.id)}
                       className="btn btn-outline-danger"
