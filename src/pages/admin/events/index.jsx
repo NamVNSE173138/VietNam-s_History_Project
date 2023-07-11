@@ -151,10 +151,6 @@ const Events = () => {
       });
   };
 
-  // const handleEventClose = () => {
-  //   setShowModal(false);
-  // };
-
   const handleSave = (id) => {
     axios.put(`https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${id}`, editedData)
       .then(response => {
@@ -162,10 +158,9 @@ const Events = () => {
         setShowEditModal(false);
       })
       .catch(error => {
-        // console.error('Error updating object data:', error);
+        console.error('Error updating object data:', error);
       });
   };
-
 
   return (
     <Box m="20px">
@@ -183,7 +178,6 @@ const Events = () => {
           <Modal.Title>Thêm sự kiện</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          
           <Form onSubmit={onFinish}>
             <Form.Group className="mb-3" controlId="eventName">
               <Form.Label>Sự kiện</Form.Label>
@@ -203,7 +197,6 @@ const Events = () => {
                   placeholder="Vd: Gia Định..."
                 />
               </Form.Group>
-
               <Form.Group as={Col} controlId="dysnaty">
                 <Form.Label>Thời kỳ</Form.Label>
                 <Form.Control
@@ -222,7 +215,6 @@ const Events = () => {
                   placeholder="Vd: 1859..."
                 />
               </Form.Group>
-
               <Form.Group as={Col} controlId="grade">
                 <Form.Label>Lớp</Form.Label>
                 <Form.Control
@@ -257,7 +249,6 @@ const Events = () => {
                 placeholder="Khác với ID đã có"
               />
             </Form.Group>
-
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 Hủy
@@ -265,9 +256,6 @@ const Events = () => {
               <Button variant="primary" type="submit"  >
                 Thêm
               </Button>
-              {/* <Button variant="primary" onClick={handleSave}>
-                Cập nhật
-              </Button> */}
             </Modal.Footer>
           </Form>
           
@@ -362,7 +350,6 @@ const Events = () => {
                   
                 />
               </Form.Group>
-
               <Form.Group as={Col} controlId="grade">
                 <Form.Label>Lớp</Form.Label>
                 <Form.Control
@@ -400,17 +387,12 @@ const Events = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Đóng
-          </Button>
           <Button variant="primary" onClick={handleSave}>
             Cập nhật
           </Button>
         </Modal.Footer>
       </Modal>
-    
         </Table>
-        
       </Box>
     </Box>
   );

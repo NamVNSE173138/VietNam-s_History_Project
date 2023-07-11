@@ -9,7 +9,7 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-
+import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -151,20 +151,21 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            {/* <Typography
+            <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Authentication
             </Typography>
+           
             <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
+              title="Link CV"
+              // to="/form"
+              icon={<AdminPanelSettingsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
+            /> 
             
           </Box>
         </Menu>
