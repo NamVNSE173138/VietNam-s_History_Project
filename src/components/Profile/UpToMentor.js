@@ -22,7 +22,7 @@ const upToMentor = () => {
     try {
       const response = await axios.post(
         `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/request`,
-        { cv: values.linkcv, userID : storedSession.userID },
+        { cv: values.linkcv, userID: storedSession.id }
       );
 
       if (response.status === 201) {

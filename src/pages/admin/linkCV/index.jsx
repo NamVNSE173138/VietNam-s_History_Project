@@ -23,7 +23,7 @@ const LinkCv = () => {
           setUserId(user.id);
 
           const requestResponse = await axios.get(
-            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${user.id}/request`
+            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/request`
           );
           setLinkCv(requestResponse.data);
         }
@@ -78,7 +78,7 @@ const LinkCv = () => {
                 .map((request) => (
                   <tr key={request.id}>
                     <td>{request.id}</td>
-                    <td>{request.userId}</td>
+                    <td>{request.userID}</td>
                     <td>{request.cv}</td>
                     <td className="d-flex justify-content-around">
                       <button className="btn btn-outline-success">
