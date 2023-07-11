@@ -5,16 +5,25 @@ import ToMentor from "./UpToMentor";
 import { useState,useEffect } from "react";
 const storedSession = JSON.parse(sessionStorage.getItem("session"));
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true); // Initially set loading state to true
+  const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+ 
 
   useEffect(() => {
-    // Simulating loading data from an API or performing some async operation
-    setTimeout(() => {
-      setIsLoading(false); // Set loading state to false after a certain delay
-    }, 2000); // Adjust the delay time according to your needs
+    // Simulating a delay of 2 seconds
+    const delay = 2000;
+
+    // Set the loading state to true initially
+    setIsLoading(true);
+
+    // After the given delay, set the loading state to false
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, delay);
+
+    // Clear the timer when the component unmounts
+    return () => clearTimeout(timer);
   }, []);
-  
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -33,13 +42,25 @@ const App = () => {
   return (
     <>
       {isLoading ? (
-        <div className="spinner"></div>
-      ) : (
+      <div className="spin-container">
+        <div className="spin"></div>
+      </div>
+    ) : (
         <div className="profile" style={{ height: "760px" }}>
-          <h2 style={{ textAlign: "center", fontSize: "50px", paddingBottom: "20px" }}>
+          <h2
+            style={{
+              textAlign: "center",
+              fontSize: "50px",
+              paddingBottom: "20px",
+            }}
+          >
             Trang cá nhân
           </h2>
-          <Row style={{ height: "254px" }}>
+          <Row
+            style={{
+              height: "254px",
+            }}
+          >
             <Col span={12}>
               <div className="">
                 <img
@@ -58,32 +79,70 @@ const App = () => {
             <Col span={12}>
               <div>
                 <div>
-                  <h3 className="h2 text-black mb-0">Tên người dùng: {storedSession.username}</h3>
+                  <h3 className="h2 text-black mb-0">
+                    Tên người dùng: {storedSession.username}
+                  </h3>
                 </div>
                 <ul className="list-unstyled mb-1-9">
-                  <li className="h4 mb-2 mb-xl-3 display-28" style={{ fontFamily: "Archivo Narrow" }}>
-                    <span className="display-26 text-secondary me-2 font-weight-600">Chức vụ:</span>{" "}
+                  <li
+                    className=" h4 mb-2 mb-xl-3 display-28"
+                    style={{ fontFamily: "Archivo Narrow" }}
+                  >
+                    <span className="display-26 text-secondary me-2 font-weight-600">
+                      Chức vụ:
+                    </span>{" "}
                     {storedSession.role}
                   </li>
-                  <li className="h4 mb-2 mb-xl-3 display-28" style={{ fontFamily: "Archivo Narrow" }}>
-                    <span className="display-26 text-secondary me-2 font-weight-600">ID:</span>{" "}
+                  <li
+                    className=" h4 mb-2 mb-xl-3 display-28"
+                    style={{ fontFamily: "Archivo Narrow" }}
+                  >
+                    <span className="display-26 text-secondary me-2 font-weight-600">
+                      ID:
+                    </span>{" "}
                     {storedSession.id}
                   </li>
-                  <li className="h4 mb-2 mb-xl-3 display-28" style={{ fontFamily: "Archivo Narrow" }}>
-                    {!isOpen && (
-                      <Button type="primary" onClick={handleOpenn}>
-                        Upgrade to Mentor
-                      </Button>
-                    )}
-  
-                    {isOpenn && <ToMentor handleClosen={handleClosen} />}
+                  <li
+                    className="h4 mb-2 mb-xl-3 display-28"
+                    style={{ fontFamily: "Archivo Narrow" }}
+                  >
+                    <div>
+                      {!isOpen && (
+                        <Button onClick={handleOpen} size="large">
+                          Đổi mật khẩu
+                        </Button>
+                      )}
+                      {isOpen && (
+                        <div>
+                          <Button onClick={handleClose} size="large">
+                            Hủy
+                          </Button>
+                          <ChangePass />
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                  <li
+                    className="h4 mb-2 mb-xl-3 display-28"
+                    style={{ fontFamily: "Archivo Narrow" }}
+                  >
+                    <div>
+                      {!isOpenn && (
+                        <Button onClick={handleOpenn} size="large">
+                          Đăng ký làm Mentor
+                        </Button>
+                      )}
+                      {isOpenn && (
+                        <div>
+                          <Button onClick={handleClosen} size="large">
+                            Hủy
+                          </Button>
+                          <ToMentor />
+                        </div>
+                      )}
+                    </div>
                   </li>
                 </ul>
-  
-                <a href={storedSession.resetLink} onClick={handleOpen}>
-                  Thay đổi mật khẩu
-                </a>
-                {isOpen && <ChangePass handleClose={handleClose} />}
               </div>
             </Col>
           </Row>
@@ -91,8 +150,5 @@ const App = () => {
       )}
     </>
   );
-  
-  
-};
-
+                      };
 export default App;
