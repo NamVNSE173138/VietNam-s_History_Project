@@ -90,10 +90,10 @@ nav li.header a{
   }
 
 @media (max-width: 768px) {
-  .nav-links{
+  nav.header .nav-links{
     display: none;
   }
-  .nav-links-mobile{
+  nav.header .nav-links-mobile{
     position: absolute;
     display: block;
     list-style: none;
