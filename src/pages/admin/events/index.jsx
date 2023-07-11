@@ -26,6 +26,9 @@ const Events = () => {
   const [editedData, setEditedData] = useState({});
   const [objectId, setObjectId] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+
   const handleClose = () => {
     setShow(false);
     resetForm();
@@ -161,6 +164,24 @@ const Events = () => {
       });
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+   // Logic for pagination
+   const indexOfLastEvent = currentPage * pageSize;
+   const indexOfFirstEvent = indexOfLastEvent - pageSize;
+   const displayedEvents = events
+     .filter((event) => {
+      return search.toLowerCase() === ""
+      ? event
+      : event.eventName.toLowerCase().includes(search);
+     })
+     .slice(indexOfFirstEvent, indexOfLastEvent);
+ 
+   // Calculate the total number of pages
+   const totalPages = Math.ceil(events.length / pageSize);
+
   return (
     <Box m="20px">
       <Header title="Event" subtitle="Managing Events" />
@@ -280,13 +301,13 @@ const Events = () => {
             </tr>
           </thead>
           <tbody>
-            {events
+            {/* {events
               .filter((event) => {
                 return search.toLowerCase() === ""
                   ? event
                   : event.eventName.toLowerCase().includes(search);
-              })
-              .map((event) => (
+              }) */}
+              {displayedEvents.map((event) => (
                 <tr key={event.eventID}>
                   <td>{event.eventID}</td>
                   <td>{event.eventName}</td>
@@ -312,6 +333,7 @@ const Events = () => {
               ))}
           </tbody>
         </Table>
+
         <Modal
           show={showEditModal}
           onHide={() => setShowEditModal(false)}
@@ -434,6 +456,24 @@ const Events = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+         {/* Pagination */}
+         <nav>
+          <ul className="pagination justify-content-center">
+            {Array.from(Array(totalPages).keys()).map((page) => (
+              <li
+                key={page}
+                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(page + 1)}
+                >
+                  {page + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Box>
     </Box>
   );

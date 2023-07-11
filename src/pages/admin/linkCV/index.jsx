@@ -7,9 +7,11 @@ import axios from "axios";
 
 const LinkCv = () => {
   const [search, setSearch] = useState("");
-  const [linkCv, setLinkCv] = useState([]);
+  const [linkCvs, setLinkCv] = useState([]);
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +38,25 @@ const LinkCv = () => {
     fetchData();
   }, []);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Logic for pagination
+  const indexOfLastLinkCV = currentPage * pageSize;
+  const indexOfFirstLinkCV = indexOfLastLinkCV - pageSize;
+  const displayedLinkCV = linkCvs
+    .filter((linkCv) => {
+      return (
+        search.toLowerCase() === "" ||
+        linkCv.userName.toLowerCase().includes(search)
+      );
+    })
+    .slice(indexOfFirstLinkCV, indexOfLastLinkCV);
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(linkCvs.length / pageSize);
+
   return (
     <Box m="20px">
       <Header title="CV" subtitle="Managing CV" />
@@ -43,7 +64,7 @@ const LinkCv = () => {
         <InputGroup className="my-3">
           <Form.Control
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search Posts"
+            placeholder="Search CVs"
           />
         </InputGroup>
       </Form>
@@ -61,8 +82,8 @@ const LinkCv = () => {
               </tr>
             </thead>
             <tbody>
-              {linkCv
-                .filter((request) => {
+              {/* {linkCvs
+                 .filter((request) => {
                   return (
                     search.toLowerCase() === "" ||
                     request.id
@@ -74,7 +95,8 @@ const LinkCv = () => {
                       .toLowerCase()
                       .includes(search.toLowerCase())
                   );
-                })
+                })  */}
+                {displayedLinkCV
                 .map((request) => (
                   <tr key={request.id}>
                     <td>{request.id}</td>
@@ -90,7 +112,26 @@ const LinkCv = () => {
                 ))}
             </tbody>
           </Table>
+          
         )}
+        {/* Pagination */}
+        <nav>
+          <ul className="pagination justify-content-center">
+            {Array.from(Array(totalPages).keys()).map((page) => (
+              <li
+                key={page}
+                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(page + 1)}
+                >
+                  {page + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Box>
     </Box>
   );

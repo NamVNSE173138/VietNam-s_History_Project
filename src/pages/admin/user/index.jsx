@@ -1,3 +1,4 @@
+
 import { Box } from "@mui/material";
 import Header from "../../../components/admin/Header";
 import React, { useEffect, useState } from "react";
@@ -12,6 +13,9 @@ const Team = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -48,6 +52,25 @@ const Team = () => {
     });
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Logic for pagination
+  const indexOfLastUser = currentPage * pageSize;
+  const indexOfFirstUser = indexOfLastUser - pageSize;
+  const displayedUsers = users
+    .filter((user) => {
+      return (
+        search.toLowerCase() === "" ||
+        user.userName.toLowerCase().includes(search)
+      );
+    })
+    .slice(indexOfFirstUser, indexOfLastUser);
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(users.length / pageSize);
+
   return (
     <Box m="20px">
       <Header title="USER" subtitle="Managing the users" />
@@ -67,44 +90,36 @@ const Team = () => {
               <th>ID</th>
               <th>Name</th>
               <th>Email</th>
-              <th>CV</th>
               <th>Role</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {users
-              .filter((user) => {
-                return search.toLowerCase() === ""
-                  ? user
-                  : user.userName.toLowerCase().includes(search);
-              })
-              .map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.userName}</td>
-                  <td>{user.email}</td>
-                  <td>{user.cv}</td>
-                  <td>{user.role}</td>
-                  <td className="d-flex justify-content-around">
-                    {user.role === "admin" ? null : (
-                      <button
-                        onClick={() => deleteUser(user.id)}
-                        className="btn btn-outline-danger"
-                      >
-                        Delete
-                      </button>
-                    )}
-
+            {displayedUsers.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.userName}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+                <td className="d-flex justify-content-around">
+                  {user.role === "admin" ? null : (
                     <button
-                      onClick={handleShow}
-                      className="nextButton btn btn-outline-info"
+                      onClick={() => deleteUser(user.id)}
+                      className="btn btn-outline-danger"
                     >
-                      Detail
+                      Delete
                     </button>
-                  </td>
-                </tr>
-              ))}
+                  )}
+
+                  <button
+                    onClick={handleShow}
+                    className="nextButton btn btn-outline-info"
+                  >
+                    Detail
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
           <Modal show={show} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
@@ -123,6 +138,25 @@ const Team = () => {
             </Modal.Footer>
           </Modal>
         </Table>
+
+        {/* Pagination */}
+        <nav>
+          <ul className="pagination justify-content-center">
+            {Array.from(Array(totalPages).keys()).map((page) => (
+              <li
+                key={page}
+                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(page + 1)}
+                >
+                  {page + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Box>
     </Box>
   );
