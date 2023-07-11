@@ -19,6 +19,7 @@ import Admin from "./pages/admin/dashboard/Dashboard";
 import AdEvent from "./pages/admin/events/Event";
 import AdUser from "./pages/admin/user/User";
 import AdPost from "./pages/admin/posts/Post";
+import AdLinkCv from "./pages/admin/linkCV/CV";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
       <Route path="/admin/events" element={<AdEvent />} />
       <Route path="/admin/user" element={<AdUser />} />
       <Route path="/admin/post" element={<AdPost />} />
+      <Route path="/admin/linkCV" element={<AdLinkCv />} />
     </Routes>
   );
 }

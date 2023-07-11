@@ -161,7 +161,7 @@ const Sidebar = () => {
            
             <Item
               title="Link CV"
-              // to="/form"
+              to="/admin/linkCV"
               icon={<AdminPanelSettingsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
