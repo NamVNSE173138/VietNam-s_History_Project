@@ -1,278 +1,239 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { tokens } from "../../../theme";
-import { mockTransactions } from "../../../assets/data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+import ArticleIcon from "@mui/icons-material/Article";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import PersonIcon from "@mui/icons-material/Person";
+import CommentIcon from "@mui/icons-material/Comment";
 import Header from "../../../components/admin/Header";
-import LineChart from "../../../components/admin/LineChart";
 import StatBox from "../../../components/admin/StatBox";
+import "./Dashboard.css";
+import Row from "react-bootstrap/Row";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalPost, setTotalPost] = useState(0);
+  const [totalEvent, setTotalEvent] = useState(0);
+  const [totalCV, setTotalCV] = useState(0);
 
+  useEffect(() => {
+    const fetchTotalUsers = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user"
+        );
+        const users = response.data;
+        setTotalUsers(users.length);
+      } catch (error) {
+        console.log("Error fetching total users:", error);
+      }
+    };
+
+    fetchTotalUsers();
+  }, []);
+  useEffect(() => {
+    const fetchTotalPost = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post"
+        );
+        const post = response.data;
+        setTotalPost(post.length);
+      } catch (error) {
+        console.log("Error fetching total post:", error);
+      }
+    };
+
+    fetchTotalPost();
+  }, []);
+  useEffect(() => {
+    const fetchTotalEvent = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
+        );
+        const event = response.data;
+        setTotalEvent(event.length);
+      } catch (error) {
+        console.log("Error fetching total event:", error);
+      }
+    };
+
+    fetchTotalEvent();
+  }, []);
+  useEffect(() => {
+    const fetchTotalCV = async () => {
+      try {
+        const response = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/request"
+        );
+        const CV = response.data;
+        setTotalCV(CV.length);
+      } catch (error) {
+        console.log("Error fetching total CV:", error);
+      }
+    };
+
+    fetchTotalCV();
+  }, []);
   return (
     <Box m="20px">
       {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
-        </Box>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+          }}
+          startIcon={<DownloadOutlinedIcon />}
+        >
+          Download Reports
+        </Button>
       </Box>
 
       {/* GRID & CHARTS */}
       <Box
-        display="grid"
+        // display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows="140px"
         gap="20px"
       >
         {/* ROW 1 */}
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
-            // increase="+14%"
-            icon={
-              <EmailIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            // increase="+21%"
-            icon={
-              <PointOfSaleIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            // increase="+5%"
-            icon={
-              <PersonAddIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            // increase="+43%"
-            icon={
-              <TrafficIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-
-        {/* ROW 2 */}
-        <Box
-          gridColumn="span 8"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
+        <Row style={{ display: "flex" }}>
+          <Link
+            style={{
+              textDecoration: "none",
+              background: "#f2f0f0",
+              display: "inline-block",
+            }}
+            to={"./events"}
           >
-            <Box>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Revenue Generated
-              </Typography>
-              <Typography
-                variant="h3"
-                fontWeight="bold"
-                color={colors.greenAccent[500]}
-              >
-                $59,342.32
-              </Typography>
-            </Box>
-            <Box>
-              <IconButton>
-                <DownloadOutlinedIcon
-                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
-                />
-              </IconButton>
-            </Box>
-          </Box>
-          <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
-          </Box>
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          overflow="auto"
-        >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
-            colors={colors.grey[100]}
-            p="15px"
-          >
-            <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
-            </Typography>
-          </Box>
-          {mockTransactions.map((transaction, i) => (
             <Box
-              key={`${transaction.txId}-${i}`}
+              gridColumn="span 3"
+              bgcolor={colors.primary[400]}
               display="flex"
-              justifyContent="space-between"
               alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
+              justifyContent="center"
+              margin="20px"
+              padding="8px"
             >
-              <Box>
-                <Typography
-                  color={colors.greenAccent[500]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {transaction.txId}
-                </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.user}
-                </Typography>
-              </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[500]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                ${transaction.cost}
-              </Box>
+              <StatBox
+                title={totalEvent.toLocaleString()}
+                subtitle="Event"
+                // increase="+14%"
+                icon={
+                  <ArticleIcon
+                    sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                  />
+                }
+              />
             </Box>
-          ))}
-        </Box>
-
-        {/* ROW 3 */}
-        {/* <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          p="30px"
-        >
-          <Typography variant="h5" fontWeight="600">
-            Campaign
-          </Typography>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            mt="25px"
+          </Link>
+          <Link
+            style={{
+              textDecoration: "none",
+              background: "#f2f0f0",
+              display: "inline-block",
+            }}
+            to={"./linkCV"}
           >
-            <ProgressCircle size="125" />
-            <Typography
-              variant="h5"
-              color={colors.greenAccent[500]}
-              sx={{ mt: "15px" }}
+            <Box
+              gridColumn="span 3"
+              bgcolor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              margin="20px"
+              padding="8px"
             >
-              $48,352 revenue generated
-            </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
-          </Box>
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
+              <StatBox
+                title={totalCV.toLocaleString()}
+                subtitle="CV up to mentor"
+                // increase="+21%"
+                icon={
+                  <AttachFileIcon
+                    sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                  />
+                }
+              />
+            </Box>
+          </Link>
+        </Row>
+        <Row>
+          <Link
+            style={{
+              textDecoration: "none",
+              background: "#f2f0f0",
+              display: "inline-block",
+            }}
+            to={"./user"}
           >
-            Sales Quantity
-          </Typography>
-          <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
-          </Box>
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          padding="30px"
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ marginBottom: "15px" }}
+            <Box
+              gridColumn="span 3"
+              bgcolor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              margin="20px"
+              padding="8px"
+            >
+              <StatBox
+                title={totalUsers.toLocaleString()}
+                subtitle="User"
+                // increase="+5%"
+                icon={
+                  <PersonIcon
+                    sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                  />
+                }
+              />
+            </Box>
+          </Link>
+          <Link
+            style={{
+              textDecoration: "none",
+              background: "#f2f0f0",
+              display: "inline-block",
+            }}
+            to={"./post"}
           >
-            Geography Based Traffic
-          </Typography>
-          <Box height="200px">
-            <GeographyChart isDashboard={true} />
-          </Box>
-        </Box> */}
+            <Box
+              gridColumn="span 3"
+              bgcolor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              margin="20px"
+              justifyContent="center"
+              padding="8px"
+            >
+              <StatBox
+                title={totalPost.toLocaleString()}
+                subtitle="Post"
+                icon={
+                  <CommentIcon
+                    sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                  />
+                }
+              />
+            </Box>
+          </Link>
+        </Row>
       </Box>
     </Box>
   );
