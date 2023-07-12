@@ -7,10 +7,14 @@ import axios from "axios";
 
 const LinkCv = () => {
   const [search, setSearch] = useState("");
-  const [linkCvs, setLinkCv] = useState([]);
+  const [linkCvs, setLinkCvs] = useState([]);
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const toggleSuccessModal = () => {
+    setShowSuccessModal(!showSuccessModal);
+  };
   const pageSize = 7;
 
   useEffect(() => {
@@ -25,9 +29,9 @@ const LinkCv = () => {
           setUserId(user.id);
 
           const requestResponse = await axios.get(
-            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/request`
+            "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/request"
           );
-          setLinkCv(requestResponse.data);
+          setLinkCvs(requestResponse.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -42,14 +46,55 @@ const LinkCv = () => {
     setCurrentPage(page);
   };
 
-  // Logic for pagination
+  const deniedCV = async (id) => {
+    try {
+      const response = await axios.delete(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/request/${id}`
+      );
+      if (response.status === 200) {
+        setLinkCvs(linkCvs.filter((request) => request.id !== id));
+      } else {
+        console.error("Error denying cv:", response);
+      }
+    } catch (error) {
+      console.error("Error denying cv:", error);
+    }
+  };
+
+  const acceptCV = async (id, userId) => {
+    try {
+      const userResponse = await axios.get(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`
+      );
+      const user = userResponse.data;
+
+      if (userId === user.id) {
+        const updateUserResponse = await axios.put(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`,
+          { ...user, role: "Mentor" }
+        );
+
+        if (updateUserResponse.status === 200) {
+          setLinkCvs(linkCvs.filter((request) => request.userId !== userId));
+          toggleSuccessModal();
+        } else {
+          console.error("Error accepting cv:", updateUserResponse);
+        }
+      } else {
+        console.error("User not found");
+      }
+    } catch (error) {
+      console.error("Error accepting cv:", error);
+    }
+  };
+
   const indexOfLastLinkCV = currentPage * pageSize;
   const indexOfFirstLinkCV = indexOfLastLinkCV - pageSize;
   const displayedLinkCV = linkCvs
     .filter((linkCv) => {
       return (
         search.toLowerCase() === "" ||
-        linkCv.userName.toLowerCase().includes(search)
+        linkCv.userName.toLowerCase().includes(search.toLowerCase())
       );
     })
     .slice(indexOfFirstLinkCV, indexOfLastLinkCV);
@@ -82,37 +127,29 @@ const LinkCv = () => {
               </tr>
             </thead>
             <tbody>
-              {/* {linkCvs
-                 .filter((request) => {
-                  return (
-                    search.toLowerCase() === "" ||
-                    request.id
-                      .toString()
-                      .toLowerCase()
-                      .includes(search.toLowerCase()) ||
-                    request.userId
-                      .toString()
-                      .toLowerCase()
-                      .includes(search.toLowerCase())
-                  );
-                })  */}
-                {displayedLinkCV
-                .map((request) => (
-                  <tr key={request.id}>
-                    <td>{request.id}</td>
-                    <td>{request.userID}</td>
-                    <td>{request.cv}</td>
-                    <td className="d-flex justify-content-around">
-                      <button className="btn btn-outline-success">
-                        Accept
-                      </button>
-                      <button className="btn btn-outline-danger">Denied</button>
-                    </td>
-                  </tr>
-                ))}
+              {displayedLinkCV.map((request) => (
+                <tr key={request.id}>
+                  <td>{request.id}</td>
+                  <td>{request.userID}</td>
+                  <td>{request.cv}</td>
+                  <td className="d-flex justify-content-around">
+                    <button
+                      onClick={() => acceptCV(request.userID, request.userID)}
+                      className="btn btn-outline-success"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      onClick={() => deniedCV(request.id)}
+                      className="btn btn-outline-danger"
+                    >
+                      Denied
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </Table>
-          
         )}
         {/* Pagination */}
         <nav>
@@ -120,7 +157,9 @@ const LinkCv = () => {
             {Array.from(Array(totalPages).keys()).map((page) => (
               <li
                 key={page}
-                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === page + 1 ? "active" : ""
+                }`}
               >
                 <button
                   className="page-link"
