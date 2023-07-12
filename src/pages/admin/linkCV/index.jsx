@@ -4,6 +4,8 @@ import Header from "../../../components/admin/Header";
 import { Table, Form, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const LinkCv = () => {
   const [search, setSearch] = useState("");
@@ -80,14 +82,22 @@ const LinkCv = () => {
         } else {
           console.error("Error accepting cv:", updateUserResponse);
         }
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+          title: <strong>Done!</strong>,
+          html: <i>You accepted Member become Mentor!</i>,
+          icon: 'success'
+        })
       } else {
         console.error("User not found");
       }
+
     } catch (error) {
       console.error("Error accepting cv:", error);
     }
   };
 
+  
   const indexOfLastLinkCV = currentPage * pageSize;
   const indexOfFirstLinkCV = indexOfLastLinkCV - pageSize;
   const displayedLinkCV = linkCvs
@@ -177,3 +187,5 @@ const LinkCv = () => {
 };
 
 export default LinkCv;
+
+
