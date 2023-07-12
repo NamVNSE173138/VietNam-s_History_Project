@@ -2,12 +2,14 @@ import { Col, Row, Button } from "antd";
 import "./Profile.css";
 import ChangePass from "./ChangePass";
 import ToMentor from "./UpToMentor";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+
 const storedSession = JSON.parse(sessionStorage.getItem("session"));
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
- 
+  const [isOpenn, setIsOpenn] = useState(false);
 
   useEffect(() => {
     // Simulating a delay of 2 seconds
@@ -24,6 +26,7 @@ const App = () => {
     // Clear the timer when the component unmounts
     return () => clearTimeout(timer);
   }, []);
+
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -31,7 +34,7 @@ const App = () => {
   const handleClose = () => {
     setIsOpen(false);
   };
-  const [isOpenn, setIsOpenn] = useState(false);
+
   const handleOpenn = () => {
     setIsOpenn(true);
   };
@@ -39,13 +42,14 @@ const App = () => {
   const handleClosen = () => {
     setIsOpenn(false);
   };
+
   return (
     <>
       {isLoading ? (
-      <div className="spin-container">
-        <div className="spin"></div>
-      </div>
-    ) : (
+        <div className="spin-container">
+          <div className="spin"></div>
+        </div>
+      ) : (
         <div className="profile" style={{ height: "760px" }}>
           <h2
             style={{
@@ -56,11 +60,7 @@ const App = () => {
           >
             Trang cá nhân
           </h2>
-          <Row
-            style={{
-              height: "254px",
-            }}
-          >
+          <Row style={{ height: "254px" }}>
             <Col span={12}>
               <div className="">
                 <img
@@ -112,7 +112,7 @@ const App = () => {
                           Đổi mật khẩu
                         </Button>
                       )}
-                      {isOpen && (
+                      {isOpen && storedSession.role === "Mentor" && (
                         <div>
                           <Button onClick={handleClose} size="large">
                             Hủy
@@ -122,26 +122,31 @@ const App = () => {
                       )}
                     </div>
                   </li>
-                  <li
-                    className="h4 mb-2 mb-xl-3 display-28"
-                    style={{ fontFamily: "Archivo Narrow" }}
-                  >
-                    <div>
-                      {!isOpenn && (
+                  {!isOpenn && storedSession.role !== "Mentor" && (
+                    <li
+                      className="h4 mb-2 mb-xl-3 display-28"
+                      style={{ fontFamily: "Archivo Narrow" }}
+                    >
+                      <div>
                         <Button onClick={handleOpenn} size="large">
                           Đăng ký làm Mentor
                         </Button>
-                      )}
-                      {isOpenn && (
-                        <div>
-                          <Button onClick={handleClosen} size="large">
-                            Hủy
-                          </Button>
-                          <ToMentor />
-                        </div>
-                      )}
-                    </div>
-                  </li>
+                      </div>
+                    </li>
+                  )}
+                  {isOpenn && (
+                    <li
+                      className="h4 mb-2 mb-xl-3 display-28"
+                      style={{ fontFamily: "Archivo Narrow" }}
+                    >
+                      <div>
+                        <Button onClick={handleClosen} size="large">
+                          Hủy
+                        </Button>
+                        <ToMentor />
+                      </div>
+                    </li>
+                  )}
                 </ul>
               </div>
             </Col>
@@ -150,5 +155,6 @@ const App = () => {
       )}
     </>
   );
-                      };
+};
+
 export default App;

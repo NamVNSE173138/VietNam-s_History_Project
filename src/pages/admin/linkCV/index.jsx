@@ -63,7 +63,7 @@ const LinkCv = () => {
     }
   };
 
-  const acceptCV = async (id, userId) => {
+  const acceptCV = async (id, userId, idremove) => {
     try {
       const userResponse = await axios.get(
         `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`
@@ -79,6 +79,7 @@ const LinkCv = () => {
         if (updateUserResponse.status === 200) {
           setLinkCvs(linkCvs.filter((request) => request.userId !== userId));
           toggleSuccessModal();
+          deniedCV(idremove);
         } else {
           console.error("Error accepting cv:", updateUserResponse);
         }
@@ -144,7 +145,9 @@ const LinkCv = () => {
                   <td>{request.cv}</td>
                   <td className="d-flex justify-content-around">
                     <button
-                      onClick={() => acceptCV(request.userID, request.userID)}
+                      onClick={() =>
+                        acceptCV(request.userID, request.userID, request.id)
+                      }
                       className="btn btn-outline-success"
                     >
                       Accept
