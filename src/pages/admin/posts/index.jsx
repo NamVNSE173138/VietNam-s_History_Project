@@ -6,10 +6,13 @@ import { Form } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { Button, Modal } from "react-bootstrap";
 
 const Posts = () => {
   const [search, setSearch] = useState("");
   const [posts, setPosts] = useState([]);
+  const [show, setShow] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null); // New state to store the selected post
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
@@ -51,15 +54,20 @@ const Posts = () => {
     setCurrentPage(page);
   };
 
+  const showPostDetails = (post) => {
+    setSelectedPost(post);
+    setShow(true);
+  };
+
   // Logic for pagination
   const indexOfLastPost = currentPage * pageSize;
   const indexOfFirstPost = indexOfLastPost - pageSize;
   const displayedPosts = posts
     .filter((post) => {
-        return search.toLowerCase() === ""
-        ? post
-        : post.authorID.toLowerCase().includes(search);
-      
+      return (
+        search.toLowerCase() === "" ||
+        post.authorID.toLowerCase().includes(search)
+      );
     })
     .slice(indexOfFirstPost, indexOfLastPost);
 
@@ -91,40 +99,67 @@ const Posts = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {posts
-              .filter((post) => {
-                return search.toLowerCase() === ""
-                  ? post
-                  : post.authorID.toLowerCase().includes(search);
-              }) */}
-              {displayedPosts.map((post) => (
-                <tr key={post.id}>
-                  <td>{post.id}</td>
-                  <td>{post.authorID}</td>
-                  <td>{post.like}</td>
-                  <td>{post.isReported}</td>
-                  <td>{post.description}</td>
-                  <td>{post.createAt}</td>
-                  <td className="d-flex justify-content-around">
-                    <button
-                      onClick={() => deletePost(post.id)}
-                      className="btn btn-outline-danger"
-                    >
-                      Delete
-                    </button>
-                    <button className="btn btn-outline-info">Detail</button>
-                  </td>
-                </tr>
-              ))}
+            {displayedPosts.map((post) => (
+              <tr key={post.id}>
+                <td>{post.id}</td>
+                <td>{post.authorID}</td>
+                <td>{post.like}</td>
+                <td>{post.isReported}</td>
+                <td>{post.description}</td>
+                <td>{post.createAt}</td>
+                <td className="d-flex justify-content-around">
+                  <button
+                    onClick={() => deletePost(post.id)}
+                    className="btn btn-outline-danger"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => showPostDetails(post)} // Pass the post object as an argument
+                    className="btn btn-outline-info"
+                  >
+                    Detail
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
-         {/* Pagination */}
-         <nav>
+        {/* Modal */}
+        <Modal show={show} onHide={() => setShow(false)} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>Post Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedPost && (
+              <div>
+                <p>ID: {selectedPost.id}</p>
+                <p>Author: {selectedPost.authorID}</p>
+                <p>Create at: {selectedPost.createAt}</p>
+                <p>Description: {selectedPost.description}</p>
+
+                {/* Display additional post details here */}
+              </div>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => setShow(false)}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* Pagination */}
+        <nav>
           <ul className="pagination justify-content-center">
             {Array.from(Array(totalPages).keys()).map((page) => (
               <li
                 key={page}
-                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === page + 1 ? "active" : ""
+                }`}
               >
                 <button
                   className="page-link"

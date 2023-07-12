@@ -7,8 +7,8 @@ import Row from "react-bootstrap/Row";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import Header from "../../../components/admin/Header";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const Events = () => {
   const [search, setSearch] = useState("");
@@ -99,12 +99,12 @@ const Events = () => {
       );
       console.log("Event created successfully:", response.data);
       // alert(`The event "${eventName}" was created successfully!`);
-      const MySwal = withReactContent(Swal)
-        MySwal.fire({
-          title: <strong>Done!</strong>,
-          html: <i>You created new event successfully!</i>,
-          icon: 'success'
-        })
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: <strong>Done!</strong>,
+        html: <i>You created new event successfully!</i>,
+        icon: "success",
+      });
       handleClose();
       fetchData();
     } catch (error) {
@@ -165,12 +165,12 @@ const Events = () => {
       .then((response) => {
         setModalData(editedData);
         setShowEditModal(false);
-        const MySwal = withReactContent(Swal)
+        const MySwal = withReactContent(Swal);
         MySwal.fire({
           title: <strong>Done!</strong>,
           html: <i>You edited event successfully!</i>,
-          icon: 'success'
-        })
+          icon: "success",
+        });
         fetchData();
       })
       .catch((error) => {
@@ -182,19 +182,19 @@ const Events = () => {
     setCurrentPage(page);
   };
 
-   // Logic for pagination
-   const indexOfLastEvent = currentPage * pageSize;
-   const indexOfFirstEvent = indexOfLastEvent - pageSize;
-   const displayedEvents = events
-     .filter((event) => {
+  // Logic for pagination
+  const indexOfLastEvent = currentPage * pageSize;
+  const indexOfFirstEvent = indexOfLastEvent - pageSize;
+  const displayedEvents = events
+    .filter((event) => {
       return search.toLowerCase() === ""
-      ? event
-      : event.eventName.toLowerCase().includes(search);
-     })
-     .slice(indexOfFirstEvent, indexOfLastEvent);
- 
-   // Calculate the total number of pages
-   const totalPages = Math.ceil(events.length / pageSize);
+        ? event
+        : event.eventName.toLowerCase().includes(search);
+    })
+    .slice(indexOfFirstEvent, indexOfLastEvent);
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(events.length / pageSize);
 
   return (
     <Box m="20px">
@@ -321,30 +321,30 @@ const Events = () => {
                   ? event
                   : event.eventName.toLowerCase().includes(search);
               }) */}
-              {displayedEvents.map((event) => (
-                <tr key={event.eventID}>
-                  <td>{event.eventID}</td>
-                  <td>{event.eventName}</td>
-                  <td>{event.location}</td>
-                  <td>{event.grade}</td>
-                  <td>{event.dysnaty}</td>
-                  <td>{event.timeline}</td>
-                  <td className="d-flex justify-content-around">
-                    <button
-                      onClick={() => openModal(event.eventID)}
-                      className="nextButton btn btn-outline-warning"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteEvent(event.eventID)}
-                      className="btn btn-outline-danger"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {displayedEvents.map((event) => (
+              <tr key={event.eventID}>
+                <td>{event.eventID}</td>
+                <td>{event.eventName}</td>
+                <td>{event.location}</td>
+                <td>{event.grade}</td>
+                <td>{event.dysnaty}</td>
+                <td>{event.timeline}</td>
+                <td className="d-flex justify-content-around">
+                  <button
+                    onClick={() => openModal(event.eventID)}
+                    className="nextButton btn btn-outline-warning"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteEvent(event.eventID)}
+                    className="btn btn-outline-danger"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
 
@@ -470,13 +470,15 @@ const Events = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-         {/* Pagination */}
-         <nav>
+        {/* Pagination */}
+        <nav>
           <ul className="pagination justify-content-center">
             {Array.from(Array(totalPages).keys()).map((page) => (
               <li
                 key={page}
-                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === page + 1 ? "active" : ""
+                }`}
               >
                 <button
                   className="page-link"

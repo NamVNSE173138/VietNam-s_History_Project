@@ -1,4 +1,3 @@
-
 import { Box } from "@mui/material";
 import Header from "../../../components/admin/Header";
 import React, { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ const Team = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // New state to store the selected user
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
 
@@ -54,6 +54,11 @@ const Team = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const showUserDetails = (user) => {
+    setSelectedUser(user);
+    handleShow();
   };
 
   // Logic for pagination
@@ -112,7 +117,7 @@ const Team = () => {
                   )}
 
                   <button
-                    onClick={handleShow}
+                    onClick={() => showUserDetails(user)} // Pass the user object as an argument
                     className="nextButton btn btn-outline-info"
                   >
                     Detail
@@ -126,7 +131,15 @@ const Team = () => {
               <Modal.Title>User Details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Woohoo, you're reading this text in a modal!
+              {selectedUser && (
+                <div>
+                  <p>ID: {selectedUser.id}</p>
+                  <p>Name: {selectedUser.userName}</p>
+                  <p>Email: {selectedUser.email}</p>
+                  <p>Role: {selectedUser.role}</p>
+                  {/* Render additional user details here */}
+                </div>
+              )}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -145,7 +158,9 @@ const Team = () => {
             {Array.from(Array(totalPages).keys()).map((page) => (
               <li
                 key={page}
-                className={`page-item ${currentPage === page + 1 ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === page + 1 ? "active" : ""
+                }`}
               >
                 <button
                   className="page-link"
