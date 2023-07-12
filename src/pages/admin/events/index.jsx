@@ -7,6 +7,8 @@ import Row from "react-bootstrap/Row";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import Header from "../../../components/admin/Header";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Events = () => {
   const [search, setSearch] = useState("");
@@ -96,7 +98,13 @@ const Events = () => {
         newEvent
       );
       console.log("Event created successfully:", response.data);
-      alert(`The event "${eventName}" was created successfully!`);
+      // alert(`The event "${eventName}" was created successfully!`);
+      const MySwal = withReactContent(Swal)
+        MySwal.fire({
+          title: <strong>Done!</strong>,
+          html: <i>You created new event successfully!</i>,
+          icon: 'success'
+        })
       handleClose();
       fetchData();
     } catch (error) {
@@ -157,6 +165,12 @@ const Events = () => {
       .then((response) => {
         setModalData(editedData);
         setShowEditModal(false);
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+          title: <strong>Done!</strong>,
+          html: <i>You edited event successfully!</i>,
+          icon: 'success'
+        })
         fetchData();
       })
       .catch((error) => {
