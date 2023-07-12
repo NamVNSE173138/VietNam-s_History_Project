@@ -17,7 +17,7 @@ const Slider = () => {
             là một loại trống đồng tiêu biểu cho Văn hóa Đông Sơn (thế kỷ 7 TCN
             - thế kỷ 6 CN ) của người Việt cổ.
           </p>
-          <Link>
+          <Link to={"./events/eventDetail/76"}>
             <Button className="carousel-btn" type="primary" size="large">
               XEM THÊM
             </Button>
@@ -34,7 +34,7 @@ const Slider = () => {
         <div className="carouselCaption">
           <h3>Chiến thắng Điện Biên Phủ</h3>
           <p className="shadow-text">(13 tháng 3 - 7 tháng 5 năm 1954)</p>
-          <Link>
+          <Link to={"./events/eventDetail/20"}>
             <Button className="carousel-btn" type="primary" size="large">
               XEM THÊM
             </Button>
@@ -52,7 +52,7 @@ const Slider = () => {
         <div className="carouselCaption">
           <h3>Khởi nghĩa Hai Bà Trưng</h3>
           <p className="shadow-text">(Năm 40 - 43 sau CN)</p>
-          <Link>
+          <Link to={"./events/eventDetail/43"}>
             <Button className="carousel-btn" type="primary" size="large">
               XEM THÊM
             </Button>
