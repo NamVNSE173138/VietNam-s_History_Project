@@ -9,7 +9,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPass from "./pages/ForgotPass";
 import ChangePass from "./pages/ChangePass";
-import Timeline from "./pages/Timeline";
 import AllEvent from "./pages/Event/AllEvent";
 import Profile from "./pages/Profile/Profile";
 import SearchList from "./pages/Event/Search";
@@ -35,10 +34,7 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot" element={<ForgotPass />} />
       <Route path="/profile" element={<Profile />} />
-      {/* <Route path="/changePassUser" element={<ChangePassUser />} /> */}
-      {/* <Route path="/upToMentor" element={<UpToMentor />} /> */}
       <Route path="/changePass" element={<ChangePass />} />
-      <Route path="/timeline" element={<Timeline />} />
       <Route path="/searchList" element={<SearchList />} />
       {/* admin */}
       <Route path="/admin" element={<Admin />} />
