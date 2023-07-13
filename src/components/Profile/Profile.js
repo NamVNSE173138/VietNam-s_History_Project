@@ -64,7 +64,7 @@ const App = () => {
             <Col span={12}>
               <div className="">
                 <img
-                  src="https://images.unsplash.com/photo-1585591424436-a55926755d91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                  src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
                   alt="..."
                   style={{
                     height: "300px",

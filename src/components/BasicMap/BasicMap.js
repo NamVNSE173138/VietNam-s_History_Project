@@ -22,8 +22,7 @@ const BasicMap = () => {
       <div page="leafletBasic" />
       <div className="row">
         <div className="col text-center">
-          <h2>React-leaflet - Basic Openstreet Maps</h2>
-          <p>Loading basic map using layer from maptiler</p>
+          <h2 style={{ marginTop: "10px" }}>Địa điểm sự kiện nổi bật</h2>
           <div className="col">
             <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
               <TileLayer

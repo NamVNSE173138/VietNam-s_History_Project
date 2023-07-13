@@ -34,7 +34,10 @@ const EventDetail = () => {
       actions={[
         <Button
           type={post.isLiked ? "primary" : "default"}
-          onClick={!isLogin ? showModal : () => handleLike(post)}
+          // onClick={!isLogin ? showModal : () => handleLike(post)}
+          onClick={() => {
+            console.log(post.id);
+          }}
         >
           <Space>
             {post.isLiked ? (
@@ -86,6 +89,7 @@ const EventDetail = () => {
         }
         title={
           <div>
+            <p>{post.id}</p>
             <p className="inline">{post.authorID} </p>{" "}
             <i className="inline" style={{ fontWeight: "inherit" }}>
               ({post.roleOfAuthor})
