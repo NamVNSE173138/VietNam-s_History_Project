@@ -22,3 +22,16 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .ant-card-meta-detail {
+    display: flex;
+align-items: center;
+  }
+
+   .profiles svg{
+    vertical-align: unset;
+  margin-right: 5px;
+}
+.infor{
+  margin-bottom: 12px;
+}

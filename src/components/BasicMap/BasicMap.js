@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import osm from "../../utils/osm-providers";
-import markerIcon from "./Daco_1014210.png";
+import markerIcon from "./zyro-image (3).png";
 import "./Map.css";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const BasicMap = () => {
 
   const customMarkerIcon = new L.Icon({
     iconUrl: markerIcon,
-    iconSize: [45, 45],
+    iconSize: [25, 35],
   });
 
   return (

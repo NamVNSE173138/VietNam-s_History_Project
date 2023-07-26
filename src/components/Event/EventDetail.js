@@ -89,7 +89,6 @@ const EventDetail = () => {
         }
         title={
           <div>
-            <p>{post.id}</p>
             <p className="inline">{post.authorID} </p>{" "}
             <i className="inline" style={{ fontWeight: "inherit" }}>
               ({post.roleOfAuthor})

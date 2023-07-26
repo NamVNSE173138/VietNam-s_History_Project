@@ -54,28 +54,6 @@ function SearchList() {
               event.eventName.toLowerCase().includes(search.toLowerCase())
             )}
             renderItem={(event) => (
-              // <Card hoverable style={{ margin: "20px" }}>
-              //   <List.Item
-              //     key={event.eventID}
-              //     extra={
-              //       <img
-              //         width={272}
-              //         height={210}
-              //         alt="logo"
-              //         src={event.image}
-              //       />
-              //     }
-              //   >
-              //     <List.Item.Meta
-              //       title={
-              //         <Link to={`/events/eventDetail/${event.eventID}`}>
-              //           {event.eventName}
-              //         </Link>
-              //       } // Wrap the event name in the Link com  nent with the event ID in the URL
-              //       description={event.timeline}
-              //     />
-              //   </List.Item>
-              // </Card>
               <Link
                 to={`/events/eventDetail/${event.eventID}`}
                 style={{ textDecoration: "none" }}
