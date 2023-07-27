@@ -5,4 +5,9 @@
   .leaflet-container{
     height: 700px;
     margin: 30px ;
+  border-radius: 10px;
+
   }
+  .leaflet-bottom {
+    display: none;
+}

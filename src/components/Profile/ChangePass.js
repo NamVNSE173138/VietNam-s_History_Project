@@ -1,19 +1,12 @@
 import { LockOutlined, CheckCircleFilled } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal } from "antd";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
 const ChangePass = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  useEffect(() => {
-    const session = JSON.parse(sessionStorage.getItem("session"));
-    if (session) {
-      console.log(session);
-    }
-  }, []);
 
   const handleModalOk = () => {
     setIsModalVisible(false);
@@ -74,16 +67,6 @@ const ChangePass = () => {
   return (
     <>
       <div style={{ marginLeft: 0, marginTop: "10px" }}>
-        {/* <h2
-          style={{
-            textAlign: "center",
-            marginTop: "20px",
-            marginBottom: "30px",
-            color: "#1677ff",
-          }}
-        >
-          Đổi mật khẩu
-        </h2> */}
         <Form
           name="normal_login"
           className="login-form"
@@ -175,7 +158,7 @@ const ChangePass = () => {
             </div>
           </>
         }
-        visible={isModalVisible}
+        // visible={isModalVisible}
         onOk={handleModalOk}
       >
         <p>Thay đổi mật khẩu thành công.</p>

@@ -2,20 +2,21 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Button } from "antd";
 import "./Slider.css";
-import img3 from "../Slider/z4424869346053_159e3b29a58877da799285fb13caf039.jpg";
+import img1 from "./z4424869346053_159e3b29a58877da799285fb13caf039.jpg";
+import img2 from "./df21bc4aa410e3ccc8c41f14a9afdd4d.jpg";
 import { Link } from "react-router-dom";
 // export default class Slider extends Component{
 const Slider = () => {
   return (
     <Carousel>
       <Carousel.Item>
-        <img className="d-block w-100" src={img3} alt="First slide" />
+        <img className="d-block w-100" src={img1} alt="First slide" />
         <div className="carouselCaption">
-          <h3>Trống đồng Đông Sơn</h3>
+          <h3>Văn minh Văn Lang - Âu Lạc</h3>
           <p className="shadow-text">
             {" "}
-            là một loại trống đồng tiêu biểu cho Văn hóa Đông Sơn (thế kỷ 7 TCN
-            - thế kỷ 6 CN ) của người Việt cổ.
+            là một văn minh cổ đại của dân tộc Việt Nam, tồn tại từ khoảng thế
+            kỷ 7 TCN đến thế kỷ 3 TCN
           </p>
           <Link to={"./events/eventDetail/76"}>
             <Button className="carousel-btn" type="primary" size="large">
@@ -44,7 +45,7 @@ const Slider = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.15752-9/354485567_578472684460626_6856032707604160166_n.png?_nc_cat=111&ccb=1-7&_nc_sid=ae9488&_nc_ohc=_8kF1Ql028wAX_DWAv7&_nc_ht=scontent.fsgn2-6.fna&oh=03_AdQIryVN7hj-qDXhv3ineGddvbitygCY3X7HSZRcXIOQiw&oe=64B3952A"
+          src={img2}
           alt="Third slide"
           // style={{height : "561px"}}
         />

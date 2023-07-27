@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Avatar, List, Space, Button, message, Modal } from "antd";
+import { Avatar, List, Space, Button, message, Modal, Spin } from "antd";
 import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import CreatePost from "../Post/CreatePost";
@@ -34,7 +34,6 @@ const EventDetail = () => {
       actions={[
         <Button
           type={post.isLiked ? "primary" : "default"}
-          // onClick={!isLogin ? showModal : () => handleLike(post)}
           onClick={() => {
             console.log(post.id);
           }}
@@ -126,31 +125,28 @@ const EventDetail = () => {
     message.success("Thanks");
     setIsReported(true);
   };
-
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post"
+      );
+      const filteredPosts = response.data.filter(
+        (post) => post.eventID === eventID
+      );
+      setPosts(filteredPosts);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
   useEffect(() => {
     const fetchEvent = async () => {
       try {
         const response = await axios.get(
           `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${eventID}`
         );
-        console.log("Fetched eventID:", response.data.eventID);
         setEvent(response.data);
       } catch (error) {
         console.error("Error fetching event details:", error);
-      }
-    };
-
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(
-          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post"
-        );
-        const filteredPosts = response.data.filter(
-          (post) => post.eventID === eventID
-        );
-        setPosts(filteredPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
       }
     };
 
@@ -159,7 +155,11 @@ const EventDetail = () => {
   }, [eventID]);
 
   if (!event) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading">
+        <Spin size="large" />
+      </div>
+    );
   }
 
   return (

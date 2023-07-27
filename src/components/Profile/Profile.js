@@ -2,6 +2,7 @@ import ChangePass from "./ChangePass";
 import ToMentor from "./UpToMentor";
 import "./Profile.css";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Card,
@@ -12,7 +13,6 @@ import {
   Col,
   Row,
   Popover,
-  Modal,
   Popconfirm,
   message,
 } from "antd";
@@ -23,9 +23,9 @@ import {
   LockOutlined,
   UploadOutlined,
   MoreOutlined,
-  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const confirm = (e) => {
   console.log(e);
@@ -44,25 +44,28 @@ const { Meta } = Card;
 const { Title, Text } = Typography;
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
+
   const [userEmail, setUserEmail] = useState("");
   const [posted, setPosted] = useState([]);
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenn, setIsOpenn] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+  const [postDeleted, setPostDeleted] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(postUrl);
+      setPosted(response.data);
+      setInitLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setInitLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(postUrl);
-        setPosted(response.data);
-        setInitLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setInitLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -109,18 +112,18 @@ const ProfilePage = () => {
   const [posts, setPosts] = useState([]);
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(postUrl);
-        setPosts(response.data);
-        setPostLoading(false);
-      } catch (error) {
-        console.log("Error fetching posts:", error);
-        setPostLoading(false);
-      }
-    };
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(postUrl);
+      setPosts(response.data);
+      setPostLoading(false);
+    } catch (error) {
+      console.log("Error fetching posts:", error);
+      setPostLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPosts();
   }, []);
 
@@ -164,6 +167,26 @@ const ProfilePage = () => {
 
     fetchUserData();
   }, [storedSession?.username]);
+
+  const deletePost = async (id) => {
+    try {
+      const response = await axios.delete(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${id}`
+      );
+      if (response.status === 200) {
+        message.success("Post deleted successfully!");
+        // Set the trigger to refetch posts after deletion
+        setPostDeleted(true);
+        fetchData();
+        // window.location.reload();
+      } else {
+        message.error("Failed to delete post.");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      message.error("An error occurred while deleting the post.");
+    }
+  };
 
   return (
     <div style={{ maxWidth: "700px", margin: "0 auto" }} className="profile">
@@ -282,7 +305,7 @@ const ProfilePage = () => {
                         <Popconfirm
                           title="Delete the task"
                           description="Are you sure to delete this task?"
-                          onConfirm={confirm}
+                          onConfirm={() => deletePost(posted.id)} // Call deletePost with the post ID
                           onCancel={cancel}
                           okText="Yes"
                           cancelText="No"
@@ -305,17 +328,22 @@ const ProfilePage = () => {
                     active
                   >
                     <List.Item.Meta
-                      title={
-                        <a>
-                          {posted.authorID} đã bình luận về bài viết{" "}
-                          {(() => {
-                            const event = events.find(
-                              (event) => posted.eventID === event.eventID
-                            );
-                            return event ? event.eventName : null;
-                          })()}
-                        </a>
-                      }
+                      title={(() => {
+                        const event = events.find(
+                          (event) => posted.eventID === event.eventID
+                        );
+                        if (!event) return null;
+
+                        return (
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            to={`/events/eventDetail/${event.eventID}`}
+                          >
+                            {posted.authorID} đã bình luận về bài viết "
+                            {event.eventName}"
+                          </Link>
+                        );
+                      })()}
                       description={posted.createAt}
                     />
                   </Skeleton>

@@ -10,3 +10,29 @@ margin-top: 100px;
 }
 
 
+.custom-timeline {
+  margin-top: 20px; 
+}
+
+.custom-timeline-item {
+  padding: 10px;
+  border-left: 5px solid #1890ff; 
+  position: relative;
+  margin-bottom: 20px; 
+}
+
+.timeline-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.timeline-content {
+  margin-left: 15px; 
+}
+.loading{
+  margin: 100px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  border-radius: 4px;
+}
