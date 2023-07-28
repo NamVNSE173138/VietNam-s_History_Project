@@ -7,7 +7,7 @@ import { InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
-import ReactHTMLTableToExcel from "react-html-table-to-excel"
+// import ReactHTMLTableToExcel from "react-html-table-to-excel"
 
 const Team = () => {
   const [search, setSearch] = useState("");
@@ -81,24 +81,24 @@ const Team = () => {
     <Box m="20px">
       <Header title="USER" subtitle="Managing the users" />
       <Box>
-      <div className="d-flex justify-content-between align-items-center">
-        <Form className="w-75">
-          <InputGroup className="my-3">
-            <Form.Control
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search User"
-            />
-          </InputGroup>
-        </Form>
-        <ReactHTMLTableToExcel
+        <div className="d-flex justify-content-between align-items-center">
+          <Form className="w-75">
+            <InputGroup className="my-3">
+              <Form.Control
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search User"
+              />
+            </InputGroup>
+          </Form>
+          {/* <ReactHTMLTableToExcel
         
         className="btn btn-info"
         table="emp-table"
         filename="User file"
         sheet="Sheet"
         buttonText="Export to Excel"
-      />
-      </div>
+      /> */}
+        </div>
 
         <Table striped bordered hover id="emp-table">
           <thead className="table-primary">
