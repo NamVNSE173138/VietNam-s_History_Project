@@ -91,20 +91,6 @@ const Dashboard = () => {
         mb={2}
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-          }}
-          startIcon={<DownloadOutlinedIcon />}
-        >
-          Download Reports
-        </Button>
       </Box>
 
       {/* GRID & CHARTS */}
