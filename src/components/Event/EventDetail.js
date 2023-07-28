@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import { Avatar, List, Space, Button, message, Modal, Spin } from "antd";
+import { Avatar, List, Space, Button, message, Spin } from "antd";
 import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import CreatePost from "../Post/CreatePost";
 import EventContext from "./EventContext";
 import "./Event.css";
+import { ModalBody, ModalFooter, ModalHeader, Modal } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 
 const EventDetail = () => {
   const session = JSON.parse(sessionStorage.getItem("session"));
@@ -20,6 +22,13 @@ const EventDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [likedPosts, setLikedPosts] = useState([]);
   const navigate = useNavigate();
+  const [modalReport, setModalReport] = useState(false);
+ 
+  const handleClose = () => setModalReport(false);
+  const handleShow = () => setModalReport(true);
+  const showReport = () => {
+    handleShow();
+  };
 
   const fetchData = async () => {
     try {
@@ -218,18 +227,92 @@ const EventDetail = () => {
               )}
             </Space>
           </Button>,
-          <Popconfirm
-            title="Report"
-            description="Are you sure to report this post?"
-            onConfirm={handleReportConfirm}
-            onCancel={handleReportCancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="default">
-              <ExclamationCircleOutlined /> Báo cáo
+          // <Popconfirm
+          //   title="Report"
+          //   description="Are you sure to report this post?"
+          //   onConfirm={handleReportConfirm}
+          //   onCancel={handleReportCancel}
+          //   okText="Yes"
+          //   cancelText="No"
+          // >
+          //   <Button type="default">
+          //     <ExclamationCircleOutlined /> Báo cáo
+          //   </Button>
+          // </Popconfirm>,
+          <Button
+          onClick={() => {
+            showReport();
+          }}
+        >
+          <ExclamationCircleOutlined /> Báo cáo
+        </Button>,
+        //  modal report
+        <Modal
+          show={modalReport}
+          onHide={handleClose}
+          size="sm"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <ModalHeader closeButton>
+            <Modal.Title>Lý do báo cáo</Modal.Title>
+          </ModalHeader>
+          <ModalBody>
+            <Form>
+              {["checkbox"].map((type) => (
+                <div key={`default-${type}`} className="mb-3">
+                  <Form.Check // prettier-ignore
+                    type={type}
+                    id={`default-${type}`}
+                    label={`Ngôn từ mất kiểm soát`}
+                  />
+                </div>
+              ))}
+            </Form>
+            <Form>
+              {["checkbox"].map((type) => (
+                <div key={`default-${type}`} className="mb-3">
+                  <Form.Check
+                    type={type}
+                    id={`default-${type}`}
+                    label={`Tục tĩu`}
+                  />
+                </div>
+              ))}
+            </Form>
+            <Form>
+              {["checkbox"].map((type) => (
+                <div key={`default-${type}`} className="mb-3">
+                  <Form.Check // prettier-ignore
+                    type={type}
+                    id={`default-${type}`}
+                    label={`Câu từ có hành vi lăng mạ`}
+                  />
+                </div>
+              ))}
+            </Form>
+            <Form>
+              {["checkbox"].map((type) => (
+                <div key={`default-${type}`} className="mb-3">
+                  <Form.Check // prettier-ignore
+                    type={type}
+                    id={`default-${type}`}
+                    label={`Tục tĩu`}
+                  />
+                </div>
+              ))}
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
             </Button>
-          </Popconfirm>,
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </ModalFooter>
+        </Modal>,
+
           <Modal
             title={
               <span>
