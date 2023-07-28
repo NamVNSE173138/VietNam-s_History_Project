@@ -227,18 +227,6 @@ const EventDetail = () => {
               )}
             </Space>
           </Button>,
-          // <Popconfirm
-          //   title="Report"
-          //   description="Are you sure to report this post?"
-          //   onConfirm={handleReportConfirm}
-          //   onCancel={handleReportCancel}
-          //   okText="Yes"
-          //   cancelText="No"
-          // >
-          //   <Button type="default">
-          //     <ExclamationCircleOutlined /> Báo cáo
-          //   </Button>
-          // </Popconfirm>,
           <Button
           onClick={() => {
             showReport();
