@@ -91,10 +91,7 @@ const Dashboard = () => {
         mb={2}
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-<<<<<<< HEAD
 
-=======
->>>>>>> 80ddbe99fcb273d63227f154dc5db055143be2b0
       </Box>
 
       {/* GRID & CHARTS */}
