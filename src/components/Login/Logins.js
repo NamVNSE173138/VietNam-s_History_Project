@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import "./Login.css";
 import CreatePost from "../../pages/CreatePost";
-import upToMentor from "../Profile/UpToMentor";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,7 +30,6 @@ const Login = () => {
       .then((data) => {
         const user = data.find(
           (user) =>
-            
             user.userName === username &&
             user.password === password &&
             (user.role === role || user.role === "admin")
@@ -39,11 +37,9 @@ const Login = () => {
 
         if (user) {
           if (user.role === "admin") {
-            navigate("/admin"); // Redirect to "/admin" route for admin user
+            navigate("/admin");
           } else {
-            // Handle successful login for member or mentor
-            console.log("Login successful");
-            navigate("/"); // Redirect to "/events" route for non-admin users
+            navigate("/");
           }
           const session = {
             id: user.id,

@@ -1,4 +1,4 @@
-import { MailOutlined, CodeOutlined, LockOutlined } from "@ant-design/icons";
+import { CodeOutlined, LockOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 const changePass = () => {
@@ -55,7 +55,6 @@ const changePass = () => {
 
             <Form.Item
               name="confirm"
-              //   label="Confirm Password"
               dependencies={["password"]}
               hasFeedback
               rules={[
@@ -77,7 +76,7 @@ const changePass = () => {
                 }),
               ]}
             >
-              <Input.Password
+              <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Confirm Password"

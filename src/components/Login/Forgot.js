@@ -1,84 +1,128 @@
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Select, Row, Col } from "antd";
-import { Link } from "react-router-dom";
-const forgotPass = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+import React, { useRef, useState, useEffect } from "react";
+import emailjs from "emailjs-com";
+import { useNavigate } from "react-router-dom";
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "0 auto",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  label: {
+    marginBottom: "8px",
+    fontWeight: "bold",
+  },
+  input: {
+    padding: "8px",
+    marginBottom: "16px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+  },
+  textarea: {
+    padding: "8px",
+    marginBottom: "16px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    resize: "vertical",
+  },
+  submitButton: {
+    padding: "8px 16px",
+    backgroundColor: "#1890ff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
+};
+
+const ForgotPass = () => {
+  const form = useRef();
+  const navigate = useNavigate();
+
+  const [randomCode, setRandomCode] = useState("");
+
+  // Fetch a random code from the API
+  useEffect(() => {
+    fetchRandomCode();
+  }, []);
+
+  const fetchRandomCode = () => {
+    // Replace the API endpoint with the actual URL of your mock API
+    fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/code")
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the API returns an array of codes, get a random code from it
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomCode = data[randomIndex].code;
+        setRandomCode(randomCode);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch random code:", error);
+      });
   };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    const userName = form.current.username.value;
+    const userEmail = form.current.email.value;
+    const message = randomCode; // Use the fetched random code as the message
+
+    if (!userEmail) {
+      console.error("Recipient email address is empty!");
+      return;
+    }
+
+    console.log("Form Data:", {
+      user_name: userName,
+      user_email: userEmail,
+      message: message,
+    });
+
+    // Replace these with your actual service and template IDs
+    const serviceId = "service_j84ttbj";
+    const templateId = "template_iykoano";
+    const userId = "7su-uLkZnI77BYXZ2";
+
+    emailjs.sendForm(serviceId, templateId, form.current, userId).then(
+      (result) => {
+        // console.log(result.text);
+        // console.log("Message sent successfully!");
+        // After sending the email, fetch a new random code for the next submission
+        fetchRandomCode();
+        navigate("/changePass");
+      },
+      (error) => {
+        console.log(error.text);
+        console.error("Failed to send message!");
+      }
+    );
+  };
+
   return (
-    <>
-      <Row>
-        <Col span={12}>
-          <h1>Forgot Password</h1>
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-          >
-            {/* <Form.Item label="Select">
-          <Select>
-            <Select.Option value="Mentor">Mentor</Select.Option>
-            <Select.Option value="Member">Member</Select.Option>
-          </Select>
-        </Form.Item> */}
-            <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Username!",
-                },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Username"
-              />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Email!",
-                },
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined className="site-form-item-icon" />}
-                type="email"
-                placeholder="Email"
-              />
-            </Form.Item>
-            {/* <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item> */}
-
-            <Form.Item>
-              <Link to={"/changePass"}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
-                >
-                  Sent code
-                </Button>
-              </Link>
-              Or <Link to={"/signup"}>I don't have account</Link>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    </>
+    <div style={styles.container}>
+      <h1>Forgot Password</h1>
+      <form ref={form} onSubmit={sendEmail} style={styles.form}>
+        <label style={styles.label}>Name</label>
+        <input type="text" name="username" style={styles.input} />
+        <label style={styles.label}>Email</label>
+        <input type="email" name="email" style={styles.input} />
+        {/* <label style={styles.label}>Message</label> */}
+        <input
+          type="text"
+          name="message"
+          value={randomCode}
+          style={{ display: "none" }}
+          readOnly
+        />
+        <button type="submit" style={styles.submitButton}>
+          Send
+        </button>
+      </form>
+    </div>
   );
 };
-export default forgotPass;
+
+export default ForgotPass;
