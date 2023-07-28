@@ -23,13 +23,56 @@ const EventDetail = () => {
   const [likedPosts, setLikedPosts] = useState([]);
   const navigate = useNavigate();
   const [modalReport, setModalReport] = useState(false);
-
   const handleClose = () => setModalReport(false);
   const handleShow = () => setModalReport(true);
+
   const showReport = () => {
     handleShow();
   };
 
+  
+
+  const [checkedValues, setCheckedValues] = useState({});
+
+  const handleChange = (event) => {
+    const { id, checked, value } = event.target;
+    setCheckedValues((prevCheckedValues) => ({
+      ...prevCheckedValues,
+      [id]: checked ? value : undefined,
+    }));
+  };
+  
+
+  const handleSaveChanges = () => {
+    // Use the `checkedValues` state to access the selected checkboxes
+    console.log(checkedValues);
+
+    // Prepare the data to be sent to the API
+    const dataWithReason = {
+      reason: Object.values(checkedValues).filter(Boolean).join(", "), // Filter out undefined values
+    };
+
+    // Send the data to the mock API
+    fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataWithReason),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Handle the API response if needed
+        console.log(responseData);
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the API request
+        console.error("Error:", error);
+      });
+
+    // Close the modal after saving changes
+    handleClose();
+  };
   const fetchData = async () => {
     try {
       const [eventResponse, postsResponse] = await Promise.all([
@@ -246,56 +289,36 @@ const EventDetail = () => {
               <Modal.Title>Lý do báo cáo</Modal.Title>
             </ModalHeader>
             <ModalBody>
-              <Form>
-                {["checkbox"].map((type) => (
-                  <div key={`default-${type}`} className="mb-3">
-                    <Form.Check // prettier-ignore
-                      type={type}
-                      id={`default-${type}`}
-                      label={`Ngôn từ mất kiểm soát`}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <Form>
-                {["checkbox"].map((type) => (
-                  <div key={`default-${type}`} className="mb-3">
-                    <Form.Check
-                      type={type}
-                      id={`default-${type}`}
-                      label={`Tục tĩu`}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <Form>
-                {["checkbox"].map((type) => (
-                  <div key={`default-${type}`} className="mb-3">
-                    <Form.Check // prettier-ignore
-                      type={type}
-                      id={`default-${type}`}
-                      label={`Câu từ có hành vi lăng mạ`}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <Form>
-                {["checkbox"].map((type) => (
-                  <div key={`default-${type}`} className="mb-3">
-                    <Form.Check // prettier-ignore
-                      type={type}
-                      id={`default-${type}`}
-                      label={`Tục tĩu`}
-                    />
-                  </div>
-                ))}
-              </Form>
+            <Form>
+            <div key={`default-report1`} className="mb-3">
+              <Form.Check
+                type="checkbox"
+                id="report1"
+                label="Ngôn từ mất kiểm soát"
+                value="Ngôn từ mất kiểm soát"
+                checked={checkedValues["report1"] || false}
+                onChange={handleChange}
+              />
+            </div>
+          </Form>
+          <Form>
+            <div key={`default-report2`} className="mb-3">
+              <Form.Check
+                type="checkbox"
+                id="report2"
+                label="Lăng mạ"
+                value="Lăng mạ"
+                checked={checkedValues["report2"] || false}
+                onChange={handleChange}
+              />
+            </div>
+          </Form>
             </ModalBody>
             <ModalFooter>
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+              <Button variant="primary" onClick={handleSaveChanges}>
                 Save Changes
               </Button>
             </ModalFooter>
