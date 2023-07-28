@@ -1,6 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
+import { CodeOutlined, LockOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Row, Col } from "antd";
+import { Link } from "react-router-dom";
+
 const styles = {
   container: {
     maxWidth: "400px",
@@ -88,11 +92,8 @@ const ForgotPass = () => {
 
     emailjs.sendForm(serviceId, templateId, form.current, userId).then(
       (result) => {
-        // console.log(result.text);
-        // console.log("Message sent successfully!");
-        // After sending the email, fetch a new random code for the next submission
-        fetchRandomCode();
-        navigate("/changePass");
+        // Rest of the function...
+        navigate(`/changePass?userName=${encodeURIComponent(userName)}`);
       },
       (error) => {
         console.log(error.text);
@@ -109,7 +110,6 @@ const ForgotPass = () => {
         <input type="text" name="username" style={styles.input} />
         <label style={styles.label}>Email</label>
         <input type="email" name="email" style={styles.input} />
-        {/* <label style={styles.label}>Message</label> */}
         <input
           type="text"
           name="message"

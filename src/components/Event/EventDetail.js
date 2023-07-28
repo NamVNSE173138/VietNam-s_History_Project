@@ -23,7 +23,7 @@ const EventDetail = () => {
   const [likedPosts, setLikedPosts] = useState([]);
   const navigate = useNavigate();
   const [modalReport, setModalReport] = useState(false);
- 
+
   const handleClose = () => setModalReport(false);
   const handleShow = () => setModalReport(true);
   const showReport = () => {
@@ -228,78 +228,78 @@ const EventDetail = () => {
             </Space>
           </Button>,
           <Button
-          onClick={() => {
-            showReport();
-          }}
-        >
-          <ExclamationCircleOutlined /> Báo cáo
-        </Button>,
-        //  modal report
-        <Modal
-          show={modalReport}
-          onHide={handleClose}
-          size="sm"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <ModalHeader closeButton>
-            <Modal.Title>Lý do báo cáo</Modal.Title>
-          </ModalHeader>
-          <ModalBody>
-            <Form>
-              {["checkbox"].map((type) => (
-                <div key={`default-${type}`} className="mb-3">
-                  <Form.Check // prettier-ignore
-                    type={type}
-                    id={`default-${type}`}
-                    label={`Ngôn từ mất kiểm soát`}
-                  />
-                </div>
-              ))}
-            </Form>
-            <Form>
-              {["checkbox"].map((type) => (
-                <div key={`default-${type}`} className="mb-3">
-                  <Form.Check
-                    type={type}
-                    id={`default-${type}`}
-                    label={`Tục tĩu`}
-                  />
-                </div>
-              ))}
-            </Form>
-            <Form>
-              {["checkbox"].map((type) => (
-                <div key={`default-${type}`} className="mb-3">
-                  <Form.Check // prettier-ignore
-                    type={type}
-                    id={`default-${type}`}
-                    label={`Câu từ có hành vi lăng mạ`}
-                  />
-                </div>
-              ))}
-            </Form>
-            <Form>
-              {["checkbox"].map((type) => (
-                <div key={`default-${type}`} className="mb-3">
-                  <Form.Check // prettier-ignore
-                    type={type}
-                    id={`default-${type}`}
-                    label={`Tục tĩu`}
-                  />
-                </div>
-              ))}
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </ModalFooter>
-        </Modal>,
+            onClick={() => {
+              showReport();
+            }}
+          >
+            <ExclamationCircleOutlined /> Báo cáo
+          </Button>,
+          //  modal report
+          <Modal
+            show={modalReport}
+            onHide={handleClose}
+            size="sm"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <ModalHeader closeButton>
+              <Modal.Title>Lý do báo cáo</Modal.Title>
+            </ModalHeader>
+            <ModalBody>
+              <Form>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check // prettier-ignore
+                      type={type}
+                      id={`default-${type}`}
+                      label={`Ngôn từ mất kiểm soát`}
+                    />
+                  </div>
+                ))}
+              </Form>
+              <Form>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check
+                      type={type}
+                      id={`default-${type}`}
+                      label={`Tục tĩu`}
+                    />
+                  </div>
+                ))}
+              </Form>
+              <Form>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check // prettier-ignore
+                      type={type}
+                      id={`default-${type}`}
+                      label={`Câu từ có hành vi lăng mạ`}
+                    />
+                  </div>
+                ))}
+              </Form>
+              <Form>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check // prettier-ignore
+                      type={type}
+                      id={`default-${type}`}
+                      label={`Tục tĩu`}
+                    />
+                  </div>
+                ))}
+              </Form>
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleClose}>
+                Save Changes
+              </Button>
+            </ModalFooter>
+          </Modal>,
 
           <Modal
             title={
@@ -324,7 +324,6 @@ const EventDetail = () => {
           }
           title={
             <div>
-              <p>{post.id}</p>
               <p className="inline">{post.authorID} </p>{" "}
               <i className="inline" style={{ fontWeight: "inherit" }}>
                 ({post.roleOfAuthor})

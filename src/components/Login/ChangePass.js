@@ -1,15 +1,23 @@
+import React from "react";
 import { CodeOutlined, LockOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Row, Col } from "antd";
-import { Link } from "react-router-dom";
-const changePass = () => {
+import { useLocation } from "react-router-dom";
+
+const ChangePass = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const userName = searchParams.get("userName");
+
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
   return (
     <>
       <Row>
         <Col span={12}>
           <h1>Change Password</h1>
+          {/* <h1>:{userName}</h1> */}
           <Form
             name="normal_login"
             className="login-form"
@@ -20,8 +28,6 @@ const changePass = () => {
           >
             <Form.Item
               name="code"
-              //   label="Username"
-              // tooltip="What do you want others to call you?"
               rules={[
                 {
                   required: true,
@@ -95,4 +101,5 @@ const changePass = () => {
     </>
   );
 };
-export default changePass;
+
+export default ChangePass;
