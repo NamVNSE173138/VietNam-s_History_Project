@@ -40,7 +40,10 @@ const Post = () => {
   }, [fetchData]);
 
   const handleLike = useCallback(
+    
     async (postId) => {
+    //   const likedBy = post.likedBy;
+    // const likeCount = likedBy.length;
       try {
         const updatedPosts = posts.map((post) => {
           if (post.id === postId) {
@@ -92,6 +95,25 @@ const Post = () => {
     [posts, userID]
   );
 
+  const userHasLikedPost = async (postId) => {
+    
+    const userId = session?.id;
+    try{ 
+    if(!userId){
+      return false;
+    }
+
+    
+      const response = await axios.get(`https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`);
+      const post = response.data;
+  
+      return post && post.likedBy.includes(userId);
+    } catch (error) {
+      console.error('Error fetching post data:', error);
+      return false;
+    }
+  };
+
   const confirm = (e) => {
     console.log(e);
     message.success("Thanks");
@@ -141,20 +163,20 @@ const Post = () => {
           const { id, authorID, description } = post;
 
           return (
-            <List.Item
+            <List.Item           //like button starts here
               key={id}
               actions={[
                 <Button
-                  type={post.likedBy.includes(userID) ? "primary" : "default"}
+                  type={userHasLikedPost(id) ? "primary" : "default"}
                   onClick={() => handleLike(id)}
                   size="large"
                 >
                   <IconText
                     icon={LikeOutlined}
-                    text={post.like}
+                    text={post.likedBy.length}
                     key="list-vertical-like-o"
                   />
-                </Button>,
+                </Button>,               // and ended here
 
                 <Button
                   type="default"
