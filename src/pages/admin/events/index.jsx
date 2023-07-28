@@ -9,6 +9,7 @@ import axios from "axios";
 import Header from "../../../components/admin/Header";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import ReactHTMLTableToExcel from "react-html-table-to-excel"
 
 const Events = () => {
   const [search, setSearch] = useState("");
@@ -199,14 +200,23 @@ const Events = () => {
   return (
     <Box m="20px">
       <Header title="Event" subtitle="Managing Events" />
+      <div className="d-flex justify-content-between align-items-center">
       <Button
         onClick={handleShow}
-        className="nextButton text-bg-warning mb-2 fw-bold fs-6"
+        className="nextButton text-bg-warning mb-2 fw-bold fs-6 mx-5"
       >
         <i style={{ marginRight: "10px" }} className="fa fa-plus"></i>
         <AddIcon />
         Add event
       </Button>
+      <ReactHTMLTableToExcel
+        className="btn btn-info"
+        table="emp-table"
+        filename="Events file"
+        sheet="Sheet1"
+        buttonText="Export to Excel"
+      />
+      </div>
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Thêm sự kiện</Modal.Title>
@@ -302,7 +312,7 @@ const Events = () => {
         </InputGroup>
       </Form>
       <Box>
-        <Table striped bordered hover>
+        <Table striped bordered hover id="emp-table">
           <thead className="table-primary">
             <tr>
               <th>ID</th>
