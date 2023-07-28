@@ -1,13 +1,12 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import { Avatar, List, Space, Button, message, Modal } from "antd";
+import { Avatar, List, Space, Button, message, Modal, Spin } from "antd";
 import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import CreatePost from "../Post/CreatePost";
 import EventContext from "./EventContext";
 import "./Event.css";
-
 
 const EventDetail = () => {
   const session = JSON.parse(sessionStorage.getItem("session"));
@@ -22,12 +21,13 @@ const EventDetail = () => {
   const [likedPosts, setLikedPosts] = useState([]);
   const navigate = useNavigate();
 
-  
   const fetchData = async () => {
     try {
       const [eventResponse, postsResponse] = await Promise.all([
-        axios.get(`https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${eventID}`),
-        axios.get("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post")
+        axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event/${eventID}`
+        ),
+        axios.get("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post"),
       ]);
 
       const eventDetails = eventResponse.data;
@@ -48,7 +48,7 @@ const EventDetail = () => {
       console.error("Error fetching data:", error);
     }
   };
-    useEffect(() => {
+  useEffect(() => {
     fetchData();
   }, [eventID]);
 
@@ -97,8 +97,6 @@ const EventDetail = () => {
     }
   };
 
-
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -112,73 +110,79 @@ const EventDetail = () => {
     setIsModalOpen(false);
   };
 
-  const handleLike = useCallback(async (post) => {
-    const postId = post.id;
-    const hasLiked = likedPosts.includes(postId);
-    try {
-      const postResponse = await axios.get(
-        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`
-      );
-      const postData = postResponse.data;
-
-      // Check if the current user ID already exists in likedBy array
-      const userIndex = postData.likedBy.findIndex(
-        (likedByUserId) => likedByUserId === userID
-      );
-
-      // Check if the current post ID already exists in likedPost array of the user
-      const userResponse = await axios.get(
-        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`
-      );
-      const userData = userResponse.data;
-      const postIndex = userData.likedPost.findIndex(
-        (likedPostId) => likedPostId === postId
-      );
-
-      // If the current user ID already exists, remove all instances from likedBy array
-      if (userIndex !== -1) {
-        const updatedLikedBy = postData.likedBy.filter(
-          (likedByUserId) => likedByUserId !== userID
+  const handleLike = useCallback(
+    async (post) => {
+      const postId = post.id;
+      const hasLiked = likedPosts.includes(postId);
+      try {
+        const postResponse = await axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`
         );
-        await axios.put(
-          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`,
-          { likedBy: updatedLikedBy }
+        const postData = postResponse.data;
+
+        // Check if the current user ID already exists in likedBy array
+        const userIndex = postData.likedBy.findIndex(
+          (likedByUserId) => likedByUserId === userID
+        );
+
+        // Check if the current post ID already exists in likedPost array of the user
+        const userResponse = await axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`
+        );
+        const userData = userResponse.data;
+        const postIndex = userData.likedPost.findIndex(
+          (likedPostId) => likedPostId === postId
+        );
+
+        // If the current user ID already exists, remove all instances from likedBy array
+        if (userIndex !== -1) {
+          const updatedLikedBy = postData.likedBy.filter(
+            (likedByUserId) => likedByUserId !== userID
+          );
+          await axios.put(
+            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`,
+            { likedBy: updatedLikedBy }
+          );
+        }
+
+        // If the current post ID already exists, remove all instances from likedPost array on user
+        if (postIndex !== -1) {
+          const updatedLikedPost = userData.likedPost.filter(
+            (likedPostId) => likedPostId !== postId
+          );
+          await axios.put(
+            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`,
+            { likedPost: updatedLikedPost }
+          );
+        }
+
+        // If the current user ID or post ID doesn't exist, add them to the arrays
+        if (userIndex === -1) {
+          const updatedLikedBy = [...postData.likedBy, userID];
+          await axios.put(
+            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`,
+            { likedBy: updatedLikedBy }
+          );
+        }
+        if (postIndex === -1) {
+          const updatedLikedPost = [...userData.likedPost, postId];
+          await axios.put(
+            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`,
+            { likedPost: updatedLikedPost }
+          );
+        }
+        setIsPostLiked(!isPostLiked);
+        updatePostLikeStatus(postId, !hasLiked);
+      } catch (error) {
+        console.error(
+          "Error updating user and post objects in the API:",
+          error
         );
       }
-
-      // If the current post ID already exists, remove all instances from likedPost array on user
-      if (postIndex !== -1) {
-        const updatedLikedPost = userData.likedPost.filter(
-          (likedPostId) => likedPostId !== postId
-        );
-        await axios.put(
-          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`,
-          { likedPost: updatedLikedPost }
-        );
-      }
-
-      // If the current user ID or post ID doesn't exist, add them to the arrays
-      if (userIndex === -1) {
-        const updatedLikedBy = [...postData.likedBy, userID];
-        await axios.put(
-          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`,
-          { likedBy: updatedLikedBy }
-        );
-      }
-      if (postIndex === -1) {
-        const updatedLikedPost = [...userData.likedPost, postId];
-        await axios.put(
-          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`,
-          { likedPost: updatedLikedPost }
-        );
-      }
-      setIsPostLiked(!isPostLiked);
-      updatePostLikeStatus(postId, !hasLiked);
-    } catch (error) {
-      console.error("Error updating user and post objects in the API:", error);
-    }
-    fetchData()
-  }, [likedPosts, userID,isPostLiked]);
+      fetchData();
+    },
+    [likedPosts, userID, isPostLiked]
+  );
 
   const handleReportCancel = (e) => {
     console.log(e);
@@ -190,20 +194,16 @@ const EventDetail = () => {
     message.success("Thanks");
     setIsReported(true);
   };
-  
 
   const PostItem = ({ post }) => {
- 
-
     return (
       <List.Item
-      key={post.id}
-      actions={[
-        <Button
-          type={post.isLiked ? "primary" : "default"}
-          onClick={!isLogin ? showModal : () => handleLike(post)}
-        >
-
+        key={post.id}
+        actions={[
+          <Button
+            type={post.isLiked ? "primary" : "default"}
+            onClick={!isLogin ? showModal : () => handleLike(post)}
+          >
             <Space>
               {isPostLiked ? (
                 <>
@@ -268,7 +268,11 @@ const EventDetail = () => {
   };
 
   if (!event) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading">
+        <Spin size="large"></Spin>
+      </div>
+    );
   }
 
   return (
