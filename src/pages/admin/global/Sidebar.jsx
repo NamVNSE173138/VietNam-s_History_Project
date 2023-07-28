@@ -9,7 +9,8 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -36,7 +37,6 @@ const Sidebar = () => {
 
   return (
     <Box
-    
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -45,7 +45,8 @@ const Sidebar = () => {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",display:"block"
+          padding: "5px 35px 5px 20px !important",
+          display: "block",
         },
         "& .pro-inner-item:hover": {
           color: "#868dfb !important",
@@ -59,14 +60,12 @@ const Sidebar = () => {
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
-          
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
             }}
-            
           >
             {!isCollapsed && (
               <Box
@@ -74,7 +73,6 @@ const Sidebar = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 ml="15px"
-
               >
                 <Typography variant="h3" color={colors.grey[100]}>
                   ADMIN
@@ -94,7 +92,11 @@ const Sidebar = () => {
                   width="100px"
                   height="100px"
                   src={`../mainlogo.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" , border: "1px solid black"}}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "50%",
+                    border: "1px solid black",
+                  }}
                 />
               </Box>
               <Box textAlign="center">
@@ -107,7 +109,7 @@ const Sidebar = () => {
                   VietEra
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                   Admin
+                  Admin
                 </Typography>
               </Box>
             </Box>
@@ -158,15 +160,22 @@ const Sidebar = () => {
             >
               Authentication
             </Typography>
-           
+
             <Item
               title="Link CV"
               to="/admin/linkCV"
               icon={<AdminPanelSettingsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> 
-            
+            />
+
+            <Item
+              title="Report Comment"
+              to="/admin/reportComment"
+              icon={<WarningAmberIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
       </ProSidebar>
