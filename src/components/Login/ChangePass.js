@@ -54,7 +54,7 @@ const ChangePass = () => {
           <h1>Change Password</h1>
           <Form
             name="change_password"
-            className="change-password-form"
+            className="login-form"
             onFinish={onFinish}
           >
             <Form.Item
@@ -119,7 +119,11 @@ const ChangePass = () => {
               />
             </Form.Item>
 
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
               Change Password
             </Button>
           </Form>

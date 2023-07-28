@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
-import { Avatar, List, Space, Button, message, Spin } from "antd";
-import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Popconfirm } from "antd";
-import CreatePost from "../Post/CreatePost";
-import EventContext from "./EventContext";
-import "./Event.css";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { Avatar, List, Space, Button, message, Spin, Input } from "antd";
+import {
+  LikeOutlined,
+  ExclamationCircleOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 import { ModalBody, ModalFooter, ModalHeader, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import EventContext from "./EventContext";
+import "./Event.css";
 
 const EventDetail = () => {
   const session = JSON.parse(sessionStorage.getItem("session"));
@@ -72,40 +74,27 @@ const EventDetail = () => {
     );
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (session && userID) {
-        try {
-          const userResponse = await axios.get(
-            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`
-          );
-          const userData = userResponse.data;
-          setLikedPosts(userData.likedPost);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  const [isPostLiked, setIsPostLiked] = useState(false);
-
-  const checkPostLiked = async (postId) => {
-    try {
-      if (session && userID) {
-        const postResponse = await axios.get(
-          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`
+  const fetchUserData = async () => {
+    if (session && userID) {
+      try {
+        const userResponse = await axios.get(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`
         );
-        const postData = postResponse.data;
-        setIsPostLiked(postData.likedBy.includes(userID));
+        const userData = userResponse.data;
+        setLikedPosts(userData.likedPost);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching post data:", error);
     }
   };
-
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  useEffect(() => {}, [posts]);
+  const [isPostLiked, setIsPostLiked] = useState(false);
+  const addNewPost = (newPost) => {
+    setPosts((prevPosts) => [...prevPosts, newPost]);
+  };
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -153,6 +142,14 @@ const EventDetail = () => {
             { likedBy: updatedLikedBy }
           );
         }
+        // If the current user ID or post ID doesn't exist, add them to the arrays
+        else {
+          const updatedLikedBy = [...postData.likedBy, userID];
+          await axios.put(
+            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`,
+            { likedBy: updatedLikedBy }
+          );
+        }
 
         // If the current post ID already exists, remove all instances from likedPost array on user
         if (postIndex !== -1) {
@@ -163,23 +160,14 @@ const EventDetail = () => {
             `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`,
             { likedPost: updatedLikedPost }
           );
-        }
-
-        // If the current user ID or post ID doesn't exist, add them to the arrays
-        if (userIndex === -1) {
-          const updatedLikedBy = [...postData.likedBy, userID];
-          await axios.put(
-            `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${postId}`,
-            { likedBy: updatedLikedBy }
-          );
-        }
-        if (postIndex === -1) {
+        } else {
           const updatedLikedPost = [...userData.likedPost, postId];
           await axios.put(
             `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${userID}`,
             { likedPost: updatedLikedPost }
           );
         }
+
         setIsPostLiked(!isPostLiked);
         updatePostLikeStatus(postId, !hasLiked);
       } catch (error) {
@@ -193,16 +181,16 @@ const EventDetail = () => {
     [likedPosts, userID, isPostLiked]
   );
 
-  const handleReportCancel = (e) => {
-    console.log(e);
-    message.error("Click on No");
-  };
+  // const handleReportCancel = (e) => {
+  //   console.log(e);
+  //   message.error("Click on No");
+  // };
 
-  const handleReportConfirm = (e) => {
-    console.log(e);
-    message.success("Thanks");
-    setIsReported(true);
-  };
+  // const handleReportConfirm = (e) => {
+  //   console.log(e);
+  //   message.success("Thanks");
+  //   setIsReported(true);
+  // };
 
   const PostItem = ({ post }) => {
     return (
@@ -241,6 +229,7 @@ const EventDetail = () => {
             size="sm"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            backdrop="static"
           >
             <ModalHeader closeButton>
               <Modal.Title>Lý do báo cáo</Modal.Title>
@@ -404,7 +393,7 @@ const EventDetail = () => {
         size="large"
         pagination={{
           onChange: (page) => {
-            console.log(page);
+            // console.log(page);
           },
           pageSize: 10,
         }}
@@ -412,10 +401,123 @@ const EventDetail = () => {
         renderItem={(post) => <PostItem post={post} />}
       />
       <EventContext.Provider value={event.eventID}>
-        <CreatePost />
+        <CreatePost onPostCreated={addNewPost} />
       </EventContext.Provider>
     </div>
   );
 };
+const CreatePost = ({ onPostCreated }) => {
+  const session = JSON.parse(sessionStorage.getItem("session"));
+  const [description, setDescription] = useState("");
+  const eventID = useContext(EventContext);
+  const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
+  const isLogin = sessionStorage.getItem("session");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-export default EventDetail;
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+    navigate("/login");
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (refresh) {
+      // Perform any necessary actions or API calls after the component reloads
+      setRefresh(false); // Reset the refresh state
+    }
+  }, [refresh]);
+  const handleCreatePost = async () => {
+    if (description.trim().length === 0) {
+      message.error("Post description cannot be empty");
+      return;
+    }
+
+    try {
+      // console.log("Received eventID:", eventID);
+      const currentDate = new Date();
+      const like = 0;
+      const authorID = session.username;
+      const roleOfAuthor = session.role;
+      const createAt = `${currentDate.getDate()}/${
+        currentDate.getMonth() + 1
+      }/${currentDate.getFullYear()}`;
+      const response = await axios.post(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post",
+        {
+          roleOfAuthor,
+          authorID,
+          like,
+          description,
+          createAt,
+          eventID,
+        }
+      );
+      // console.log(response.data);
+      message.success("Post successfully created");
+      onPostCreated(response.data);
+      setDescription("");
+      setRefresh(true);
+      // window.location.reload(); // Trigger component reload by updating the refresh state
+    } catch (error) {
+      console.error("Error creating post:", error);
+      message.error("Failed to create post");
+    }
+  };
+
+  return (
+    <div style={{ marginTop: "20px" }}>
+      <Input.TextArea
+        rows={4}
+        placeholder="Viết bình luận..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+
+      {!isLogin ? (
+        <>
+          <Button
+            type="primary"
+            onClick={showModal}
+            style={{ width: "100%", marginTop: "10px" }}
+          >
+            Đăng
+          </Button>
+          <Modal
+            title={
+              <span>
+                <WarningOutlined
+                  style={{ color: "#ff4d4f", fontSize: "30px" }}
+                />{" "}
+                Lưu ý
+              </span>
+            }
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <h4 style={{ textAlign: "center" }}>Bạn cần đăng nhập trước</h4>
+          </Modal>
+        </>
+      ) : (
+        <>
+          <Button
+            type="primary"
+            onClick={handleCreatePost}
+            style={{ width: "100%", marginTop: "10px" }}
+          >
+            Đăng
+          </Button>
+        </>
+      )}
+    </div>
+  );
+};
+export { EventDetail, CreatePost };

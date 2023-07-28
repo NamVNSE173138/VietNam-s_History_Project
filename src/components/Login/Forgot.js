@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
-import { CodeOutlined, LockOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Row, Col } from "antd";
+import { Modal } from "antd";
 
 const styles = {
   container: {
@@ -36,16 +35,20 @@ const styles = {
 const ForgotPass = () => {
   const form = useRef();
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [randomCode, setRandomCode] = useState("");
-
-  // Fetch a random code from the API
+  const showModal = () => {
+    setModalOpen(true);
+  };
+  const hideModal = () => {
+    setModalOpen(false);
+  };
   useEffect(() => {
     fetchRandomCode();
   }, []);
 
   const fetchRandomCode = () => {
-    // Replace the API endpoint with the actual URL of your mock API
     fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/code")
       .then((response) => response.json())
       .then((data) => {
@@ -71,30 +74,43 @@ const ForgotPass = () => {
       return;
     }
 
-    console.log("Form Data:", {
-      user_name: userName,
-      user_email: userEmail,
-      message: message,
-    });
+    fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user")
+      .then((response) => response.json())
+      .then((data) => {
+        const userExists = data.some(
+          (user) => user.userName === userName && user.email === userEmail
+        );
+        if (userExists) {
+          const serviceId = "service_j84ttbj";
+          const templateId = "template_iykoano";
+          const userId = "7su-uLkZnI77BYXZ2";
 
-    // Replace these with your actual service and template IDs
-    
-const serviceId = "service_j84ttbj";
-const templateId = "template_iykoano";
-const userId = "7su-uLkZnI77BYXZ2";
-
-    emailjs.sendForm(serviceId, templateId, form.current, userId).then(
-      (result) => {
-        // Rest of the function...
-        navigate(`/changePass?userName=${encodeURIComponent(userName)}&code=${encodeURIComponent(message)}`);
-      },
-      (error) => {
-        console.log(error.text);
-        console.error("Failed to send message!");
-      }
-    );
+          emailjs.sendForm(serviceId, templateId, form.current, userId).then(
+            (result) => {
+              navigate(
+                `/changePass?userName=${encodeURIComponent(
+                  userName
+                )}&code=${encodeURIComponent(message)}`
+              );
+            },
+            (error) => {
+              console.log(error.text);
+              console.error("Failed to send message!");
+            }
+          );
+        } else {
+          Modal.warning({
+            title: "User Not Found",
+            content: "User with the provided name and email does not exist!",
+            onOk: hideModal,
+            onCancel: hideModal,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch user data:", error);
+      });
   };
-
   return (
     <div style={styles.container}>
       <h1>Forgot Password</h1>
