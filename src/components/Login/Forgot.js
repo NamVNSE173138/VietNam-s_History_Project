@@ -3,7 +3,6 @@ import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
 import { CodeOutlined, LockOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Row, Col } from "antd";
-import { Link } from "react-router-dom";
 
 const styles = {
   container: {
@@ -23,13 +22,6 @@ const styles = {
     marginBottom: "16px",
     border: "1px solid #ccc",
     borderRadius: "4px",
-  },
-  textarea: {
-    padding: "8px",
-    marginBottom: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    resize: "vertical",
   },
   submitButton: {
     padding: "8px 16px",
@@ -86,14 +78,15 @@ const ForgotPass = () => {
     });
 
     // Replace these with your actual service and template IDs
-    const serviceId = "service_j84ttbj";
-    const templateId = "template_iykoano";
-    const userId = "7su-uLkZnI77BYXZ2";
+    
+const serviceId = "service_j84ttbj";
+const templateId = "template_iykoano";
+const userId = "7su-uLkZnI77BYXZ2";
 
     emailjs.sendForm(serviceId, templateId, form.current, userId).then(
       (result) => {
         // Rest of the function...
-        navigate(`/changePass?userName=${encodeURIComponent(userName)}`);
+        navigate(`/changePass?userName=${encodeURIComponent(userName)}&code=${encodeURIComponent(message)}`);
       },
       (error) => {
         console.log(error.text);
