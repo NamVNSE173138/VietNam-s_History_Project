@@ -9,7 +9,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const ReportCmt = () => {
   const [search, setSearch] = useState("");
-  const [linkCvs, setLinkCvs] = useState([]);
+  const [reportCmt, setReportCmt] = useState([]);
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +33,7 @@ const ReportCmt = () => {
           const requestResponse = await axios.get(
             "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/report"
           );
-          setLinkCvs(requestResponse.data);
+          setReportCmt(requestResponse.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -48,13 +48,13 @@ const ReportCmt = () => {
     setCurrentPage(page);
   };
 
-  const deniedCV = async (id) => {
+  const deniedCmt = async (id) => {
     try {
       const response = await axios.delete(
         `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/report/${id}`
       );
       if (response.status === 200) {
-        setLinkCvs(linkCvs.filter((request) => request.id !== id));
+        setReportCmt(reportCmt.filter((request) => request.id !== id));
       } else {
         console.error("Error denying cv:", response);
       }
@@ -63,7 +63,7 @@ const ReportCmt = () => {
     }
   };
 
-  const acceptCV = async (id, userId, idremove) => {
+  const acceptCmt = async (id, userId, idremove) => {
     try {
       const userResponse = await axios.get(
         `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`
@@ -77,9 +77,9 @@ const ReportCmt = () => {
         );
 
         if (updateUserResponse.status === 200) {
-          setLinkCvs(linkCvs.filter((request) => request.userId !== userId));
+          setReportCmt(reportCmt.filter((request) => request.userId !== userId));
           toggleSuccessModal();
-          deniedCV(idremove);
+          deniedCmt(idremove);
         } else {
           console.error("Error accepting cv:", updateUserResponse);
         }
@@ -99,28 +99,28 @@ const ReportCmt = () => {
   };
 
   
-  const indexOfLastLinkCV = currentPage * pageSize;
-  const indexOfFirstLinkCV = indexOfLastLinkCV - pageSize;
-  const displayedLinkCV = linkCvs
+  const indexOfLastReportCmt = currentPage * pageSize;
+  const indexOfFirstReportCmt = indexOfLastReportCmt - pageSize;
+  const displayedLinkCV = reportCmt
     .filter((linkCv) => {
       return (
         search.toLowerCase() === "" ||
         linkCv.userName.toLowerCase().includes(search.toLowerCase())
       );
     })
-    .slice(indexOfFirstLinkCV, indexOfLastLinkCV);
+    .slice(indexOfFirstReportCmt, indexOfLastReportCmt);
 
   // Calculate the total number of pages
-  const totalPages = Math.ceil(linkCvs.length / pageSize);
+  const totalPages = Math.ceil(reportCmt.length / pageSize);
 
   return (
     <Box m="20px">
-      <Header title="CV" subtitle="Managing CV" />
+      <Header title="Report Comments" subtitle="Managing report" />
       <Form>
         <InputGroup className="my-3">
           <Form.Control
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search CVs"
+            placeholder="Search Report"
           />
         </InputGroup>
       </Form>
@@ -133,8 +133,8 @@ const ReportCmt = () => {
               <tr>
                 <th>ID</th>
                 <th>User Name</th>
-                <th>Content</th>
-                <th>Reported by</th>
+                <th>Comment</th>
+                <th>Reported By</th>
                 <th>Reason</th>
                 <th>Action</th>
               </tr>
@@ -144,20 +144,20 @@ const ReportCmt = () => {
                 <tr key={report.id}>
                   <td>{report.id}</td>
                   <td>{report.authorID}</td>
-                  <td>{report.desciption}</td>
+                  <td>{report.description}</td>
                   <td>{report.reportedBy}</td>
                   <td>{report.reason}</td>
                   <td className="d-flex justify-content-around">
                     <button
                       onClick={() =>
-                        acceptCV(report.userID, report.userID, report.id)
+                        acceptCmt(report.userID, report.userID, report.id)
                       }
                       className="btn btn-outline-success"
                     >
                       Accept
                     </button>
                     <button
-                      onClick={() => deniedCV(report.id)}
+                      onClick={() => deniedCmt(report.id)}
                       className="btn btn-outline-danger"
                     >
                       Denied

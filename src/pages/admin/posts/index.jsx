@@ -92,7 +92,6 @@ const Posts = () => {
               <th>ID</th>
               <th>Author</th>
               <th>Like</th>
-              <th>Report</th>
               <th>Comment</th>
               <th>Date</th>
               <th>Action</th>
@@ -104,7 +103,6 @@ const Posts = () => {
                 <td>{post.id}</td>
                 <td>{post.authorID}</td>
                 <td>{post.like}</td>
-                <td>{post.isReported}</td>
                 <td>{post.description}</td>
                 <td>{post.createAt}</td>
                 <td className="d-flex justify-content-around">

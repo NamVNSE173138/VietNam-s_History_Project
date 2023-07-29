@@ -27,31 +27,69 @@ const EventDetail = () => {
   const [modalReport, setModalReport] = useState(false);
   const handleClose = () => setModalReport(false);
   const handleShow = () => setModalReport(true);
+  const [reportedBy, setReportedBy] = useState("");
+  const [selectedPost, setSelectedPost] = useState(null);
+  
 
-  const showReport = () => {
+  const showReport = (post) => {
+    // Store the selected post in the component's state
+    setSelectedPost(post);
     handleShow();
   };
 
-  
 
   const [checkedValues, setCheckedValues] = useState({});
 
-  const handleChange = (event) => {
+  //---------------------------------------------------
+  const handleChange = (event, post) => {
+    console.log("handleChange called with post:", post);
     const { id, checked, value } = event.target;
     setCheckedValues((prevCheckedValues) => ({
       ...prevCheckedValues,
       [id]: checked ? value : undefined,
     }));
-  };
-  
 
+    // Store the authorID and description of the selected post in checkedValues
+    setCheckedValues((prevCheckedValues) => ({
+      ...prevCheckedValues,
+      [`authorID_${id}`]: post.authorID,
+      [`description_${id}`]: post.description,
+    }));
+  };
+  //----------------------------------------
+
+  //------------------------------------------------------------------------
   const handleSaveChanges = () => {
     // Use the `checkedValues` state to access the selected checkboxes
     console.log(checkedValues);
 
+    // Extract the authorID and description of the selected post from checkedValues
+    // const selectedPostAuthorID = checkedValues[`authorID_report1`];
+    // const selectedPostDescription = checkedValues[`description_report1`];
+    const selectedPostAuthorID = selectedPost.authorID
+    const selectedPostDescription = selectedPost.description
+
+    // Extract the postID from the selected post
+    const selectedPostID = selectedPost.postID;
+
+    // Create a new object without `authorID` and `description` properties
+    const filteredCheckedValues = Object.entries(checkedValues).reduce(
+      (acc, [key, value]) => {
+        if (!key.startsWith("authorID_") && !key.startsWith("description_")) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
+
     // Prepare the data to be sent to the API
     const dataWithReason = {
-      reason: Object.values(checkedValues).filter(Boolean).join(", "), // Filter out undefined values
+      reason: Object.values(filteredCheckedValues).filter(Boolean).join(", "), // Filter out undefined values
+      authorID: selectedPostAuthorID,
+      description: selectedPostDescription,
+      postID: selectedPostID, // Use the correct postID from the selected post
+      reportedBy: reportedBy,
     };
 
     // Send the data to the mock API
@@ -75,6 +113,8 @@ const EventDetail = () => {
     // Close the modal after saving changes
     handleClose();
   };
+  //---------------------------------------------------------
+
   const fetchData = async () => {
     try {
       const [eventResponse, postsResponse] = await Promise.all([
@@ -258,9 +298,16 @@ const EventDetail = () => {
               )}
             </Space>
           </Button>,
+          // <Button
+          //   onClick={() => {
+          //     showReport();
+          //   }}
+          // >
+          //   <ExclamationCircleOutlined /> Báo cáo
+          // </Button>,
           <Button
             onClick={() => {
-              showReport();
+              showReport(post);
             }}
           >
             <ExclamationCircleOutlined /> Báo cáo
@@ -278,30 +325,45 @@ const EventDetail = () => {
               <Modal.Title>Lý do báo cáo</Modal.Title>
             </ModalHeader>
             <ModalBody>
-            <Form>
-            <div key={`default-report1`} className="mb-3">
-              <Form.Check
-                type="checkbox"
-                id="report1"
-                label="Ngôn từ mất kiểm soát"
-                value="Ngôn từ mất kiểm soát"
-                checked={checkedValues["report1"] || false}
-                onChange={handleChange}
-              />
-            </div>
-          </Form>
-          <Form>
-            <div key={`default-report2`} className="mb-3">
-              <Form.Check
-                type="checkbox"
-                id="report2"
-                label="Lăng mạ"
-                value="Lăng mạ"
-                checked={checkedValues["report2"] || false}
-                onChange={handleChange}
-              />
-            </div>
-          </Form>
+              <Form>
+                <div key={`default-report1`} className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    id="report1"
+                    label="Ngôn từ mất kiểm soát"
+                    value="Ngôn từ mất kiểm soát"
+                    checked={checkedValues["report1"] || false}
+                    // onChange={handleChange}
+                    onChange={(event) => handleChange(event, post)}
+                  />
+                </div>
+              </Form>
+              <Form>
+                <div key={`default-report2`} className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    id="report2"
+                    label="Có hành vi lăng mạ"
+                    value="Có hành vi lăng mạ"
+                    checked={checkedValues["report2"] || false}
+                    // onChange={handleChange}
+                    onChange={(event) => handleChange(event, post)}
+                  />
+                </div>
+              </Form>
+              <Form>
+                <div key={`default-report3`} className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    id="report3"
+                    label="Tục tĩu"
+                    value="Tục tĩu"
+                    checked={checkedValues["report3"] || false}
+                    // onChange={handleChange}
+                    onChange={(event) => handleChange(event, post)}
+                  />
+                </div>
+              </Form>
             </ModalBody>
             <ModalFooter>
               <Button variant="secondary" onClick={handleClose}>
