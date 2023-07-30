@@ -45,9 +45,7 @@ function SearchList() {
             itemLayout="vertical"
             size="large"
             pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
+              onChange: (page) => {},
               pageSize: 6,
             }}
             dataSource={events.filter((event) =>

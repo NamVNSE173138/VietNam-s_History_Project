@@ -226,55 +226,6 @@ const Signup = () => {
           <Input />
         </Form.Item>
 
-        {/* <Form.Item
-          name="role"
-          label="Chức vụ "
-          rules={[
-            {
-              type: "array",
-              required: true,
-              message: "Chọn chức vụ!",
-            },
-          ]}
-        >
-          <Cascader options={residences} />
-        </Form.Item> */}
-
-        {/* <Form.Item name="linkcv" label="CV">
-          <AutoComplete
-            options={websiteOptions}
-            onChange={onWebsiteChange}
-            placeholder="website"
-          >
-            <Input />
-          </AutoComplete>
-        </Form.Item> */}
-
-        {/* <Form.Item
-          label="Captcha"
-          extra="We must make sure that your are a human."
-        >
-          <Row gutter={8}>
-            <Col span={12}>
-              <Form.Item
-                name="captcha"
-                noStyle
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input the captcha you got!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Button>Get captcha</Button>
-            </Col>
-          </Row>
-        </Form.Item> */}
-
         <Form.Item
           name="agreement"
           valuePropName="checked"
@@ -296,7 +247,7 @@ const Signup = () => {
               centered
               open={modal2Open}
               onOk={() => setModal2Open(false)}
-              // onCancel={() => setModal2Open(false)}
+              onCancel={() => setModal2Open(false)}
             >
               <p>
                 1. Điều khoản sử dụng: Trang web học lịch sử sẽ có một bộ quy

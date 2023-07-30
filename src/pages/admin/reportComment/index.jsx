@@ -4,9 +4,9 @@ import Header from "../../../components/admin/Header";
 import { Table, Form, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-import {message} from "antd";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { message } from "antd";
 
 const ReportCmt = () => {
   const [search, setSearch] = useState("");
@@ -43,7 +43,6 @@ const ReportCmt = () => {
     }
   };
   useEffect(() => {
-
     fetchData();
   }, []);
 
@@ -66,18 +65,34 @@ const ReportCmt = () => {
     }
   };
 
-  const acceptCmt = async (selectedPostID) => {
+  const acceptCmt = async (selectedPostID, reportID) => {
     try {
-      const response = await axios.delete(
-        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${selectedPostID}`
+      // Fetch posts data
+      const postsResponse = await axios.get(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post"
       );
-      if (response.status === 200) {
-        message.success("Post deleted successfully!");
-        // Set the trigger to refetch posts after deletion
-        // setPostDeleted(true);
-        fetchData();
+
+      const posts = postsResponse.data;
+
+      // Check if any report has a matching postID
+      const matchingPost = posts.find((post) => selectedPostID === post.postID);
+
+      if (matchingPost) {
+        // Delete the post if a matching report is found
+        const response = await axios.delete(
+          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${matchingPost.id}`
+        );
+        if (response.status === 200) {
+          message.success("Post deleted successfully!");
+          // Refetch posts after deletion
+          deniedCmt(reportID);
+          fetchData();
+        } else {
+          message.error("Failed to delete post.");
+        }
       } else {
-        message.error("Failed to delete post.");
+        // If no matching post is found, show a message or take appropriate action
+        message.warning("No matching post found in the reports.");
       }
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -85,7 +100,6 @@ const ReportCmt = () => {
     }
   };
 
-  
   const indexOfLastReportCmt = currentPage * pageSize;
   const indexOfFirstReportCmt = indexOfLastReportCmt - pageSize;
   const displayedReportCmt = reportCmt
@@ -136,9 +150,7 @@ const ReportCmt = () => {
                   <td>{report.reason}</td>
                   <td className="d-flex justify-content-around">
                     <button
-                      onClick={() =>
-                        acceptCmt(report.postID)
-                      }
+                      onClick={() => acceptCmt(report.postID, report.id)}
                       className="btn btn-outline-success"
                     >
                       Accept
@@ -181,5 +193,3 @@ const ReportCmt = () => {
 };
 
 export default ReportCmt;
-
-

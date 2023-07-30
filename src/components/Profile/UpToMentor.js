@@ -30,16 +30,16 @@ const UpToMentor = () => {
       );
 
       if (response.status === 201) {
-        console.log("CV link submitted successfully");
         Modal.success({
-          title: "CV sent successfully",
-          content: "Please wait for admin approval.",
+          title: "CV đã gửi thành công",
+          content: "Vui lòng chờ để quản trị viên phê duyệt.",
         });
         navigate("/");
       }
     } catch (error) {
-      console.error("Error submitting CV link:", error);
-      // Handle error case, show an error message, or perform any other actions as needed.
+      Modal.error({
+        title: "CV gửi không thành công",
+      });
     }
   };
 
@@ -71,8 +71,8 @@ const UpToMentor = () => {
           />
         </Form.Item>
 
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          Gửi
         </Button>
       </Form>
     </div>

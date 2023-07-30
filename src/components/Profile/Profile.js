@@ -202,14 +202,14 @@ const ProfilePage = () => {
         />
         <div style={{ marginLeft: "116px" }}>
           <Title style={{ marginTop: "20px" }} level={3}>
-            ABOUT ME
+            THÔNG TIN CÁ NHÂN
           </Title>
           <Row style={{ marginLeft: "15px" }}>
             <Col span={12}>
               <div className="infor">
                 <Text style={{ fontSize: "18px" }} strong>
                   <SolutionOutlined className="profiles" />
-                  Role:
+                  Chức vụ:
                 </Text>{" "}
                 {storedSession.role}
               </div>
@@ -292,7 +292,6 @@ const ProfilePage = () => {
           className="demo-loadmore-list"
           loading={initLoading}
           itemLayout="horizontal"
-          loadMore={loadMore}
           dataSource={posted}
           renderItem={(posted) =>
             posted.authorID === storedSession.username ? (
@@ -303,15 +302,15 @@ const ProfilePage = () => {
                       placement="left"
                       content={
                         <Popconfirm
-                          title="Delete the task"
-                          description="Are you sure to delete this task?"
+                          title="Xóa bình luận"
+                          description="Bạn có chắc không?"
                           onConfirm={() => deletePost(posted.id)} // Call deletePost with the post ID
                           onCancel={cancel}
-                          okText="Yes"
-                          cancelText="No"
+                          okText="Có"
+                          cancelText="Không"
                         >
                           <Button type="primary" danger>
-                            Delete
+                            Xóa
                           </Button>
                         </Popconfirm>
                       }

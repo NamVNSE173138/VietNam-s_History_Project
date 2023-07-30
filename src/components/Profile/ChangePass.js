@@ -51,13 +51,16 @@ const ChangePass = () => {
           `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${user.id}`,
           updatedUser
         );
-
+        Modal.success({
+          title: "Đổi mật khẩu thành công",
+        });
         setIsModalVisible(true);
-        navigate("/profile");
+        navigate("/");
         // Display the modal
       } catch (error) {
-        console.error("Error updating password:", error);
-        message.error("Failed to update password");
+        Modal.error({
+          title: "Đổi mật khẩu không thành công",
+        });
       }
     };
 

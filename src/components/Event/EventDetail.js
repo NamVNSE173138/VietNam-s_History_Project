@@ -15,7 +15,6 @@ import "./Event.css";
 const EventDetail = () => {
   const session = JSON.parse(sessionStorage.getItem("session"));
   const userID = session?.id;
-  // const userName = session?.userName;
 
   const { eventID } = useParams();
   const [event, setEvent] = useState(null);
@@ -30,20 +29,16 @@ const EventDetail = () => {
   const handleShow = () => setModalReport(true);
   const [reportedBy, setReportedBy] = useState("");
   const [selectedPost, setSelectedPost] = useState(null);
-  
 
   const showReport = (post) => {
-    // Store the selected post in the component's state
     setSelectedPost(post);
     handleShow();
   };
-
 
   const [checkedValues, setCheckedValues] = useState({});
 
   //---------------------------------------------------
   const handleChange = (event, post) => {
-    console.log("handleChange called with post:", post);
     const { id, checked, value } = event.target;
     setCheckedValues((prevCheckedValues) => ({
       ...prevCheckedValues,
@@ -61,11 +56,8 @@ const EventDetail = () => {
 
   //------------------------------------------------------------------------
   const handleSaveChanges = () => {
-    console.log(checkedValues);
-
-    
-    const selectedPostAuthorID = selectedPost.authorID
-    const selectedPostDescription = selectedPost.description
+    const selectedPostAuthorID = selectedPost.authorID;
+    const selectedPostDescription = selectedPost.description;
 
     // Extract the postID from the selected post
     const selectedPostID = selectedPost.postID;
@@ -100,7 +92,6 @@ const EventDetail = () => {
       .then((response) => response.json())
       .then((responseData) => {
         // Handle the API response if needed
-        console.log(responseData);
       })
       .catch((error) => {
         // Handle any errors that occurred during the API request
@@ -260,17 +251,6 @@ const EventDetail = () => {
     },
     [likedPosts, userID, isPostLiked]
   );
-
-  // const handleReportCancel = (e) => {
-  //   console.log(e);
-  //   message.error("Click on No");
-  // };
-
-  // const handleReportConfirm = (e) => {
-  //   console.log(e);
-  //   message.success("Thanks");
-  //   setIsReported(true);
-  // };
 
   const PostItem = ({ post }) => {
     return (
@@ -460,7 +440,7 @@ const EventDetail = () => {
       <p style={{ marginTop: "20px", fontSize: "20px", marginBottom: "50px" }}>
         {event.description}
       </p>
-      <h4>Bình luận</h4>  
+      <h4>Bình luận</h4>
       <List
         style={{ marginTop: 0 }}
         itemLayout="vertical"
