@@ -15,6 +15,7 @@ import "./Event.css";
 const EventDetail = () => {
   const session = JSON.parse(sessionStorage.getItem("session"));
   const userID = session?.id;
+  // const userName = session?.userName;
 
   const { eventID } = useParams();
   const [event, setEvent] = useState(null);
@@ -60,12 +61,9 @@ const EventDetail = () => {
 
   //------------------------------------------------------------------------
   const handleSaveChanges = () => {
-    // Use the `checkedValues` state to access the selected checkboxes
     console.log(checkedValues);
 
-    // Extract the authorID and description of the selected post from checkedValues
-    // const selectedPostAuthorID = checkedValues[`authorID_report1`];
-    // const selectedPostDescription = checkedValues[`description_report1`];
+    
     const selectedPostAuthorID = selectedPost.authorID
     const selectedPostDescription = selectedPost.description
 
@@ -89,9 +87,8 @@ const EventDetail = () => {
       authorID: selectedPostAuthorID,
       description: selectedPostDescription,
       postID: selectedPostID, // Use the correct postID from the selected post
-      reportedBy: reportedBy,
+      reportedBy: session.username,
     };
-
     // Send the data to the mock API
     fetch("https://64890c550e2469c038fe9625.mockapi.io/VN_HS/report", {
       method: "POST",
@@ -298,13 +295,6 @@ const EventDetail = () => {
               )}
             </Space>
           </Button>,
-          // <Button
-          //   onClick={() => {
-          //     showReport();
-          //   }}
-          // >
-          //   <ExclamationCircleOutlined /> Báo cáo
-          // </Button>,
           <Button
             onClick={() => {
               showReport(post);
@@ -470,8 +460,7 @@ const EventDetail = () => {
       <p style={{ marginTop: "20px", fontSize: "20px", marginBottom: "50px" }}>
         {event.description}
       </p>
-
-      <h4>Bình luận</h4>
+      <h4>Bình luận</h4>  
       <List
         style={{ marginTop: 0 }}
         itemLayout="vertical"

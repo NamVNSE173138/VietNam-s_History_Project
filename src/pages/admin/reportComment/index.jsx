@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import {message} from "antd";
 
 const ReportCmt = () => {
   const [search, setSearch] = useState("");
@@ -14,32 +15,34 @@ const ReportCmt = () => {
   const [userId, setUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [postDeleted, setPostDeleted] = useState(false);
+
   const toggleSuccessModal = () => {
     setShowSuccessModal(!showSuccessModal);
   };
   const pageSize = 7;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userResponse = await axios.get(
-          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user"
+  const fetchData = async () => {
+    try {
+      const userResponse = await axios.get(
+        "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user"
+      );
+
+      if (userResponse.data.length > 0) {
+        const user = userResponse.data[0];
+        setUserId(user.id);
+
+        const requestResponse = await axios.get(
+          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/report"
         );
-
-        if (userResponse.data.length > 0) {
-          const user = userResponse.data[0];
-          setUserId(user.id);
-
-          const requestResponse = await axios.get(
-            "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/report"
-          );
-          setReportCmt(requestResponse.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("An error occurred while fetching the data.");
+        setReportCmt(requestResponse.data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("An error occurred while fetching the data.");
+    }
+  };
+  useEffect(() => {
 
     fetchData();
   }, []);
@@ -63,49 +66,33 @@ const ReportCmt = () => {
     }
   };
 
-  const acceptCmt = async (id, userId, idremove) => {
+  const acceptCmt = async (selectedPostID) => {
     try {
-      const userResponse = await axios.get(
-        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`
+      const response = await axios.delete(
+        `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/post/${selectedPostID}`
       );
-      const user = userResponse.data;
-
-      if (userId === user.id) {
-        const updateUserResponse = await axios.put(
-          `https://64890c550e2469c038fe9625.mockapi.io/VN_HS/user/${id}`,
-          { ...user, role: "Mentor" }
-        );
-
-        if (updateUserResponse.status === 200) {
-          setReportCmt(reportCmt.filter((request) => request.userId !== userId));
-          toggleSuccessModal();
-          deniedCmt(idremove);
-        } else {
-          console.error("Error accepting cv:", updateUserResponse);
-        }
-        const MySwal = withReactContent(Swal)
-        MySwal.fire({
-          title: <strong>Done!</strong>,
-          html: <i>You accepted Member become Mentor!</i>,
-          icon: 'success'
-        })
+      if (response.status === 200) {
+        message.success("Post deleted successfully!");
+        // Set the trigger to refetch posts after deletion
+        // setPostDeleted(true);
+        fetchData();
       } else {
-        console.error("User not found");
+        message.error("Failed to delete post.");
       }
-
     } catch (error) {
-      console.error("Error accepting cv:", error);
+      console.error("Error deleting post:", error);
+      message.error("An error occurred while deleting the post.");
     }
   };
 
   
   const indexOfLastReportCmt = currentPage * pageSize;
   const indexOfFirstReportCmt = indexOfLastReportCmt - pageSize;
-  const displayedLinkCV = reportCmt
-    .filter((linkCv) => {
+  const displayedReportCmt = reportCmt
+    .filter((reportCmt) => {
       return (
         search.toLowerCase() === "" ||
-        linkCv.userName.toLowerCase().includes(search.toLowerCase())
+        reportCmt.userName.toLowerCase().includes(search.toLowerCase())
       );
     })
     .slice(indexOfFirstReportCmt, indexOfLastReportCmt);
@@ -140,7 +127,7 @@ const ReportCmt = () => {
               </tr>
             </thead>
             <tbody>
-              {displayedLinkCV.map((report) => (
+              {displayedReportCmt.map((report) => (
                 <tr key={report.id}>
                   <td>{report.id}</td>
                   <td>{report.authorID}</td>
@@ -150,7 +137,7 @@ const ReportCmt = () => {
                   <td className="d-flex justify-content-around">
                     <button
                       onClick={() =>
-                        acceptCmt(report.userID, report.userID, report.id)
+                        acceptCmt(report.postID)
                       }
                       className="btn btn-outline-success"
                     >
