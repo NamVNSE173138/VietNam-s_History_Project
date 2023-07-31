@@ -37,9 +37,9 @@ const UpToMentor = () => {
         navigate("/");
       }
     } catch (error) {
-      Modal.error({
-        title: "CV gửi không thành công",
-      });
+      // Modal.error({
+      //   title: "CV gửi không thành công",
+      // });
     }
   };
 
