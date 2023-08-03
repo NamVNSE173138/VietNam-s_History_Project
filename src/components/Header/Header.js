@@ -44,6 +44,13 @@ const Header = () => {
             <li className="header">TRANG CHỦ</li>
           </Link>
           <Link
+            to={"/dynasty"}
+            style={linkStyles}
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            <li className="header">TRIỀU ĐẠI</li>
+          </Link>
+          <Link
             to={"/events"}
             style={linkStyles}
             onClick={() => window.scrollTo(0, 0)}
@@ -51,13 +58,6 @@ const Header = () => {
             <li className="header">SỰ KIỆN</li>
           </Link>
 
-          <Link
-            to={"/grade"}
-            style={linkStyles}
-            onClick={() => window.scrollTo(0, 0)}
-          >
-            <li className="header">LỚP</li>
-          </Link>
           {!isLogin ? (
             <>
               <Link

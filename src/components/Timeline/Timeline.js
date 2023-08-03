@@ -10,20 +10,16 @@ const EventTimeline = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://64890c550e2469c038fe9625.mockapi.io/VN_HS/event"
-        );
-        setTimelineData(response.data);
+    // Fetch data from the API endpoint on the server
+    axios
+      .get("http://localhost:5000/api/dynasty")
+      .then((response) => {
         setLoading(false);
-      } catch (error) {
-        setError("Error fetching timeline data");
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+        setTimelineData(response.data); // Store the fetched data in the state
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -39,15 +35,17 @@ const EventTimeline = () => {
         <div>{error}</div>
       ) : (
         <div className="custom-timeline">
-          {timelineData.map((event) => (
+          {timelineData.map((dynasty) => (
             <Link
               style={{ color: "unset", textDecoration: "none" }}
-              to={`/events/eventDetail/${event.eventID}`}
-              key={event.eventID}
+              to={`/dynasty/dynastyDetail/${dynasty.dysnatyID}`}
+              key={dynasty.dysnatyID}
             >
-              <div key={event.eventID} className="custom-timeline-item">
-                <div className="timeline-label">{event.timeline}</div>
-                <div className="timeline-content">{event.eventName}</div>
+              <div key={dynasty.dysnatyID} className="custom-timeline-item">
+                <div className="timeline-label">{dynasty.dysnatyName}</div>
+                <div className="timeline-content">
+                  {dynasty.timeFrom} - {dynasty.timeTo}
+                </div>
               </div>
             </Link>
           ))}

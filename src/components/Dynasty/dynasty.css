@@ -1,0 +1,101 @@
+.loading{
+    margin: 100px 0;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  /* Event.css (Assuming you uncommented the import statement for Event.css) */
+
+.all-event {
+    margin-top: 100px;
+  }
+  
+  /* Style for the List component and its items */
+  .ant-list-item {
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    margin: 4px 200px;
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .ant-list-item-meta-title a {
+    color: #1890ff;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+  
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  .ant-list-item-meta-description {
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .ant-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  
+  .ant-pagination-item-active a {
+    color: #1890ff;
+  }
+  
+  .ant-pagination-item a:hover {
+    color: #1890ff;
+  }
+  
+  /* Add any additional styles for the List component or its items if needed */
+  /* dynastyDetail.css */
+.dynasty-container {
+  font-family: 'Times New Roman', Times, serif;
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.dynasty-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.dynasty-title2 {
+  
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dynasty-timeline {
+  font-size: 18px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.dynasty-description {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.dynasty-list {
+  margin-left: 50px;
+}
+
+.dynasty-item {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+

@@ -22,6 +22,7 @@ const Home = () => {
       </Row>
 
       <PopEvent />
+
       <Footer />
     </>
   );

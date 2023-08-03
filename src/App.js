@@ -20,6 +20,10 @@ import AdUser from "./pages/admin/user/User";
 import AdPost from "./pages/admin/posts/Post";
 import AdLinkCv from "./pages/admin/linkCV/CV";
 import AdReportCmt from "./pages/admin/reportComment/ReportCmt";
+import AllDynasty from "./pages/dynasty/AllDynasty";
+import DynastyDetail from "./pages/dynasty/DynastyDetail";
+import CharactorDetail from "./pages/Charactor/CharactorDetail";
+import KingsDetail from "./pages/King/KingDetail";
 
 function App() {
   return (
@@ -37,6 +41,16 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/changePass" element={<ChangePass />} />
       <Route path="/searchList" element={<SearchList />} />
+      <Route path="/dynasty" element={<AllDynasty />} />
+      <Route
+        path="/dynasty/dynastyDetail/:dysnatyID"
+        element={<DynastyDetail />}
+      />
+      <Route
+        path="/dynasty/charactor/:charactorID"
+        element={<CharactorDetail />}
+      />
+      <Route path="/dynasty/king/:kingID" element={<KingsDetail />} />
       {/* admin */}
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/events" element={<AdEvent />} />
