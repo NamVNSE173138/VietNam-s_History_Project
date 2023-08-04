@@ -1,22 +1,22 @@
 import { List, Form, Input } from "antd"; // Update the import path
 
 import axios from "axios";
-import "./Event.css";
+import "./King.css";
 import { SearchOutlined } from "@ant-design/icons";
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const AllEvent = () => {
-  const [event, setEvent] = useState([]);
+const AllKing = () => {
+  const [king, setKing] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/event")
+      .get("http://localhost:5000/api/king")
       .then((response) => {
         setLoading(false);
-        setEvent(response.data); // Store the fetched data in the state
+        setKing(response.data); // Store the fetched data in the state
       })
       .catch((error) => {
         console.log(error);
@@ -25,8 +25,8 @@ const AllEvent = () => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
-  const filteredDataSource = event.filter((event) =>
-    event.eventName.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredDataSource = king.filter((king) =>
+    king.kingName.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
     <div className="all-event" style={{ marginTop: "100px" }}>
@@ -47,15 +47,15 @@ const AllEvent = () => {
         }}
         dataSource={filteredDataSource}
         loading={loading}
-        renderItem={(event) => (
+        renderItem={(king) => (
           <Link
-            to={`/events/eventDetail/${event.eventID}`}
+            to={`/dynasty/king/${king.kingID}`}
             style={{ textDecoration: "none" }}
           >
-            <List.Item key={event.eventID}>
+            <List.Item key={king.kingID}>
               <List.Item.Meta
-                title={event.eventName}
-                description={`${event.eventFrom} - ${event.eventTo}`}
+                title={king.kingName}
+                description={`${king.rulingFrom} - ${king.rulingTo}`}
               />
             </List.Item>
           </Link>
@@ -65,4 +65,4 @@ const AllEvent = () => {
   );
 };
 
-export default AllEvent;
+export default AllKing;

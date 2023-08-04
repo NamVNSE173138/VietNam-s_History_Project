@@ -1,16 +1,15 @@
 import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import EventDetail from "../../components/Event/EventDetails";
-
-const EventsDetail = () => {
+import AllChar from "../../components/Charactor/AllCharactor";
+const AllCharactor = () => {
   return (
     <>
       <Header />
-      <EventDetail />
+      <AllChar />
       <Footer />
     </>
   );
 };
 
-export default EventsDetail;
+export default AllCharactor;

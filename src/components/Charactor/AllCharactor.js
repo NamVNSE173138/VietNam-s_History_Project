@@ -1,22 +1,21 @@
-import { List, Form, Input } from "antd"; // Update the import path
-
+import { List, Form, Input } from "antd";
 import axios from "axios";
-import "./Event.css";
+import "./Charactor.css";
 import { SearchOutlined } from "@ant-design/icons";
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const AllEvent = () => {
-  const [event, setEvent] = useState([]);
+const AllDynasty = () => {
+  const [charactor, setCharactor] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/event")
+      .get("http://localhost:5000/api/charactor")
       .then((response) => {
         setLoading(false);
-        setEvent(response.data); // Store the fetched data in the state
+        setCharactor(response.data); // Store the fetched data in the state
       })
       .catch((error) => {
         console.log(error);
@@ -25,8 +24,8 @@ const AllEvent = () => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
-  const filteredDataSource = event.filter((event) =>
-    event.eventName.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredDataSource = charactor.filter((charactor) =>
+    charactor.characterName.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
     <div className="all-event" style={{ marginTop: "100px" }}>
@@ -34,7 +33,7 @@ const AllEvent = () => {
         <Input
           prefix={<SearchOutlined />}
           style={{ width: "1025px" }}
-          placeholder="Tìm kiếm vị vua"
+          placeholder="Tìm kiếm nhân vật lịch sử"
           value={searchQuery}
           onChange={handleSearchChange}
         />
@@ -47,15 +46,15 @@ const AllEvent = () => {
         }}
         dataSource={filteredDataSource}
         loading={loading}
-        renderItem={(event) => (
+        renderItem={(charactor) => (
           <Link
-            to={`/events/eventDetail/${event.eventID}`}
+            to={`/dynasty/charactor/${charactor.charactorID}`}
             style={{ textDecoration: "none" }}
           >
-            <List.Item key={event.eventID}>
+            <List.Item key={charactor.charactorID}>
               <List.Item.Meta
-                title={event.eventName}
-                description={`${event.eventFrom} - ${event.eventTo}`}
+                title={charactor.characterName}
+                // description={`${charactor.timeFrom} - ${charactor.timeTo}`}
               />
             </List.Item>
           </Link>
@@ -65,4 +64,4 @@ const AllEvent = () => {
   );
 };
 
-export default AllEvent;
+export default AllDynasty;

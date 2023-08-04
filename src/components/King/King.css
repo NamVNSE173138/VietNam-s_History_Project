@@ -1,0 +1,38 @@
+/* DynastyDetail.css */
+.dynasty-container {
+    max-width: 800px;
+    padding: 20px;
+  }
+  
+  .character-list {
+    margin-bottom: 20px;
+  }
+  
+  .dynasty-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .dynasty-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-right: px;
+  }
+  
+  .character-image {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  

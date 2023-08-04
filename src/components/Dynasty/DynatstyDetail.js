@@ -7,6 +7,7 @@ import "./dynasty.css";
 const DynastyDetail = () => {
   const [loading, setLoading] = useState(true);
   const [king, setKing] = useState({});
+  const [event, setEvent] = useState({});
   const [dynasty, setDynasty] = useState({}); // Change timelineData to dynasty since we're fetching data for a specific dynasty
   const { dysnatyID } = useParams();
   // Create an array of Axios requests
@@ -14,12 +15,14 @@ const DynastyDetail = () => {
     const requests = [
       axios.get(`http://localhost:5000/api/dynasty/${dysnatyID}/charactors`),
       axios.get(`http://localhost:5000/api/king/${dysnatyID}`),
+      axios.get(`http://localhost:5000/api/dynasty/${dysnatyID}/event`),
     ];
     axios
       .all(requests)
       .then(
-        axios.spread((dynastyResponse, kingResponse) => {
+        axios.spread((dynastyResponse, kingResponse, eventResponse) => {
           setLoading(false);
+          setEvent(eventResponse.data);
           setDynasty(dynastyResponse.data); // Store the fetched dynasty data in the state
           setKing(kingResponse.data); // Store the fetched character data in the state
         })
@@ -69,6 +72,25 @@ const DynastyDetail = () => {
                   <br />
 
                   <Link to={`/dynasty/king/${kings.kingID}`}>
+                    <Button style={{ margin: "8px" }} size="large">
+                      Xem thêm...
+                    </Button>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : null}
+        {event.length !== 0 ? (
+          <>
+            <div className="dynasty-list">
+              <p className="dynasty-title2">Các sự kiện liên quan:</p>
+              {event.map((events) => (
+                <div key={events.eventID} className="character-item">
+                  {events.eventName}
+                  <br />
+
+                  <Link to={`/dynasty/king/${events.eventID}`}>
                     <Button style={{ margin: "8px" }} size="large">
                       Xem thêm...
                     </Button>

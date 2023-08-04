@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const AllDynasty = () => {
-  const [events, setEvents] = useState([]);
   const [timelineData, setTimelineData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");

@@ -51,6 +51,20 @@ const Header = () => {
             <li className="header">TRIỀU ĐẠI</li>
           </Link>
           <Link
+            to={"/king"}
+            style={linkStyles}
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            <li className="header">VUA</li>
+          </Link>
+          <Link
+            to={"/charactor"}
+            style={linkStyles}
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            <li className="header">NHÂN VẬT LỊCH SỬ</li>
+          </Link>
+          <Link
             to={"/events"}
             style={linkStyles}
             onClick={() => window.scrollTo(0, 0)}

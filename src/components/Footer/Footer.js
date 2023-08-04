@@ -39,6 +39,16 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li className="footer">
+                  <Link className="menu-footer" to={"/king"}>
+                    Vua
+                  </Link>
+                </li>
+                <li className="footer">
+                  <Link className="menu-footer" to={"/charactor"}>
+                    Nhân vật lịch sử
+                  </Link>
+                </li>
+                <li className="footer">
                   <Link className="menu-footer" to={"/events"}>
                     Sự kiện
                   </Link>
